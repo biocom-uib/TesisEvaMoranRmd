@@ -1,0 +1,21 @@
+book_filename: "Tesis Eva Morán"
+output_dir: docs
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    cor: 'Corolario '
+    prop: 'Proposición '
+    def: 'Definición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostración '
+    remark: 'Nota. '
+    solution: 'Solución. '
+  ui:
+        part_name: "Tema "
+        chapter_name: "Lección "
+delete_merged_file: true

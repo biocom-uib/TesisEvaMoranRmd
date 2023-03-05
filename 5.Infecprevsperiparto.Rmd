@@ -1,0 +1,985 @@
+# Comparación de infectadas anteparto y periparto
+
+Clasificamos en infección *anteparto* y *periparto* comparando las variables "EG_TOTAL_PARTO" (edad gestacional en el momento del parto) y "EDAD.GEST.TOTAL" (edad gestacional en el momento del diagnóstico):  diagnósticos realizados 3 o más días antes del parto se consideran **anteparto**, los diagnósticos realizados 2 días antes del parto en adelante se consideran **periparto**. Las diferencias se calculan usando las edades gestacionales.
+
+
+
+```{r}
+Casos$Dif=round((Casos$EG_TOTAL_PARTO-Casos$EDAD.GEST.TOTAL)*7)
+Casos$PreP=rep(NA,n_I)
+Casos$PreP[Casos$Dif>2]=1  #Diagnóstico de covid anteparto
+Casos$PreP[Casos$Dif<=2]=0
+
+n_IAP=table(Casos$PreP)[2]
+n_IPP=table(Casos$PreP)[1]
+
+ColumnesP=c("Infectadas anteparto (N)", "Infectadas anteparto (%)","Infectadas periparto (N)", "Infectadas periparto (%)","No infectadas (N)", "No infectadas (%)")
+
+CasosGM$Dif=round((CasosGM$EG_TOTAL_PARTO-CasosGM$EDAD.GEST.TOTAL)*7)
+CasosGM$PreP=rep(NA,dim(CasosGM)[1])
+CasosGM$PreP[CasosGM$Dif>2]=1  #Diagnóstico de covid anteparto
+CasosGM$PreP[CasosGM$Dif<=2]=0
+```
+
+
+
+## Diferencias entre edades gestacionales en el momento del parto y edades gestacionales en el momento del diagnóstico
+
+
+```{r}
+data =data.frame(
+  name=rep("Infectadas",length(as.numeric(Casos$Dif))),
+  Diferencias=as.numeric(Casos$Dif)
+  )
+
+data %>%
+  ggplot( aes(x=name, y=Diferencias, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Diferencias (días)")
+```
+
+```{r}
+I=as.numeric(Casos$Dif)
+Dades=rbind(c(min(I,na.rm=TRUE),max(I,na.rm=TRUE), round(mean(I,na.rm=TRUE),1),round(median(I,na.rm=TRUE),1),round(quantile(I,c(0.25,0.75),na.rm=TRUE),1),  round(sd(I,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Mínima","Máxima","Media","Mediana", "1er cuartil", "3er cuartil",  "Desv. típica")
+rownames(Dades)=c("Infectadas")
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+
+
+```
+
+
+Hay:
+
+* `r n_IAP` casos diagnosticadas **anteparto** (al menos 3 días antes del parto), 
+
+* `r n_IPP` diagnosticadas **periparto** (de 2 días antes del parto en adelante)
+
+* `r n_I-n_IAP-n_IPP` pérdidas (la edad gestacional de diagnóstico o de parto son desconocidas)
+
+
+## Comparación de la sintomatología
+
+**Porcentajes calculados por filas**
+
+```{r}
+I.AP=Casos$SINTOMAS_DIAGNOSTICO[Casos$PreP==1]
+I.PP=Casos$SINTOMAS_DIAGNOSTICO[Casos$PreP==0]
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+#table(I.AP)
+#table(I.PP)
+EEExt=rbind(c(table(I.AP)[1],round(100*prop.table(table(I.AP)),2)[1],
+              table(I.AP)[3],round(100*prop.table(table(I.AP)),2)[3],
+              table(I.AP)[2],round(100*prop.table(table(I.AP)),2)[2],
+              length(I.AP)),
+            c(table(I.PP)[1],round(100*prop.table(table(I.PP)),2)[1],
+              table(I.PP)[3],round(100*prop.table(table(I.PP)),2)[3],
+              table(I.PP)[2],round(100*prop.table(table(I.PP)),2)[2],
+              length(I.PP))
+            )
+EEE=EEExt[,c(1,3,5)]
+colnames(EEE)=c("Asintomáticas", "Síntomas leves", "Neumonía")
+
+colnames(EEExt)= c("Asintomáticas (N)", "Asintomáticas (%)","Síntomas leves (N)", "Síntomas leves (%)", "Neumonía (N)", "Neumonía (%)","Total")
+rownames(EEExt)=c("Infectadas anteparto", "Infectadas periparto")
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+**Porcentajes calculados por columnas**
+
+```{r}
+I.AP=Casos$SINTOMAS_DIAGNOSTICO[Casos$PreP==1]
+I.PP=Casos$SINTOMAS_DIAGNOSTICO[Casos$PreP==0]
+TT=table(Casos$PreP,Casos$SINTOMAS_DIAGNOSTICO)
+p.TT=round(100*prop.table(TT,margin=2)[2:1,],1)
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+#table(I.AP)
+#table(I.PP)
+EEExt=rbind(c(TT[2,1],p.TT[1,1],
+              TT[2,3],p.TT[1,3],
+              TT[2,2],p.TT[1,2],
+              length(I.AP)),
+            c(TT[1,1],p.TT[2,1],
+              TT[1,3],p.TT[2,3],
+              TT[1,2],p.TT[2,2],
+              length(I.PP))
+            )
+EEE=EEExt[,c(1,3,5)]
+colnames(EEE)=c("Asintomáticas", "Síntomas leves", "Neumonía")
+
+colnames(EEExt)= c("Asintomáticas (N)", "Asintomáticas (%)","Síntomas leves (N)", "Síntomas leves (%)", "Neumonía (N)", "Neumonía (%)","Total")
+rownames(EEExt)=c("Infectadas anteparto", "Infectadas periparto")
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r}
+Síntomas=ordered(rep(c("Asintomática", "Síntomas leves", "Neumonía"), each=2),levels=c("Asintomática", "Síntomas leves", "Neumonía"))
+Grupo=rep(c("Anteparto","Periparto") , 3)
+valor1=as.vector(prop.table(EEE, margin=1))
+data1 <- data.frame(Grupo,Síntomas,valor1)
+valor2=as.vector(prop.table(EEE, margin=2))
+data2 <- data.frame(Grupo,Síntomas,valor2)
+
+
+ggplot(data1, aes(fill=Síntomas, y=valor1, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Momento de diagnóstico")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") 
+
+ggplot(data2, aes(fill=Grupo, y=valor2, x=Síntomas)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Síntomas")+
+  ylab("")+
+  labs(fill = "Momento diag.")
+
+```
+
+* Asociación entre los grupos de sintomatología y el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(chisq.test(EEE)$p.value,1)`$
+
+* Test de diferencia en la tendencia de la gravedad: p-valor $`r signif(prop.trend.test(EEE[1,],colSums(EEE),score=prop.table(table(Sint)))$p.value,1)`$
+
+
+
+## Comparaciones
+
+
+
+### Preeclampsia 
+
+
+
+```{r}
+I=Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL
+NI=Controls$PREECLAMPSIA
+TablaAntePeri(I,NI,"PE", "No PE")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+
+```{r,eval=FALSE,include=FALSE}
+Síntomas=rep(c("Inf. anteparto", "Inf. periparto", "No infectadas"), each=2)
+Grupo=rep(c("Preeclampsia","No preeclampsia") , 3)
+valor=as.vector(t(prop.table(EE, margin=1)))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Grupo, y=valor, x=Síntomas)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Momento de diagnóstico")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+### Preeclampsia con CG
+
+
+```{r}
+n_PAI=sum(Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL[Casos$PreP==1])
+n_PPI=sum(Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL[Casos$PreP==0])
+n_PNI=sum(Controls$PREECLAMPSIA)
+I.AP=Casos$Preeclampsia.grave_HELLP_ECLAMPSIA[Casos$PreP==1 & Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL==1]
+I.PP=Casos$Preeclampsia.grave_HELLP_ECLAMPSIA[Casos$PreP==0 & Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL==1]
+NI1=Controls[Controls$PREECLAMPSIA==1,]$preeclampsia_severa
+NI2=Controls[Controls$PREECLAMPSIA==1,]$Preeclampsia.grave.No.HELLP 
+NI=rep(NA,n_PNI)
+for (i in 1:n_PNI){NI[i]=max(NI1[i],NI2[i],na.rm=TRUE)}
+#table(NI)
+#table(I.AP)
+#table(I.PP)
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+EE=rbind(as.vector(table(I.AP))[2:1],
+         as.vector(table(I.PP))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I.AP))[2:1],NA_IAP),
+            round(100*c(as.vector(table(I.AP))[2:1],NA_IAP)/n_PAI,1),
+            c(as.vector(table(I.PP))[2:1],NA_IPP),
+            round(100*c(as.vector(table(I.PP))[2:1],NA_IPP)/n_PPI,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_PNI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("PE con CG", "PE sin CG","Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+### Anomalías congénitas
+
+
+
+
+```{r}
+NI=Controls$Diagnóstico.de.malformación.ecográfica._.semana.20._
+I=Casos$Diagnóstico.de.malformación.ecográfica._.semana.20._
+
+TablaAntePeri(I,NI,"Anomalías congénitas", "No anomalías congénitas")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+
+### Retraso del crecimiento intrauterino 
+
+
+```{r}
+NI=Controls$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.
+I=Casos$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.
+
+TablaAntePeri(I,NI,"RCIU","No RCIU")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+
+
+
+### Diabetes gestacional 
+
+```{r}
+NI=Controls$Diabetes.gestacional
+I=Casos$Diabetes.gestacional
+
+TablaAntePeri(I,NI,"DG","No DG")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+
+
+
+### Hipertensión gestacional 
+
+
+```{r}
+NI=Controls$Hipertensión.gestacional
+I=Casos$Hipertensión.gestacional
+TablaAntePeri(I,NI,"HG","No HG")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+
+
+
+
+
+### Rotura prematura de membranas 
+
+
+
+```{r}
+NI=Controls$Bolsa.rota.anteparto
+I=Casos$Bolsa.rota.anteparto
+
+TablaAntePeri(I,NI,"RPM","No RPM")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+
+### Ingreso materno en  UCI
+
+
+
+```{r}
+NI=Controls$UCI...9
+I=Casos$UCI
+TablaAntePeri(I,NI,"UCI","No UCI")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+
+
+
+
+### Ingreso materno en UCI según el momento del parto o cesárea
+
+
+
+```{r}
+UCI.IA=sum(Casos$UCI[Casos$PreP==1],na.rm=TRUE)
+UCI.IP=sum(Casos$UCI[Casos$PreP==0],na.rm=TRUE)
+UCI.NI=sum(Controls$UCI...9,na.rm=TRUE)
+
+NI=Controls$UCI.ANTES.DEL.PARTO
+
+I.AP=Casos$UCI_ANTES.DESPUES.DEL.PARTO[Casos$PreP==1]
+I.PP=Casos$UCI_ANTES.DESPUES.DEL.PARTO[Casos$PreP==0]
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+
+EE=rbind(as.vector(table(I.AP)),
+         as.vector(table(I.PP)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I.AP))),
+            round(100*c(as.vector(table(I.AP)))/UCI.IA,1),
+            c(as.vector(table(I.PP))),
+            round(100*c(as.vector(table(I.PP)))/UCI.IP,1),
+            c(c(0,2)),
+            round(100*c(c(0,2))/UCI.NI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("UCI antes del parto", " UCI después del parto")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(EE,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+### Feto muerto anteparto 
+
+```{r}
+I1.AP=Casos$Feto.muerto.intraútero[Casos$PreP==1]
+I1.AP[I1.AP=="Sí"]=1
+I1.AP[I1.AP=="No"]=0
+I1.PP=Casos$Feto.muerto.intraútero[Casos$PreP==0]
+I1.PP[I1.PP=="Sí"]=1
+I1.PP[I1.PP=="No"]=0
+I2.AP=CasosGM$Feto.vivo[CasosGM$PreP==1]
+I2.AP[I2.AP=="Sí"]=0
+I2.AP[I2.AP=="No"]=1
+I2.PP=CasosGM$Feto.vivo[CasosGM$PreP==0]
+I2.PP[I2.PP=="Sí"]=0
+I2.PP[I2.PP=="No"]=1
+I.AP=c(I1.AP,I2.AP)
+I.PP=c(I1.PP,I2.PP)
+#
+NI1=Controls$Feto.vivo...194
+NI1[NI1=="Sí"]=0
+NI1[NI1=="No"]=1
+NI2=ControlsGM$Feto.vivo...245
+NI2[NI2=="Sí"]=0
+NI2[NI2=="No"]=1
+NI=c(NI1,NI2)
+NA_IAP=length(I1.AP[is.na(I1.AP)])
+NA_IPP=length(I1.PP[is.na(I1.PP)])
+NA_NI=length(NI[is.na(NI)])
+n_IAP=length(I.AP)
+n_IPP=length(I.PP)
+n_NI=length(NI)
+
+EE=rbind(as.vector(table(I.AP))[2:1],
+         as.vector(table(I.PP))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I.AP))[2:1],NA_IAP),
+            round(100*c(as.vector(table(I.AP))[2:1],NA_IAP)/n_IAP,1),
+            c(as.vector(table(I.PP))[2:1],NA_IPP),
+            round(100*c(as.vector(table(I.PP))[2:1],NA_IPP)/n_IPP,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_NI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("Algún feto muerto anteparto", "Ningún feto muerto anteparto","Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$ de Montecarlo, p-valor $`r signif(chisq.test(EE,simulate.p.value=TRUE,B=10000)$p.value,1)`$
+
+
+
+### Prematurez 
+
+
+
+```{r}
+NI=Controls$Preterm.deliveries
+I=Casos$PREMATURO
+TablaAntePeri(I,NI,"Prematuro","A término")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+
+
+### Eventos trombóticos
+
+
+
+```{r}
+NI1=Controls$DVT
+NI2=Controls$PE
+NI=rep(NA,n_NI)
+for (i in 1:n_NI){NI[i]=max(NI1[i],NI2[i],na.rm=TRUE)}
+I=Casos$EVENTOS_TROMBO_TOTALES
+
+TablaAntePeri(I,NI,"Eventos trombóticos","No eventos trombóticos")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(EE,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+
+### Eventos hemorrágicos
+
+
+
+
+```{r}
+NI=Controls$eventos_hemorragicos
+I=Casos$EVENTOS_HEMORRAGICOS_TOTAL
+
+TablaAntePeri(I,NI,"Eventos hemorrágicos","No eventos hemorrágicos")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+```
+
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`
+
+
+
+### Hemorragias potsparto
+
+
+
+```{r}
+NI=Controls$Hemorragia.postparto
+I=Casos$Hemorragia.postparto
+I.sino=I
+I.sino[!is.na(I.sino)& I.sino!="No"]="Sí"
+NI.sino=NI
+NI.sino[!is.na(NI.sino)& NI.sino!="No"]="Sí"
+
+TablaAntePeri(I.sino,NI.sino,"HPP","No HPP")
+```
+
+```{r}
+EE=rbind(as.vector(table(I.sino[Casos$PreP==1]))[2:1],
+         as.vector(table(I.sino[Casos$PreP==0]))[2:1],
+         as.vector(table(NI.sino))[2:1])
+```
+
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(EE,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+
+```{r}
+I.AP=I[Casos$PreP==1]
+I.PP=I[Casos$PreP==0]
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+EE=rbind(as.vector(table(I.AP)),
+         as.vector(table(I.PP)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I.AP)),NA_IAP),
+            round(100*c(as.vector(table(I.AP)),NA_IAP)/n_IAP,1),
+            c(as.vector(table(I.PP)),NA_IPP),
+            round(100*c(as.vector(table(I.PP)),NA_IPP)/n_IPP,1),
+            c(as.vector(table(NI)),NA_NI),
+            round(100*c(as.vector(table(NI)),NA_NI)/n_NI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("Histerectomía",
+"Tto. médico",
+"Tto. Qx. conservador",
+"No HPP", "Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+* Diferencia entre infectadas ante y periparto: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(EE[c(1,2),],simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(EE,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+### Inicio del parto
+
+
+```{r}
+I.AP=Casos$Inicio.de.parto[Casos$PreP==1]
+I.PP=Casos$Inicio.de.parto[Casos$PreP==0]
+NI=Controls$Inicio.de.parto
+NI[NI=="Cesárea programada"]="Cesárea"
+
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+#table(I.AP)
+#table(I.PP)
+#table(NI)
+EE=rbind(as.vector(table(I.AP))[c(2,3,1)],
+         as.vector(table(I.PP))[c(2,3,1)],
+         as.vector(table(NI))[c(2,3,1)])
+EEExt=rbind(c(as.vector(table(I.AP))[c(2,3,1)],NA_IAP),
+            round(100*c(as.vector(table(I.AP))[c(2,3,1)],NA_IAP)/length(I.AP),1),
+            c(as.vector(table(I.PP))[c(2,3,1)],NA_IPP),
+            round(100*c(as.vector(table(I.PP))[c(2,3,1)],NA_IPP)/length(I.PP),1),
+            c(as.vector(table(NI))[c(2,3,1)],NA_NI),
+            round(100*c(as.vector(table(NI))[c(2,3,1)],NA_NI)/length(NI),1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("Espontáneo", "Inducido", "Cesárea programada","Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+
+
+```{r}
+df =data.frame(
+  Factor=c( rep("Inf. anteparto",length(I.AP)), rep("Inf. periparto",length(I.PP)), rep("No infectadas",length(NI))),
+  Inicios=ordered(c( I.AP,I.PP,NI ),levels=c("Espontáneo","Inducido","Cesárea"))
+)
+
+base=ordered(rep(c("Espontáneo","Inducido","Cesárea"), each=3),levels=c("Espontáneo","Inducido","Cesárea"))
+Grupo=rep(c("Inf. anteparto","Inf. periparto","No infectada") , 3)
+valor=c(as.vector(prop.table(table(df),margin=1))                 )
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=base, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+  
+  xlab("")+
+  ylab("")+
+    scale_fill_brewer(palette = "Set3") +
+  labs(fill = "Inicio")
+
+```
+
+
+
+
+
+
+* Diferencia entre infectadas ante y periparto: test $\chi^2$, p-valor `r round(chisq.test(EE[c(1,2),])$p.value,3)`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+* *Inicios espontáneos*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),1],EE[c(1,2),2]+EE[c(1,2),3]))$p.value,3)`
+
+* *Inducidos*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),2],EE[c(1,2),1]+EE[c(1,2),3]))$p.value,3)` 
+
+* *Cesáreas programadas*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),3],EE[c(1,2),1]+EE[c(1,2),2]))$p.value,3)`
+
+
+
+### Tipo de parto
+
+
+```{r}
+I.AP.In=Casos$Inicio.de.parto[Casos$PreP==1]
+I.AP.In[I.AP.In=="Cesárea"]="Cesárea programada"
+I.AP=Casos$Tipo.de.parto[Casos$PreP==1]
+I.AP[I.AP.In=="Cesárea programada"]="Cesárea programada"
+I.AP[I.AP=="Cesárea"]="Cesárea urgente"
+
+I.PP.In=Casos$Inicio.de.parto[Casos$PreP==0]
+I.PP.In[I.PP.In=="Cesárea"]="Cesárea programada"
+I.PP=Casos$Tipo.de.parto[Casos$PreP==0]
+I.PP[I.PP.In=="Cesárea programada"]="Cesárea programada"
+I.PP[I.PP=="Cesárea"]="Cesárea urgente"
+
+NI.In=Controls$Inicio.de.parto
+NI=Controls$Tipo.de.parto
+NI[NI.In=="Cesárea programada"]="Cesárea programada"
+NI[NI=="Cesárea"]="Cesárea urgente"
+
+NA_IAP=length(I.AP[is.na(I.AP)])
+NA_IPP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+#table(I.AP)
+#table(I.PP)
+#table(NI)
+EE=rbind(as.vector(table(I.AP))[c(3,4,1,2)],
+         as.vector(table(I.PP))[c(3,4,1,2)],
+         as.vector(table(NI))[c(3,4,1,2)])
+EEExt=rbind(c(as.vector(table(I.AP))[c(3,4,1,2)],NA_IAP),
+            round(100*c(as.vector(table(I.AP))[c(3,4,1,2)],NA_IAP)/length(I.AP),1),
+            c(as.vector(table(I.PP))[c(3,4,1,2)],NA_IPP),
+            round(100*c(as.vector(table(I.PP))[c(3,4,1,2)],NA_IPP)/length(I.PP),1),
+            c(as.vector(table(NI))[c(3,4,1,2)],NA_NI),
+            round(100*c(as.vector(table(NI))[c(3,4,1,2)],NA_NI)/length(NI),1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente", "Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r}
+df =data.frame(
+  Factor=c( rep("Inf. anteparto",length(I.AP)), rep("Inf. periparto",length(I.PP)), rep("No infectadas",length(NI))),
+  Inicios=ordered(c( I.AP,I.PP,NI ),levels=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"))
+)
+
+base=ordered(rep(c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"), each=3),levels=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"))
+Grupo=rep(c("Inf. anteparto","Inf. periparto","No infectada") , 4)
+valor=c(as.vector(prop.table(table(df),margin=1))                 )
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=base, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+  
+  xlab("")+
+  ylab("")+
+    scale_fill_brewer(palette = "Set3") +
+  labs(fill = "Tipo")
+
+```
+
+
+
+* Diferencia entre infectadas ante y periparto: test $\chi^2$, p-valor `r round(chisq.test(EE[c(1,2),])$p.value,3)`
+
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+* *Eutócicos*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),1],EE[c(1,2),2]+EE[c(1,2),3]+EE[c(1,2),4]))$p.value,3)`
+
+
+* *Instrumentales*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),2],EE[c(1,2),1]+EE[c(1,2),3]+EE[c(1,2),4]))$p.value,3)`
+
+
+* *Cesáreas programadas*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),3],EE[c(1,2),1]+EE[c(1,2),2]+EE[c(1,2),4]))$p.value,3)`
+
+* *Cesáreas urgentes*: Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r round(fisher.test(rbind(EE[c(1,2),4],EE[c(1,2),1]+EE[c(1,2),2]+EE[c(1,2),3]))$p.value,3)`
+
+
+
+
+### Ingreso del neonato en  UCI
+
+
+
+```{r}
+NI=c(Controls$APGAR.5...200,ControlsGM$APGAR.5...249)
+NI=cut(NI,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+I.AP=c(Casos[Casos$PreP==1,]$APGAR.5...126,CasosGM[CasosGM$PreP==1,]$APGAR.5...150)
+I.PP=c(Casos[Casos$PreP==0,]$APGAR.5...126,CasosGM[CasosGM$PreP==0,]$APGAR.5...150)
+I.AP=cut(I.AP,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+I.PP=cut(I.PP,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+
+
+
+n_IAP=length(I.AP)
+n_IPP=length(I.PP)
+nn_NI=length(NI)
+NA_AP=length(I.AP[is.na(I.AP)])
+NA_PP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+
+#table(I.PP)
+#table(NI)
+EE=rbind(as.vector(table(I.AP)),
+         as.vector(table(I.PP)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I.AP)),NA_AP),
+            round(100*c(as.vector(table(I.AP)),NA_AP)/n_IAP,1),
+            c(as.vector(table(I.PP)),NA_PP),
+            round(100*c(as.vector(table(I.PP)),NA_PP)/n_IPP,1),
+            c(as.vector(table(NI)),NA_NI),
+            round(100*c(as.vector(table(NI)),NA_NI)/nn_NI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("Apgar.5≤7", "Apgar.5≥8","Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+```{r}
+FFp=round(fisher.test(EE[c(1,2),])$p.value,3)
+FFGp=chisq.test(EE)$p.value
+```
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r FFp`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(FFGp,1)`$
+
+
+
+### Ingreso del neonato en  UCI
+
+
+
+```{r}
+NI=c(Controls[Controls$Feto.vivo...194=="Sí",]$Ingreso.en.UCI...213,ControlsGM[ControlsGM$Feto.vivo...245=="Sí",]$Ingreso.en.UCI...260)
+I.AP=c(Casos[Casos$Feto.muerto.intraútero=="No" & Casos$PreP==1,]$Ingreso.en.UCIN,CasosGM[CasosGM$Feto.vivo=="Sí" & CasosGM$PreP==1,]$Ingreso.en.UCI)
+I.PP=c(Casos[Casos$Feto.muerto.intraútero=="No" & Casos$PreP==0,]$Ingreso.en.UCIN,CasosGM[CasosGM$Feto.vivo=="Sí" & CasosGM$PreP==0,]$Ingreso.en.UCI)
+n_IAP=length(I.AP)
+n_IPP=length(I.PP)
+nn_NI=length(NI)
+NA_AP=length(I.AP[is.na(I.AP)])
+NA_PP=length(I.PP[is.na(I.PP)])
+NA_NI=length(NI[is.na(NI)])
+
+#table(I.PP)
+#table(NI)
+EE=rbind(as.vector(table(I.AP))[2:1],
+         as.vector(table(I.PP))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I.AP))[2:1],NA_AP),
+            round(100*c(as.vector(table(I.AP))[2:1],NA_AP)/n_IAP,1),
+            c(as.vector(table(I.PP))[2:1],NA_PP),
+            round(100*c(as.vector(table(I.PP))[2:1],NA_PP)/n_IPP,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/nn_NI,1))
+rownames(EEExt)=ColumnesP
+colnames(EEExt)=c("UCIN", "No UCIN","Pérdidas")
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+```{r}
+FFp=round(fisher.test(EE[c(1,2),])$p.value,3)
+FFGp=chisq.test(EE)$p.value
+```
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r FFp`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(FFGp,1)`$
+
+
+
+### Peso de neonatos
+
+
+```{r}
+NI=c(Controls[Controls$Feto.vivo...194=="Sí",]$Peso._gramos_...198,ControlsGM[ControlsGM$Feto.vivo...245=="Sí",]$Peso._gramos_...247)
+
+I=c(Casos[Casos$Feto.muerto.intraútero=="No",]$Peso._gramos_...125,CasosGM[CasosGM$Feto.vivo=="Sí",]$Peso._gramos_...247)
+I.AP=I[Casos$PreP==1]
+I.PP=I[Casos$PreP==0]
+```
+
+
+```{r}
+Dades=rbind(c(round(min(I.AP,na.rm=TRUE),1),round(max(I.AP,na.rm=TRUE),1), round(mean(I.AP,na.rm=TRUE),1),round(median(I.AP,na.rm=TRUE),1),round(quantile(I.AP,c(0.25,0.75),na.rm=TRUE),1), round(sd(I.AP,na.rm=TRUE),1)),
+            c(round(min(I.PP,na.rm=TRUE),1),round(max(I.PP,na.rm=TRUE),1), round(mean(I.PP,na.rm=TRUE),1),round(median(I.PP,na.rm=TRUE),1),round(quantile(I.PP,c(0.25,0.75),na.rm=TRUE),1), round(sd(I.PP,na.rm=TRUE),1)),
+            c(round(min(NI,na.rm=TRUE),1),round(max(NI,na.rm=TRUE),1), round(mean(NI,na.rm=TRUE),1),round(median(NI,na.rm=TRUE),1),round(quantile(NI,c(0.25,0.75),na.rm=TRUE),1), round(sd(NI,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Peso mínimo","Peso máximo","Peso medio", "Peso mediano", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Infectadas anteparto", "Infectadas periparto", "Controles")
+
+Dades %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+
+
+```
+
+
+
+```{r 426,fig.cap="\\s"}
+data =data.frame(
+  name=c( rep("Anteparto",length(I.AP)), rep("Periparto",length(I.PP)), rep("No infectadas",length(NI))),
+  Pesos=c( I.AP,I.PP,NI ))
+
+
+data %>%
+  ggplot( aes(x=name, y=Pesos, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    theme(
+      legend.position="none",
+      plot.title=element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Pesos (gramos)")+
+  scale_fill_brewer(palette = "Dark2") 
+
+```
+
+
+```{r}
+FK=c(fligner.test(list(I.AP, I.PP))$p.value,fligner.test(list(I.PP, NI))$p.value,fligner.test(list(NI, I.AP))$p.value, fligner.test(list(I.AP,I.PP,NI))$p.value)
+TT=c(t.test(I.AP, I.PP,var.equal=TRUE)$p.value,t.test(NI, I.PP,var.equal=TRUE)$p.value,t.test(I.AP, NI,var.equal=TRUE)$p.value,kruskal.test(Pesos~name,data=data)$p.value)
+```
+
+
+
+* p-valor del test t para los pesos medios de infectadas ante y periparto: p-valor `r round(TT[1],5)`
+
+
+* p-valor del test t para los pesos medios de las infectadas periparto y controles: p-valor `r round(TT[2],5)`
+
+
+
+* p-valor del test t para los pesos medios de las infectadas anteparto y controles: p-valor `r round(TT[3],5)`
+
+
+* p-valor del test de Kruskal-Wallis: p-valor `r round(TT[4],4)`
+
+*Bajo peso*
+
+
+```{r}
+NI=cut(NI,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+I=cut(I,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+TablaAntePeri(I,NI,"No bajo peso","Bajo peso")
+```
+
+```{r}
+EE=rbind(as.vector(table(I[Casos$PreP==1]))[2:1],
+         as.vector(table(I[Casos$PreP==0]))[2:1],
+         as.vector(table(NI))[2:1])
+FFp=round(fisher.test(EE[c(1,2),])$p.value,3)
+FFGp=chisq.test(EE)$p.value
+```
+
+* Diferencia entre infectadas ante y periparto: test de Fisher, p-valor `r FFp`
+
+* Asociación entre el desenlace y la infección al separar las infectadas según el momento del diagnóstico: test $\chi^2$, p-valor $`r signif(FFGp,1)`$
+
+
+
+

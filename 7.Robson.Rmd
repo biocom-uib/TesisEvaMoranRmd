@@ -1,0 +1,1288 @@
+# Grupos Robson
+
+
+## Muestra global
+
+
+
+
+```{r}
+Ola=factor(c(rep("1a ola",n_I1+n_NI1), rep("2a ola",n_I2+n_NI2)))
+Grupos=c(Casos1w$Robson,Controls1w$Robson,Casos2w$Robson,Controls2w$Robson)
+tabla=data.frame(Robson=c(1:10,"Pérdidas"),
+                table(Ola,Grupos)[1,c(2:11,1)],
+table(Ola,Grupos)[2,c(2:11,1)])
+
+row.names(tabla)=c()
+names(tabla)=c("Grupo Robson","1a ola","2a ola")
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("1a ola","2a ola"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(c(prop.table(table(c(Casos1w$Robson,Controls1w$Robson))[c(2:11)]),prop.table(table(c(Casos2w$Robson,Controls2w$Robson))[c(2:11)])))
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Distribución de grupos Robson en las dos olas")+
+  scale_fill_brewer(palette = "Pastel2") 
+```
+
+```{r,include=FALSE}
+A=rbind(table(c(Casos1w$Robson,Controls1w$Robson))[c(2:11)],table(c(Casos2w$Robson,Controls2w$Robson))[c(2:11)])
+CT=chisq.test(A,simulate.p.value = TRUE)$p.value
+```
+
+Diferencia en la distribución de grupos Robson en las dos olas: Test ji cuadrado de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor `r round(CT,3)`. No hay evidencia de diferencia en la distribución de los grupos en las dos olas.
+
+
+
+
+### Infectadas
+
+```{r}
+TRCa=table(Casos$Robson,Casos$Cesárea) 
+
+DFTRCa=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Casos$Robson)[c(2:11,1)]),Cesáreas=TRCa[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCa,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCa)=c()
+
+DFTRCa %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCa[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson de infectadas")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+
+### No infectadas
+
+```{r}
+TRCo=table(Controls$Robson,Controls$Cesárea) 
+DFTRCo=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Controls$Robson)[c(2:11,1)]),Cesáreas=TRCo[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCo,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCo)=c()
+DFTRCo %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCo[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson de no infectadas")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+### Diferencias?
+
+
+
+```{r,include=FALSE}
+A=rbind(table(Casos$Robson)[c(2:11)],table(Controls$Robson)[c(2:11)])
+CT=chisq.test(A,simulate.p.value = TRUE)$p.value
+```
+
+Diferencia en la distribución de grupos Robson entre casos y controles: Test ji cuadrado de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor `r round(CT,5)`. 
+
+
+
+
+Qué grupos tienen proporciones de cesáreas en infectadas o no infectadas significativamente diferentes? Ninguno:
+
+
+```{r}
+TablaRobsonGlobal(TRCa,TRCo,"global")
+```
+
+
+
+
+## 1^a^  ola
+
+### Global
+
+```{r}
+TRC1w=table(c(Casos1w$Robson,Controls1w$Robson),c(Casos1w$Cesárea,Controls1w$Cesárea)) 
+DFTRC1w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(c(Casos1w$Robson,Controls1w$Robson))[c(2:11,1)]),Cesáreas=TRC1w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRC1w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRC1w)=c()
+
+DFTRC1w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRC1w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en la 1a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+### Infectadas
+
+```{r}
+TRCa1w=table(Casos1w$Robson,Casos1w$Cesárea) 
+DFTRCa1w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Casos1w$Robson)[c(2:11,1)]),Cesáreas=TRCa1w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCa1w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCa1w)=c()
+
+DFTRCa1w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCa1w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en las infectadas de la 1a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+### No infectadas
+
+```{r}
+TRCo1w=table(Controls1w$Robson,Controls1w$Cesárea) 
+DFTRCo1w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Controls1w$Robson)[c(2:11,1)]),Cesáreas=TRCo1w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCo1w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCo1w)=c()
+
+DFTRCo1w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCo1w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en las no infectadas de la 1a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+### Diferencias?
+
+
+Qué grupos tienen proporciones de cesáreas significativamente diferentes entre infectadas y no infectadas? Ninguno:
+
+
+```{r}
+TablaRobsonGlobal(TRCa1w,TRCo1w,"global")
+```
+
+## 2^a^  ola
+
+### Global
+
+```{r}
+TRC2w=table(c(Casos2w$Robson,Controls2w$Robson),c(Casos2w$Cesárea,Controls2w$Cesárea)) 
+DFTRC2w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(c(Casos2w$Robson,Controls2w$Robson))[c(2:11,1)]),Cesáreas=TRC2w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRC2w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRC2w)=c()
+
+DFTRC2w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRC2w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en la 2a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+
+### Infectadas
+
+```{r}
+TRCa2w=table(Casos2w$Robson,Casos2w$Cesárea) 
+DFTRCa2w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Casos2w$Robson)[c(2:11,1)]),Cesáreas=TRCa2w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCa2w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCa2w)=c()
+
+DFTRCa2w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCa2w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en las infectadas de la 2a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+### No infectadas
+
+```{r}
+TRCo2w=table(Controls2w$Robson,Controls2w$Cesárea) 
+DFTRCo2w=data.frame(Robson=c(1:10,"Pérdidas"),Gestantes=as.vector(table(Controls2w$Robson)[c(2:11,1)]),Cesáreas=TRCo2w[c(2:11,1),2], Porcentaje=round(100*prop.table(TRCo2w,margin=1)[c(2:11,1),2],2))
+row.names(DFTRCo2w)=c()
+
+DFTRCo2w %>%  
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCo2w[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson en las no infectadas de la 2a ola")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+### Diferencias?
+
+
+```{r,eval=FALSE,include=FALSE}
+#Test de Cochran-Mantel-Haenszel
+
+data2w=data.frame(Tipo=c(rep("I",n_I2),rep("NI",n_NI2)),Cesarea=c(Casos2w$Cesárea,Controls2w$Cesárea),Robson=c(Casos2w$Robson,Controls2w$Robson))
+data2w=droplevels(data2w[data2w$Robson!="0",])
+mantelhaen.test(table(data2w))
+```
+
+Qué grupos tienen proporciones de cesáreas significativamente diferentes?  Ninguno:
+
+
+```{r}
+TablaRobsonGlobal(TRCa2w,TRCo2w,"2a ola")
+```
+
+
+## Contrastes entre olas
+
+### En el global
+
+Qué grupos tienen proporciones de cesáreas significativamente diferentes en las dos olas?  Ninguno:
+
+```{r}
+EE1=t(TRC1w)[2:1,2:11]
+EE2=t(TRC2w)[2:1,2:11]
+OR=rep(0,10)
+pp=rep(0,10)
+for (i in 1:10){
+FT=fisher.test(cbind(EE1[,i],EE2[,i]))
+OR[i]=FT$estimate
+pp[i]=FT$p.value       }
+
+dt=data.frame(1:10,colSums(EE1),EE1[1,],round(100*prop.table(EE1,margin=2)[1,],2),colSums(EE2),EE2[1,],round(100*prop.table(EE2,margin=2)[1,],2),round(OR,2),round(pp,3))
+names(dt)=c("Grupo Robson", "1a ola", "Cesáreas", "Porcentaje",  "2a ola", "Cesáreas", "Porcentaje","OR","p-valor test de Fisher")
+dt %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+### Entre infectadas
+
+Qué grupos tienen proporciones de cesáreas significativamente diferentes en las infectadas en las dos olas? Ninguno:
+
+
+```{r}
+EE1=t(TRCa1w)[2:1,2:11]
+EE2=t(TRCa2w)[2:1,2:11]
+OR=rep(0,10)
+pp=rep(0,10)
+for (i in 1:10){
+FT=fisher.test(cbind(EE1[,i],EE2[,i]))
+OR[i]=FT$estimate
+pp[i]=FT$p.value       }
+
+dt=data.frame(1:10,colSums(EE1),EE1[1,],round(100*prop.table(EE1,margin=2)[1,],2),colSums(EE2),EE2[1,],round(100*prop.table(EE2,margin=2)[1,],2),round(OR,2),round(pp,3))
+names(dt)=c("Grupo Robson", "Inf. 1a ola", "Cesáreas", "Porcentaje",  "Inf. 2a ola", "Cesáreas", "Porcentaje","OR","p-valor test de Fisher")
+dt %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+## Grupos sintomáticos y olas
+
+
+### Global
+
+
+```{r}
+TRCaS=table(Casos$Robson,Casos$SINTOMAS_DIAGNOSTICO)[c(2:11,1),]
+pTRCaS=round(100*prop.table(table(Casos$Robson,Casos$SINTOMAS_DIAGNOSTICO),margin=1)[c(2:11,1),],2)
+DFTRCaS=data.frame(
+  Robson=c(1:10,"Pérdidas"),
+Tot=as.vector(table(Casos$Robson)[c(2:11,1)]),
+Asint=TRCaS[,1],
+pAsint=pTRCaS[,1],
+SL=TRCaS[,2],
+pSL=pTRCaS[,2],
+Neum=TRCaS[,3],
+pNeum=pTRCaS[,3])
+row.names(DFTRCaS)=c()
+names(DFTRCaS)=c("Grupo Robson", "Total infectadas", "Asintomáticas", "%", "Síntomas leves", "%", "Neumonía", "%")
+
+DFTRCaS %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), each=10))
+Grupo=factor(rep(1:10 , 3))
+valor=as.vector(TRCaS[1:10,])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Grupos sintomáticos en grupos Robson en las infectadas")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+
+En la tabla que sigue, para cada grupo Robson, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo es igual o diferente de la distribución de los síntomas de las infectadas. Como ves, las distribuciones de síntomas en los grupos 1 y 10 son significativamente diferentes del global.
+
+
+```{r}
+pp=c()
+for (i in c(1:10)){
+pp[i]=chisq.test(TRCaS[i,],p=prop.table(colSums(TRCaS)),simulate.p.value=TRUE,B=10000)$p.value
+}
+tabla=data.frame(
+Robson=rep(1:10),
+round(pp,4)
+)
+names(tabla)=c("Grupo Robson","p-valor")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+
+
+### Comparando olas
+
+```{r}
+TRCa1wS=table(Casos1w$Robson,Casos1w$SINTOMAS_DIAGNOSTICO)[c(2:11,1),]
+pTRCa1wS=round(100*prop.table(table(Casos1w$Robson,Casos1w$SINTOMAS_DIAGNOSTICO),margin=1)[c(2:11,1),],2)
+pTRCa1wS[9,]=c(0,0,0)
+TRCa2wS=table(Casos2w$Robson,Casos2w$SINTOMAS_DIAGNOSTICO)[c(2:11,1),] 
+pTRCa2wS=round(100*prop.table(table(Casos2w$Robson,Casos2w$SINTOMAS_DIAGNOSTICO),margin=1)[c(2:11,1),],2)
+DFTRCaWS=data.frame(
+  Robson=c(1:10,"Pérdidas"),
+Tot1w=as.vector(table(Casos1w$Robson)[c(2:11,1)]),
+Asint1w=TRCa1wS[,1],
+pAsint1w=pTRCa1wS[,1],
+SL1w=TRCa1wS[,2],
+pSL1w=pTRCa1wS[,2],
+Neum1w=TRCa1wS[,3],
+pTRCa1wS[,3],
+Tot2w=as.vector(table(Casos2w$Robson)[c(2:11,1)]),
+Asint2w=TRCa2wS[,1],
+pAsint2w=pTRCa2wS[,1],
+SL2w=TRCa2wS[,2],
+pSL2w=pTRCa2wS[,2],
+Neum2w=TRCa2wS[,3],
+pTRCa2wS[,3])
+row.names(DFTRCaWS)=c()
+names(DFTRCaWS)=c("Grupo Robson", "Total infectadas 1a ola", "Asintomáticas 1a ola", "%", "Síntomas leves 1a ola", "%", "Neumonía 1a ola", "%","Total infectadas 2a ola", "Asintomáticas 2a ola", "%", "Síntomas leves 2a ola", "%", "Neumonía 2a ola", "%")
+
+DFTRCaWS %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), each=10))
+Grupo=factor(rep(1:10 , 3))
+valor=as.vector(TRCa1wS[1:10,])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Grupos sintomáticos en grupos Robson en las infectadas de la 1a ola")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=ordered(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), each=10),levels=c("Asintomáticas","Síntomas leves", "Neumonía"))
+Grupo=factor(rep(1:10 , 3))
+valor=as.vector(TRCa2wS[1:10,])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Grupos sintomáticos en grupos Robson en las infectadas de la 2a ola")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+```{r ,fig.cap="\\s"}
+
+Tipo=ordered(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), 20),levels=c("Asintomáticas","Síntomas leves", "Neumonía"))
+Grupo=ordered(rep(c(sort(c(paste(1:9, "\n 1a\n ola"),paste(1:9, "\n 2a\n ola")) ),"10 \n 1a\n ola", "10 \n 2a\n ola"),each=3),levels=
+               c(sort(c(paste(1:9, "\n 1a\n ola"),paste(1:9, "\n 2a\n ola")) ),"10 \n 1a\n ola", "10 \n 2a\n ola"))
+valor=c()
+for (i in 1:10){
+  valor=c(valor,pTRCa1wS[i,],  pTRCa2wS[i,])
+}
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Distribuciones en grupos sintomáticos de los grupos Robson de  infectadas en ambas olas")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+```{r ,fig.cap="\\s"}
+
+Tipo=ordered(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), 20),levels=c("Asintomáticas","Síntomas leves", "Neumonía"))
+Grupo=ordered(rep(c(sort(c(paste(1:9, "\n 1a\n ola"),paste(1:9, "\n 2a\n ola")) ),"10 \n 1a\n ola", "10 \n 2a\n ola"),each=3),levels=
+               c(sort(c(paste(1:9, "\n 1a\n ola"),paste(1:9, "\n 2a\n ola")) ),"10 \n 1a\n ola", "10 \n 2a\n ola"))
+valor=c()
+for (i in 1:10){
+  valor=c(valor,TRCa1wS[i,],  TRCa2wS[i,])
+}
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Frecuencias de grupos sintomáticos en los grupos Robson de  infectadas en ambas olas")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+En la tabla que sigue, para cada grupo y cada ola, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo y esa ola es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.
+
+```{r}
+pp=c()
+for (i in c(1:8,10)){
+pp[i]=chisq.test(TRCa1wS[i,],p=prop.table(TRCa1wS+TRCa2wS,margin=1)[i,],simulate.p.value=TRUE,B=10000)$p.value
+}
+for (i in c(11:18,20)){
+pp[i]=chisq.test(TRCa2wS[i-10,],p=prop.table(TRCa1wS[i-10,]+TRCa2wS[i-10,]),simulate.p.value=TRUE,B=10000)$p.value
+}
+tabla=data.frame(
+Robson=rep(1:10,2),
+Ola=rep(1:2,each=10),
+round(pp,4)
+)
+names(tabla)=c("Grupo Robson","Ola","p-valor")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+### Enter cesáreas
+
+Dejo de tener en cuenta los grupos 5,6,7,9, donde las cesáreas fueron constantes.
+
+
+```{r}
+TRCa1wSC=table(Casos1w$Cesárea,Casos1w$SINTOMAS_DIAGNOSTICO,Casos1w$Robson)[2:1,,c(2:11,1)]
+pTRCa1wSC=round(100*prop.table(TRCa1wSC,margin=c(2,3)),2)
+TRCa2wSC=table(Casos2w$Cesárea,Casos2w$SINTOMAS_DIAGNOSTICO,Casos2w$Robson)[2:1,,c(2:11,1)] 
+pTRCa2wSC=round(100*prop.table(TRCa2wSC,margin=c(2,3)),2)
+
+DFTRCaWSC=data.frame(
+Robson=c(1:10,"Pérdidas"),
+Asint1w=TRCa1wS[,1],
+pAsint1w=pTRCa1wSC[1,1,],
+SL1w=TRCa1wS[,2],
+pSL1w=pTRCa1wSC[1,2,],
+Neum1w=TRCa1wS[,3],
+pNeum1w=pTRCa1wSC[1,3,],
+Asint2w=TRCa2wS[,1],
+pAsint2w=pTRCa2wSC[1,1,],
+SL2w=TRCa2wS[,2],
+pSL2w=pTRCa2wSC[1,2,],
+Neum2w=TRCa2wS[,3],
+pNeum2w=pTRCa2wSC[1,3,]
+)
+DFTRCaWSC=DFTRCaWSC[c(1:4,8,10),]
+row.names(DFTRCaWSC)=c()
+
+names(DFTRCaWSC)=c("Grupo Robson", "Asintomáticas 1a ola", "% cesáreas en asintomáticas 1a ola", "Síntomas leves 1a ola", "% cesáreas en síntomas leves 1a ola", "Neumonías 1a ola", "% cesáreas en neumonía 1a ola",  "Asintomáticas 2a ola","% cesáreas en asintomáticas 2a ola", "Síntomas leves 2a ola", "% cesáreas en síntomas leves 2a ola", "Neumonías 2a ola", "% cesáreas en neumonía 2a ola")
+
+DFTRCaWSC %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+```
+
+
+
+En la tabla que sigue, para cada grupo y cada ola, el p-valor es del contraste de si la distribución de cesáreas en los grupos sintomáticos de las infectadas de ese grupo y esa ola es igual o diferente de la distribución de cesáreas en los grupos sintomáticos de las infectadas de ese grupo en el total de las dos olas.
+Si no puedes rechazar que sean iguales, tampoco puedes rechazar que haya diferencia entre olas. Parece que hay diferencia en el grupo 10. 
+
+
+
+```{r}
+pp=c()
+for(i in c(1:4,8,10)){
+EEw=TRCa1wSC[,,i]
+EE=TRCa1wSC[,,i]+TRCa2wSC[,,i]
+pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+}
+for(i in c(11:14,18,20)){
+EEw=TRCa2wSC[,,i-10]
+EE=TRCa1wSC[,,i-10]+TRCa2wSC[,,i-10]
+pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+}
+pp=pp[!is.na(pp)]
+
+tabla=data.frame(
+Robson=rep(c(1:4,8,10),2),
+Ola=rep(1:2,each=6),
+round(pp,4)
+)
+names(tabla)=c("Grupo Robson","Ola","p-valor")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+En la tabla que sigue, para cada grupo Robson y para cada sintomático:
+
+* OR: la OR de cesárea relativa a ser de la 1a ola
+* p-valor: el p-valor del test de Fisher bilateral para comparar las proporciones de cesáreas en ese grupo Robson y ese grupo sintomático entre las dos olas
+
+
+
+```{r}
+ppA=c()
+ppSL=c()
+ppN=c()
+ORA=c()
+ORSL=c()
+ORN=c()
+for(i in c(1:4,8,10)){
+EE1w=TRCa1wSC[,,i]
+EE2w=TRCa2wSC[,,i]
+ORA[i]=fisher.test(cbind(EE1w[,1],EE2w[,1]))$estimate
+ORSL[i]=fisher.test(cbind(EE1w[,2],EE2w[,2]))$estimate
+ORN[i]=fisher.test(cbind(EE1w[,3],EE2w[,3]))$estimate
+
+ppA[i]=fisher.test(cbind(EE1w[,1],EE2w[,1]))$p.value
+ppSL[i]=fisher.test(cbind(EE1w[,2],EE2w[,2]))$p.value
+ppN[i]=fisher.test(cbind(EE1w[,3],EE2w[,3]))$p.value
+}
+ppA=ppA[!is.na(ppA)]
+ppSL=ppSL[!is.na(ppSL)]
+ppN=ppN[!is.na(ppN)]
+
+ORA=ORA[!is.na(ORA)]
+ORSL=ORSL[!is.na(ORSL)]
+ORN=ORN[!is.na(ORN)]
+
+
+tabla=data.frame(
+Robson=c(1:4,8,10),
+round(ORA,4),
+round(ppA,4),
+round(ORSL,4),
+round(ppSL,4),
+round(ORN,4),
+round(ppN,4)
+)
+names(tabla)=c("Grupo Robson", "OR asintomáticas", "p-valor asintomáticas","OR síntomas leves","p-valor síntomas leves","OR neumonía","p-valor neumonía")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+```{r}
+TCaAsin=table(Casos$Robson[Casos$SINTOMAS_CAT==1],Casos$Cesárea[Casos$SINTOMAS_CAT==1])[2:11,2:1]
+TCaSL=table(Casos$Robson[Casos$SINTOMAS_CAT==2],Casos$Cesárea[Casos$SINTOMAS_CAT==2])[2:11,2:1]
+TCaNeu=table(Casos$Robson[Casos$SINTOMAS_CAT==3],Casos$Cesárea[Casos$SINTOMAS_CAT==3])[2:11,2:1]
+dades=data.frame(1:10,
+rowSums(TCaAsin),TCaAsin[,1],round(100*prop.table(TCaAsin,margin=1)[,1],2),
+rowSums(TCaSL),TCaSL[,1],round(100*prop.table(TCaSL,margin=1)[,1],2),
+rowSums(TCaNeu),TCaNeu[,1],round(100*prop.table(TCaNeu,margin=1)[,1],2))
+      names(dades)=c("Grupo Robson", "Inf. asintomáticas", "Cesáreas", "Porcentaje", 
+                     "Inf. síntomas leves", "Cesáreas", "Porcentaje",
+                     "Inf. Neumonía", "Cesáreas", "Porcentaje")
+dades %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+
+```
+
+
+En la lista que sigue, los p-valores son los del contraste si las proporciones de cesáreas en los grupos 1,2,3,4,8 y 10 son las mismas o no en los dos grupos sintomáticos comparados:
+
+
+
+
+
+```{r}
+pp=c()
+EE=dades[c(1:4,8,10),c(2,3,5,6,8,9)]
+pp[1]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,4])/(EE[,1]+EE[,3]))$p.value
+pp[2]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,6])/(EE[,1]+EE[,5]))$p.value
+pp[3]=prop.trend.test(EE[,4],EE[,3],score=(EE[,4]+EE[,6])/(EE[,3]+EE[,5]))$p.value
+```
+
+* Asintomáticas contra síntomas leves: $`r signif(pp[1],1)`$
+* Asintomáticas contra neumonía: $`r signif(pp[2],1)`$
+* Síntomas leves contra neumonía: $`r signif(pp[3],1)`$
+
+
+Qué pasa si agrupamos asintomáticas+síntomas leves contra neumonía? Hay diferencia en la 10
+
+```{r}
+Casos$SintGrave=NA
+Casos$SintGrave[Casos$SINTOMAS_CAT==1 |Casos$SINTOMAS_CAT==2]=0
+Casos$SintGrave[Casos$SINTOMAS_CAT==3]=1
+
+TCaSL=table(Casos$Robson[Casos$SintGrave==0],Casos$Cesárea[Casos$SintGrave==0])
+TCaSG=table(Casos$Robson[Casos$SintGrave==1],Casos$Cesárea[Casos$SintGrave==1])
+
+EE1=t(TCaSL)[2:1,2:11]
+EE2=t(TCaSG)[2:1,2:11]
+OR=rep(0,10)
+pp=rep(0,10)
+for (i in 1:10){
+FT=fisher.test(cbind(EE1[,i],EE2[,i]))
+OR[i]=FT$estimate
+pp[i]=FT$p.value       }
+
+dt=data.frame(1:10,colSums(EE1),EE1[1,],round(100*prop.table(EE1,margin=2)[1,],2),colSums(EE2),EE2[1,],round(100*prop.table(EE2,margin=2)[1,],2),round(OR,2),round(pp,3))
+names(dt)=c("Grupo Robson", "Inf. asintomáticas o leves", "Cesáreas", "Porcentaje",  "Inf. Neumonía", "Cesáreas", "Porcentaje","OR","p-valor test de Fisher")
+dt %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+## Antepartos contra peripartos
+
+```{r}
+Casos$Sint=Casos$SINTOMAS_CAT
+#Momento del diagnóstico
+Casos$PreP=NA
+Casos$PreP[round((Casos$EG_TOTAL_PARTO-Casos$EDAD.GEST.TOTAL)*7)>2]="Anteparto"  
+Casos$PreP[round((Casos$EG_TOTAL_PARTO-Casos$EDAD.GEST.TOTAL)*7)<=2]="Periparto"
+#
+CasosPeriLeves=Casos
+CasosPeriLeves=CasosPeriLeves[CasosPeriLeves$Sint==1|CasosPeriLeves$Sint==2,]
+CasosPeriLeves=CasosPeriLeves[CasosPeriLeves$PreP!="Anteparto",]
+CasosPeriLeves=droplevels(CasosPeriLeves)
+CasosPeriGraves=Casos
+CasosPeriGraves=CasosPeriGraves[CasosPeriGraves$Sint==3,]
+CasosPeriGraves=CasosPeriGraves[CasosPeriGraves$PreP!="Anteparto",]
+CasosPeriGraves=droplevels(CasosPeriGraves)
+CasosPeriGraves$Robson=factor(CasosPeriGraves$Robson,levels=0:10)
+```
+
+
+```{r}
+TRcaPreP=table(Casos$Robson[Casos$PreP=="Anteparto"],Casos$Cesárea[Casos$PreP=="Anteparto"])
+TRcaPeriP=table(Casos$Robson[Casos$PreP=="Periparto"],Casos$Cesárea[Casos$PreP=="Periparto"])
+TRCaPL=table(CasosPeriLeves$Robson,CasosPeriLeves$Cesárea) 
+TRCaPG=table(CasosPeriGraves$Robson,CasosPeriGraves$Cesárea) 
+```
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCaPL[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson de infectadas periparto asintomáticas o leves")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Cesárea","No cesárea"), each=10))
+Grupo=factor(rep(1:10 , 2))
+valor=as.vector(TRCaPG[c(2:11),2:1])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Cesáreas en grupos Robson de infectadas periparto graves")+
+  scale_fill_brewer(palette = "Pastel1") 
+```
+
+```{r}
+TRCo=table(Controls$Robson,Controls$Cesárea) 
+```
+
+
+
+
+### Diferencias?
+
+
+Qué grupos tienen proporciones de cesáreas significativamente diferentes en las infectadas anteparto y periparto? Algunos!
+
+
+```{r}
+EE1=t(TRcaPreP)[2:1,2:11]
+EE2=t(TRcaPeriP)[2:1,2:11]
+OR=rep(0,10)
+pp=rep(0,10)
+for (i in 1:10){
+FT=fisher.test(cbind(EE1[,i],EE2[,i]))
+OR[i]=FT$estimate
+pp[i]=FT$p.value       }
+
+dt=data.frame(1:10,colSums(EE1),EE1[1,],round(100*prop.table(EE1,margin=2)[1,],2),colSums(EE2),EE2[1,],round(100*prop.table(EE2,margin=2)[1,],2),round(OR,2),round(pp,3))
+names(dt)=c("Grupo Robson", "Inf. anteparto", "Cesáreas", "Porcentaje",  "Inf. periparto", "Cesáreas", "Porcentaje","OR","p-valor test de Fisher")
+dt %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+Qué grupos tienen proporciones de cesáreas en infectadas periparto no graves o no infectadas significativamente diferentes? Ninguno:
+
+
+```{r}
+TablaRobsonGlobal(TRCaPL,TRCo,"Peripartos asintomáticos o leves","")
+```
+Qué grupos tienen proporciones de cesáreas en infectadas periparto graves o no infectadas significativamente diferentes? Algunos!
+
+
+```{r}
+TablaRobsonGlobal(TRCaPG,TRCo,"Peripartos neumonías","")
+```
+
+Qué grupos tienen proporciones de cesáreas en infectadas periparto no graves o neumonias significativamente diferentes? Bastantes!
+
+
+```{r}
+EE1=t(TRCaPG)[2:1,2:11]
+EE2=t(TRCaPL)[2:1,2:11]
+OR=rep(0,10)
+pp=rep(0,10)
+for (i in 1:10){
+FT=fisher.test(cbind(EE1[,i],EE2[,i]))
+OR[i]=FT$estimate
+pp[i]=FT$p.value       }
+
+dt=data.frame(1:10,colSums(EE1),EE1[1,],round(100*prop.table(EE1,margin=2)[1,],2),colSums(EE2),EE2[1,],round(100*prop.table(EE2,margin=2)[1,],2),round(OR,2),round(pp,3))
+names(dt)=c("Grupo Robson", "Periparto neumonía", "Cesáreas", "Porcentaje",  "Periparto no neumonía", "Cesáreas", "Porcentaje","OR","p-valor test de Fisher")
+dt %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+```{r}
+CasosPrep=droplevels(Casos[Casos$PreP=="Anteparto",])
+CasosPeri=droplevels(Casos[Casos$PreP=="Periparto",])
+```
+
+
+
+
+```{r}
+TRCa1wS=table(CasosPrep$Robson,CasosPrep$SINTOMAS_DIAGNOSTICO)[c(2:11,1),]
+pTRCa1wS=round(100*prop.table(table(CasosPrep$Robson,CasosPrep$SINTOMAS_DIAGNOSTICO),margin=1)[c(2:11,1),],2)
+TRCa2wS=table(CasosPeri$Robson,CasosPeri$SINTOMAS_DIAGNOSTICO)[c(2:11,1),] 
+pTRCa2wS=round(100*prop.table(table(CasosPeri$Robson,CasosPeri$SINTOMAS_DIAGNOSTICO),margin=1)[c(2:11,1),],2)
+DFTRCaWS=data.frame(
+  Robson=c(1:10,"Pérdidas"),
+Tot1w=as.vector(table(CasosPrep$Robson)[c(2:11,1)]),
+Asint1w=TRCa1wS[,1],
+pAsint1w=pTRCa1wS[,1],
+SL1w=TRCa1wS[,2],
+pSL1w=pTRCa1wS[,2],
+Neum1w=TRCa1wS[,3],
+pTRCa1wS[,3],
+Tot2w=as.vector(table(CasosPeri$Robson)[c(2:11,1)]),
+Asint2w=TRCa2wS[,1],
+pAsint2w=pTRCa2wS[,1],
+SL2w=TRCa2wS[,2],
+pSL2w=pTRCa2wS[,2],
+Neum2w=TRCa2wS[,3],
+pTRCa2wS[,3])
+row.names(DFTRCaWS)=c()
+names(DFTRCaWS)=c("Grupo Robson", "Total infectadas anteparto", "Asintomáticas prepartp", "%", "Síntomas leves anteparto", "%", "Neumonía anteparto", "%","Total infectadas periparto", "Asintomáticas periparto", "%", "Síntomas leves periparto", "%", "Neumonía peripartoa", "%")
+
+DFTRCaWS %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=factor(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), each=10))
+Grupo=factor(rep(1:10 , 3))
+valor=as.vector(TRCa1wS[1:10,])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Grupos sintomáticos en grupos Robson en las infectadas anteparto")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+```{r ,fig.cap="\\s"}
+Tipo=ordered(rep(c("Asintomáticas","Síntomas leves", "Neumonía"), each=10),levels=c("Asintomáticas","Síntomas leves", "Neumonía"))
+Grupo=factor(rep(1:10 , 3))
+valor=as.vector(TRCa2wS[1:10,])
+data=data.frame(Grupo,Tipo,valor)
+
+ggplot(data, aes(fill=Tipo, y=valor, x=Grupo)) + 
+  geom_bar(position="stack", stat="identity")+
+  ylab("")+
+  xlab("")+
+  ggtitle("Grupos sintomáticos en grupos Robson en las infectadas periparto")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+
+En la tabla que sigue, para cada grupo y cada momento de diagnóatico, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo y ese momento es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.
+
+```{r}
+pp=c()
+for (i in c(1:8,10)){
+pp[i]=chisq.test(TRCa1wS[i,],p=prop.table(TRCa1wS+TRCa2wS,margin=1)[i,],simulate.p.value=TRUE,B=10000)$p.value
+}
+for (i in c(11:18,20)){
+pp[i]=chisq.test(TRCa2wS[i-10,],p=prop.table(TRCa1wS[i-10,]+TRCa2wS[i-10,]),simulate.p.value=TRUE,B=10000)$p.value
+}
+tabla=data.frame(
+Robson=rep(1:10,2),
+Ola=rep(c("Preparto","Periparto"),each=10),
+round(pp,4)
+)
+names(tabla)=c("Grupo Robson","Diagnóstico","p-valor")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+### Enter cesáreas
+
+Dejo de tener en cuenta los grupos 5,6,7,9, donde las cesáreas fueron constantes.
+
+
+```{r}
+TRCa1wSC=table(CasosPrep$Cesárea,CasosPrep$SINTOMAS_DIAGNOSTICO,CasosPrep$Robson)[2:1,,c(2:11,1)]
+pTRCa1wSC=round(100*prop.table(TRCa1wSC,margin=c(2,3)),2)
+TRCa2wSC=table(CasosPeri$Cesárea,CasosPeri$SINTOMAS_DIAGNOSTICO,CasosPeri$Robson)[2:1,,c(2:11,1)] 
+pTRCa2wSC=round(100*prop.table(TRCa2wSC,margin=c(2,3)),2)
+
+DFTRCaWSC=data.frame(
+Robson=c(1:10,"Pérdidas"),
+Asint1w=TRCa1wS[,1],
+pAsint1w=pTRCa1wSC[1,1,],
+SL1w=TRCa1wS[,2],
+pSL1w=pTRCa1wSC[1,2,],
+Neum1w=TRCa1wS[,3],
+pNeum1w=pTRCa1wSC[1,3,],
+Asint2w=TRCa2wS[,1],
+pAsint2w=pTRCa2wSC[1,1,],
+SL2w=TRCa2wS[,2],
+pSL2w=pTRCa2wSC[1,2,],
+Neum2w=TRCa2wS[,3],
+pNeum2w=pTRCa2wSC[1,3,]
+)
+DFTRCaWSC=DFTRCaWSC[c(1:4,8,10),]
+row.names(DFTRCaWSC)=c()
+
+names(DFTRCaWSC)=c("Grupo Robson", "Asintomáticas anteparto", "% cesáreas en asintomáticas anteparto", "Síntomas leves anteparto", "% cesáreas en síntomas leves anteparto", "Neumonías anteparto", "% cesáreas en neumonía anteparto",  "Asintomáticas periparto","% cesáreas en asintomáticas periparto", "Síntomas leves periparto", "% cesáreas en síntomas leves periparto", "Neumonías periparto", "% cesáreas en neumonía periparto")
+
+DFTRCaWSC %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+```
+
+
+
+En la tabla que sigue, para cada grupo y cada momento, el p-valor es del contraste de si la distribución de cesáreas en los grupos sintomáticos de las infectadas de ese grupo y ese momento es igual o diferente de la distribución de cesáreas en los grupos sintomáticos de las infectadas.
+
+
+```{r}
+pp=c()
+for(i in c(1:4,8,10)){
+EEw=TRCa1wSC[,,i]
+EE=TRCa1wSC[,,i]+TRCa2wSC[,,i]
+pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+}
+for(i in c(11:14,18,20)){
+EEw=TRCa2wSC[,,i-10]
+EE=TRCa1wSC[,,i-10]+TRCa2wSC[,,i-10]
+pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+}
+pp=pp[!is.na(pp)]
+
+tabla=data.frame(
+Robson=rep(c(1:4,8,10),2),
+Ola=rep(c("Preparto","Periparto"),each=6),
+round(pp,4)
+)
+names(tabla)=c("Grupo Robson","Diagnóstico","p-valor")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+En la tabla que sigue, para cada grupo Robson y para cada sintomático:
+
+* OR: la OR de cesárea relativa a ser anteparto
+* p-valor: el p-valor del test de Fisher bilateral para comparar las proporciones de cesáreas en ese grupo Robson y ese grupo sintomático entre los dos momentos de diagnóstico
+
+
+
+```{r}
+ppA=c()
+ppSL=c()
+ppN=c()
+ORA=c()
+ORSL=c()
+ORN=c()
+for(i in c(1:4,8,10)){
+EE1w=TRCa1wSC[,,i]
+EE2w=TRCa2wSC[,,i]
+ORA[i]=fisher.test(cbind(EE1w[,1],EE2w[,1]))$estimate
+ORSL[i]=fisher.test(cbind(EE1w[,2],EE2w[,2]))$estimate
+ORN[i]=fisher.test(cbind(EE1w[,3],EE2w[,3]))$estimate
+
+ppA[i]=fisher.test(cbind(EE1w[,1],EE2w[,1]))$p.value
+ppSL[i]=fisher.test(cbind(EE1w[,2],EE2w[,2]))$p.value
+ppN[i]=fisher.test(cbind(EE1w[,3],EE2w[,3]))$p.value
+}
+ppA=ppA[!is.na(ppA)]
+ppSL=ppSL[!is.na(ppSL)]
+ppN=ppN[!is.na(ppN)]
+
+ORA=ORA[!is.na(ORA)]
+ORSL=ORSL[!is.na(ORSL)]
+ORN=ORN[!is.na(ORN)]
+
+
+tabla=data.frame(
+Robson=c(1:4,8,10),
+round(ORA,4),
+round(ppA,4),
+round(ORSL,4),
+round(ppSL,4),
+round(ORN,4),
+round(ppN,4)
+)
+names(tabla)=c("Grupo Robson", "OR asintomáticas", "p-valor asintomáticas","OR síntomas leves","p-valor síntomas leves","OR neumonía","p-valor neumonía")
+row.names(tabla)=c()
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+```{r}
+TCaAsin=table(Casos$Robson[Casos$SINTOMAS_CAT==1],Casos$Cesárea[Casos$SINTOMAS_CAT==1])[2:11,2:1]
+TCaSL=table(Casos$Robson[Casos$SINTOMAS_CAT==2],Casos$Cesárea[Casos$SINTOMAS_CAT==2])[2:11,2:1]
+TCaNeu=table(Casos$Robson[Casos$SINTOMAS_CAT==3],Casos$Cesárea[Casos$SINTOMAS_CAT==3])[2:11,2:1]
+dades=data.frame(1:10,
+rowSums(TCaAsin),TCaAsin[,1],round(100*prop.table(TCaAsin,margin=1)[,1],2),
+rowSums(TCaSL),TCaSL[,1],round(100*prop.table(TCaSL,margin=1)[,1],2),
+rowSums(TCaNeu),TCaNeu[,1],round(100*prop.table(TCaNeu,margin=1)[,1],2))
+      names(dades)=c("Grupo Robson", "Inf. asintomáticas", "Cesáreas", "Porcentaje", 
+                     "Inf. síntomas leves", "Cesáreas", "Porcentaje",
+                     "Inf. Neumonía", "Cesáreas", "Porcentaje")
+dades %>%
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+
+```
+
+
+En la lista que sigue, los p-valores son los del contraste si las proporciones de cesáreas en los grupos 1,2,3,4,8 y 10 son las mismas o no en los dos grupos sintomáticos comparados:
+
+
+
+
+
+```{r}
+pp=c()
+EE=dades[c(1:4,8,10),c(2,3,5,6,8,9)]
+pp[1]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,4])/(EE[,1]+EE[,3]))$p.value
+pp[2]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,6])/(EE[,1]+EE[,5]))$p.value
+pp[3]=prop.trend.test(EE[,4],EE[,3],score=(EE[,4]+EE[,6])/(EE[,3]+EE[,5]))$p.value
+```
+
+* Asintomáticas contra síntomas leves: $`r signif(pp[1],1)`$
+* Asintomáticas contra neumonía: $`r signif(pp[2],1)`$
+* Síntomas leves contra neumonía: $`r signif(pp[3],1)`$
+
+
+
+## Bonus Track
+
+Datos sobre un hospital valenciano de 2010 a 2018 (https://doi.org/10.3390/ijerph17051575)
+
+```{r}
+DatosAnteriores=data.frame(matrix(c(638,	5529	,921,	2527	,338,	5283	,402,	1578	,23,	118	,304,	320	,136,	158	,133,	229	,35,	35	,222,	729),nrow=10,byrow=T))
+names(DatosAnteriores)=c("Cesáreas","Gestantes")
+DatosAnteriores$Robson=1:10
+DatosAnteriores=DatosAnteriores[,c(3,2,1)]
+DatosAnteriores$Porcentaje=round(100*DatosAnteriores$Cesáreas/DatosAnteriores$Gestantes,2)
+
+DatosAnteriores %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+Se ajustan vuestros grupos Robson a esa distribución? 
+
+```{r}
+Ant=as.vector(prop.table(DatosAnteriores$Gestantes))
+Aqui=as.vector(prop.table(table(c(Casos$Robson,Controls$Robson))[2:11]))
+AquiC=as.vector(prop.table(table(c(Controls$Robson))[2:11]))
+Distrs=data.frame(Robson=1:10,round(100*Ant,2),round(100*Aqui,2),round(100*AquiC,2))
+names(Distrs)=c("Robson","Anterior (%)", "Vuestra global (%)", "Vuestra controles (%)")
+Distrs %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+Global: No
+```{r}
+chisq.test(table(c(Casos$Robson,Controls$Robson))[2:11],p=prop.table(DatosAnteriores$Gestantes))
+```
+
+Vuestros controles: No
+
+```{r}
+chisq.test(table(Controls$Robson)[2:11],p=prop.table(DatosAnteriores$Gestantes),simulate.p.value = TRUE, B=5000)
+```
+
+
+En qué grupos los porcentajes de cesáreas en vuestra muestra fueron diferentes del histórico? En la tabla que sigue
+
+* OR Odds ratio de cesárea en (ese grupo) en la muestra actual respecto del histórico
+
+* p-valor: p-valor del test de Fisher comparando ese grupo en el actual y el histórico
+
+```{r}
+TTG=table(c(Casos$Cesárea,Controls$Cesárea),c(Casos$Robson,Controls$Robson))[2:1,2:11]
+TTCa=table(c(Casos$Cesárea),c(Casos$Robson))[2:1,2:11]
+TTGC=table(c(Controls$Cesárea),c(Controls$Robson))[2:1,2:11]
+TTAnt=rbind(DatosAnteriores$Cesáreas,DatosAnteriores$Gestantes-DatosAnteriores$Cesáreas)
+ppG=rep(0,10)
+ppCa=rep(0,10)
+ppC=rep(0,10)
+ORG=rep(0,10)
+ORC=rep(0,10)
+ORCa=rep(0,10)
+
+for (i in 1:10){
+FTG=fisher.test(cbind(TTG[,i], TTAnt[,i]))
+FTCG=fisher.test(cbind(TTGC[,i], TTAnt[,i]))
+FTCa=fisher.test(cbind(TTCa[,i], TTAnt[,i]))
+ppG[i]=FTG$p.value
+ppC[i]=FTCG$p.value
+ppCa[i]=FTCG$p.value
+ORCa[i]=FTG$estimate
+
+ORG[i]=FTG$estimate
+ORC[i]=FTCG$estimate
+}
+
+tabla=data.frame(1:10,round(ORG,2),round(ppG,4),round(ORC,2),round(ppC,4),round(ORCa,2),round(ppCa,4))
+names(tabla)=c("Robson", "OR global", "p-valor global", "OR controles", "p-valor controles", "OR casos", "p-valor casos")
+
+tabla %>%  
+  kbl() %>%
+  kable_styling()%>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
