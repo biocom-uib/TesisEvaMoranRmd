@@ -1,0 +1,129 @@
+h1:regresiones-logísticas Regresiones logísticas
+h2:tablas-para-las-regresiones-logísticas Tablas para las regresiones logísticas
+h3:embarazos Embarazos
+h3:hijos Hijos
+h2:regresiones Regresiones
+h3:influencia-de-características-previas-en-la-covid Influencia de características previas en la COVID
+h4:covid-sí-o-no COVID sí o no
+h4:covid-según-gravedad COVID según gravedad
+h3:rciu RCIU
+h4:covid-sí-o-no-1 COVID Sí o No
+h4:covid-asintomática-leve-o-neumonía-contra-no-covid COVID asintomática, leve o neumonía contra No COVID
+h4:covid-ante-o-periparto-contra-no-covid COVID ante o periparto contra No COVID
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola Ola
+h4:infección-y-ola Infección y ola
+h3:preeclampsia Preeclampsia
+h4:covid-sí-o-no-2 COVID Sí o No
+h4:covid-asintomática-leve-o-neumonía-contra-no-covid-1 COVID asintomática, leve o neumonía contra No COVID
+h4:covid-ante-o-periparto-contra-no-covid-1 COVID ante o periparto contra No COVID
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-1 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-1 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-1 Ola
+h4:infección-y-ola-1 Infección y ola
+h3:preeclampsia-grave-en-preeclámpsicas Preeclampsia grave en preeclámpsicas
+h4:covid-sí-o-no-3 COVID Sí o No
+h4:covid-asintomática-leve-o-neumonía-contra-no-covid-2 COVID asintomática, leve o neumonía contra No COVID
+h4:covid-ante-o-periparto-contra-no-covid-2 COVID ante o periparto contra No COVID
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-2 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-2 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:olas Olas
+h4:infección-y-ola-2 Infección y ola
+h3:efectos-trombóticos Efectos trombóticos
+h4:covid-sí-o-no-4 COVID Sí o No
+h4:covid-asintomática-leve-o-neumonía-contra-no-covid-3 COVID asintomática, leve o neumonía contra No COVID
+h4:covid-ante-o-periparto-contra-no-covid-3 COVID ante o periparto contra No COVID
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-3 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-3 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-2 Ola
+h4:infección-y-ola-3 Infección y Ola
+h3:rotura-prematura-de-membranas Rotura prematura de membranas
+h4:covid-sí-o-no-5 COVID Sí o No
+h4:covid-asintomática-leve-o-neumonía-contra-no-covid-4 COVID asintomática, leve o neumonía contra No COVID
+h4:covid-ante-o-periparto-contra-no-covid-4 COVID ante o periparto contra No COVID
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-4 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-4 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-3 Ola
+h4:infección-y-ola-4 Infección y Ola
+h3:prematuridad Prematuridad
+h4:covid-sí-o-no-6 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-5 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-5 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-4 Ola
+h4:infección-y-ola-5 Infección y ola
+h3:presencia-de-fetos-muertos Presencia de fetos muertos
+h4:covid-sí-o-no-7 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-1 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-1 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-6 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-6 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-5 Ola
+h4:infección-y-ola-6 Infección y ola
+h3:ingreso-materno-en-uci Ingreso materno en UCI
+h4:covid-sí-o-no-8 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-2 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-2 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-7 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-7 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-6 Ola
+h4:infección-y-ola-7 Infección y ola
+h3:inicio-de-parto Inicio de parto
+h4:covid-sí-o-no-9 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-3 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-3 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-8 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-8 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-7 Ola
+h4:infección-y-ola-8 Infección y ola
+h3:tipos-de-parto Tipos de parto
+h4:covid-sí-o-no-10 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-4 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-4 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-9 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-9 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-8 Ola
+h4:infección-y-ola-9 Infección y ola
+h3:uci-neonatal UCI neonatal
+h4:covid-sí-o-no-11 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-5 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-5 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-10 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-10 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-9 Ola
+h4:infección-y-ola-10 Infección y ola
+h3:bajo-peso Bajo peso
+h4:covid-sí-o-no-12 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-6 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-6 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-11 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-11 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-10 Ola
+h4:infección-y-ola-11 Infección y ola
+h3:cesáreas-en-grupo-robson-2 Cesáreas en Grupo Robson 2
+h4:covid-sí-o-no-13 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-7 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-7 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-12 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-12 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-11 Ola
+h4:infección-y-ola-12 Infección y ola
+h3:cesáreas-en-grupo-robson-2-1 Cesáreas en Grupo Robson 2
+h4:covid-sí-o-no-14 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-8 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-8 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-13 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-13 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-12 Ola
+h4:infección-y-ola-13 Infección y ola
+h3:cesáreas-en-grupo-robson-10 Cesáreas en Grupo Robson 10
+h4:covid-sí-o-no-15 COVID Sí o No
+h4:covid-no-asintomática-leve-o-grave-9 COVID No, asintomática, leve o grave
+h4:covid-ante-o-periparto-contra-no-9 COVID ante o periparto contra No
+h4:covid-anteparto-asintomática-leve-o-neumonía-contra-no-covid-14 COVID anteparto asintomática, leve o neumonía contra No COVID
+h4:covid-periparto-asintomática-leve-o-neumonía-contra-no-covid-14 COVID periparto asintomática, leve o neumonía contra No COVID
+h4:ola-13 Ola
+h4:infección-y-ola-14 Infección y ola
+
