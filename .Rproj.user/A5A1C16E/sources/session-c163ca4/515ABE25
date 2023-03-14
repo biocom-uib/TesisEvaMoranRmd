@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/TesisEvaMoranRmd/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "3417714488",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1678783740499.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "125,0",
-        "scrollLine": "135"
+        "cursorPosition": "46,438",
+        "scrollLine": "44"
     },
     "folds": "",
-    "lastKnownWriteTime": 1678785120,
+    "lastKnownWriteTime": 1678797868,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1678785120670,
+    "last_content_update": 1678797868032,
     "read_only": false,
     "read_only_alternatives": []
 }
