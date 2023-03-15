@@ -2821,7 +2821,7 @@ Pérdidas
 <span id="cb42-13"><a href="descripción-de-la-muestra-global.html#cb42-13" aria-hidden="true" tabindex="-1"></a>EEExt<span class="ot">=</span><span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(I)),NA_I),</span>
 <span id="cb42-14"><a href="descripción-de-la-muestra-global.html#cb42-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(I)),NA_I)<span class="sc">/</span><span class="fu">length</span>(I),<span class="dv">1</span>),</span>
 <span id="cb42-15"><a href="descripción-de-la-muestra-global.html#cb42-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(NI)),NA_NI),</span>
-<span id="cb42-16"><a href="descripción-de-la-muestra-global.html#cb42-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(NI)),NA_NI)<span class="sc">/</span><span class="fu">length</span>(I),<span class="dv">1</span>))</span>
+<span id="cb42-16"><a href="descripción-de-la-muestra-global.html#cb42-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(NI)),NA_NI)<span class="sc">/</span><span class="fu">length</span>(NI),<span class="dv">1</span>))</span>
 <span id="cb42-17"><a href="descripción-de-la-muestra-global.html#cb42-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(EEExt)<span class="ot">=</span>Columnes</span>
 <span id="cb42-18"><a href="descripción-de-la-muestra-global.html#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-19"><a href="descripción-de-la-muestra-global.html#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(EEExt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;PE sin CG&quot;</span>, <span class="st">&quot;PE con CG&quot;</span>,<span class="st">&quot;Pérdidas&quot;</span>)</span>
@@ -2866,7 +2866,7 @@ PE sin CG
 53
 </td>
 <td style="text-align:right;">
-61.6
+82.8
 </td>
 </tr>
 <tr>
@@ -2883,7 +2883,7 @@ PE con CG
 11
 </td>
 <td style="text-align:right;">
-12.8
+17.2
 </td>
 </tr>
 <tr>
@@ -2907,8 +2907,8 @@ Pérdidas
 </table>
 </div>
 <ul>
-<li><p>Comparación de riesgo preeclampsia con CG en preeclámpsicas infectadas y no infectadas: test de Fisher bilateral, p-valor 0.0171;</p></li>
-<li><p>RA estimado de preeclampsia con CG en preeclámpsicas relativo a infección: 0.177; RR: 2.03</p></li>
+<li><p>Comparación de riesgo de PE con CG en preeclámpsicas infectadas y no infectadas: test de Fisher bilateral, p-valor 0.0171;</p></li>
+<li><p>RA estimado de PE con CG en preeclámpsicas relativo a infección: 0.177; RR: 2.03</p></li>
 <li><p>IC 95% para el RA [0.0266, 0.3273] y para el RR [1.13, 3.76]</p></li>
 </ul>
 </div>
@@ -3212,7 +3212,7 @@ Pérdidas
 </table>
 </div>
 <ul>
-<li><p>Comparación de riesgo de ingreso materno en UCI en infectadas y no infectadas: test de Fisher bilateral, p-valor 0;</p></li>
+<li><p>Comparación de riesgo de ingreso materno en UCI en infectadas y no infectadas: test de Fisher bilateral, p-valor $3^{-9};</p></li>
 <li><p>RA estimado de UCI relativa a infección: 0.021; RR: 17.82</p></li>
 <li><p>IC 95% para el RA [0.0131, 0.0288] y para el RR [4.76, 66.93]</p></li>
 </ul>
@@ -3411,8 +3411,8 @@ Pérdidas
 </table>
 </div>
 <ul>
-<li><p>Comparación de riesgo de algún feto muerto anteparto en infectadas y no infectadas: test de Fisher bilateral, p-valor <span class="math inline">\(9\times 10^{-4}\)</span>;</p></li>
-<li><p>RA estimado de algún feto muerto anteparto relativo a infección: 0.01; RR: 6.1</p></li>
+<li><p>Comparación de riesgo de algún feto muerto anteparto en infectadas y no infectadas: test de Fisher bilateral, p-valor <span class="math inline">\(8.6\times 10^{-4}\)</span>;</p></li>
+<li><p>RA estimado de algún feto muerto anteparto relativo a infección: 0.0095; RR: 6.1</p></li>
 <li><p>IC 95% para el RA [0.0034, 0.0156] y para el RR [1.93, 19.3]</p></li>
 </ul>
 </div>
@@ -3732,14 +3732,16 @@ Cesárea programada
 <span id="cb55-3"><a href="descripción-de-la-muestra-global.html#cb55-3" aria-hidden="true" tabindex="-1"></a>I<span class="ot">=</span>Casos<span class="sc">$</span>Tipo.de.parto</span>
 <span id="cb55-4"><a href="descripción-de-la-muestra-global.html#cb55-4" aria-hidden="true" tabindex="-1"></a>I[I.In<span class="sc">==</span><span class="st">&quot;Cesárea programada&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea programada&quot;</span></span>
 <span id="cb55-5"><a href="descripción-de-la-muestra-global.html#cb55-5" aria-hidden="true" tabindex="-1"></a>I[I<span class="sc">==</span><span class="st">&quot;Cesárea&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea urgente&quot;</span></span>
-<span id="cb55-6"><a href="descripción-de-la-muestra-global.html#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-7"><a href="descripción-de-la-muestra-global.html#cb55-7" aria-hidden="true" tabindex="-1"></a>NI.In<span class="ot">=</span>Controls<span class="sc">$</span>Inicio.de.parto</span>
-<span id="cb55-8"><a href="descripción-de-la-muestra-global.html#cb55-8" aria-hidden="true" tabindex="-1"></a>NI<span class="ot">=</span>Controls<span class="sc">$</span>Tipo.de.parto</span>
-<span id="cb55-9"><a href="descripción-de-la-muestra-global.html#cb55-9" aria-hidden="true" tabindex="-1"></a>NI[NI.In<span class="sc">==</span><span class="st">&quot;Cesárea programada&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea programada&quot;</span></span>
-<span id="cb55-10"><a href="descripción-de-la-muestra-global.html#cb55-10" aria-hidden="true" tabindex="-1"></a>NI[NI<span class="sc">==</span><span class="st">&quot;Cesárea&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea urgente&quot;</span></span>
-<span id="cb55-11"><a href="descripción-de-la-muestra-global.html#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-12"><a href="descripción-de-la-muestra-global.html#cb55-12" aria-hidden="true" tabindex="-1"></a>NA_I<span class="ot">=</span><span class="fu">length</span>(I[<span class="fu">is.na</span>(I)])</span>
-<span id="cb55-13"><a href="descripción-de-la-muestra-global.html#cb55-13" aria-hidden="true" tabindex="-1"></a>NA_NI<span class="ot">=</span><span class="fu">length</span>(NI[<span class="fu">is.na</span>(NI)])</span></code></pre></div>
+<span id="cb55-6"><a href="descripción-de-la-muestra-global.html#cb55-6" aria-hidden="true" tabindex="-1"></a>I[I<span class="sc">==</span><span class="st">&quot;Eutocico&quot;</span>]<span class="ot">=</span><span class="st">&quot;Eutócico&quot;</span></span>
+<span id="cb55-7"><a href="descripción-de-la-muestra-global.html#cb55-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-8"><a href="descripción-de-la-muestra-global.html#cb55-8" aria-hidden="true" tabindex="-1"></a>NI.In<span class="ot">=</span>Controls<span class="sc">$</span>Inicio.de.parto</span>
+<span id="cb55-9"><a href="descripción-de-la-muestra-global.html#cb55-9" aria-hidden="true" tabindex="-1"></a>NI<span class="ot">=</span>Controls<span class="sc">$</span>Tipo.de.parto</span>
+<span id="cb55-10"><a href="descripción-de-la-muestra-global.html#cb55-10" aria-hidden="true" tabindex="-1"></a>NI[NI.In<span class="sc">==</span><span class="st">&quot;Cesárea programada&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea programada&quot;</span></span>
+<span id="cb55-11"><a href="descripción-de-la-muestra-global.html#cb55-11" aria-hidden="true" tabindex="-1"></a>NI[NI<span class="sc">==</span><span class="st">&quot;Cesárea&quot;</span>]<span class="ot">=</span><span class="st">&quot;Cesárea urgente&quot;</span></span>
+<span id="cb55-12"><a href="descripción-de-la-muestra-global.html#cb55-12" aria-hidden="true" tabindex="-1"></a>NI[NI<span class="sc">==</span><span class="st">&quot;Eutocico&quot;</span>]<span class="ot">=</span><span class="st">&quot;Eutócico&quot;</span></span>
+<span id="cb55-13"><a href="descripción-de-la-muestra-global.html#cb55-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-14"><a href="descripción-de-la-muestra-global.html#cb55-14" aria-hidden="true" tabindex="-1"></a>NA_I<span class="ot">=</span><span class="fu">length</span>(I[<span class="fu">is.na</span>(I)])</span>
+<span id="cb55-15"><a href="descripción-de-la-muestra-global.html#cb55-15" aria-hidden="true" tabindex="-1"></a>NA_NI<span class="ot">=</span><span class="fu">length</span>(NI[<span class="fu">is.na</span>(NI)])</span></code></pre></div>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="descripción-de-la-muestra-global.html#cb56-1" aria-hidden="true" tabindex="-1"></a>EE<span class="ot">=</span><span class="fu">rbind</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(I))[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>)],</span>
 <span id="cb56-2"><a href="descripción-de-la-muestra-global.html#cb56-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">as.vector</span>(<span class="fu">table</span>(NI))[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>)])</span>
 <span id="cb56-3"><a href="descripción-de-la-muestra-global.html#cb56-3" aria-hidden="true" tabindex="-1"></a>EEExt<span class="ot">=</span><span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fu">as.vector</span>(<span class="fu">table</span>(I))[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>)],NA_I),</span>

@@ -727,7 +727,7 @@ Pérdidas
 Figura 7.1: 
 </p>
 </div>
-<p>Diferencia en la distribución de grupos Robson en las dos olas: Test ji cuadrado de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor 0.267. No hay evidencia de diferencia en la distribución de los grupos en las dos olas.</p>
+<p>Diferencia en la distribución de grupos Robson en las dos olas: Test <span class="math inline">\(\chi^2\)</span> de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor 0.267. No hay evidencia de diferencia en la distribución de los grupos en las dos olas.</p>
 <div id="infectadas" class="section level3 hasAnchor" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Infectadas<a href="grupos-robson.html#infectadas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="grupos-robson.html#cb790-1" aria-hidden="true" tabindex="-1"></a>TRCa<span class="ot">=</span><span class="fu">table</span>(Casos<span class="sc">$</span>Robson,Casos<span class="sc">$</span>Cesárea) </span>
@@ -1132,7 +1132,7 @@ Figura 7.3:
 </div>
 <div id="diferencias" class="section level3 hasAnchor" number="7.1.3">
 <h3><span class="header-section-number">7.1.3</span> Diferencias?<a href="grupos-robson.html#diferencias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Diferencia en la distribución de grupos Robson entre casos y controles: Test ji cuadrado de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor 5^{-4}.</p>
+<p>Diferencia en la distribución de grupos Robson entre casos y controles: Test <span class="math inline">\(\chi^2\)</span> de Montecarlo (hay muy pocas gestantes del grupo 9), p-valor <span class="math inline">\(5\times 10^{-4}\)</span>.</p>
 <p>Qué grupos tienen proporciones de cesáreas en infectadas o no infectadas significativamente diferentes? Ninguno:</p>
 <div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="grupos-robson.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TablaRobsonGlobal</span>(TRCa,TRCo,<span class="st">&quot;global&quot;</span>)</span></code></pre></div>
 <div style="border: 0px;overflow-x: scroll; width:100%; ">
@@ -4394,7 +4394,7 @@ Pérdidas
 Figura 7.10: 
 </p>
 </div>
-<p>En la tabla que sigue, para cada grupo Robson, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo es igual o diferente de la distribución de los síntomas de las infectadas. Como ves, las distribuciones de síntomas en los grupos 1 y 10 son significativamente diferentes del global.</p>
+<p>En la tabla que sigue, para cada grupo Robson, el p-valor es del contraste <span class="math inline">\(\chi^2\)</span> de si la distribución de los síntomas de las infectadas de ese grupo es igual o diferente de la distribución de los síntomas de las infectadas. Como ves, las distribuciones de síntomas en los grupos 1 y 10 son significativamente diferentes del global.</p>
 <div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="grupos-robson.html#cb813-1" aria-hidden="true" tabindex="-1"></a>pp<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb813-2"><a href="grupos-robson.html#cb813-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)){</span>
 <span id="cb813-3"><a href="grupos-robson.html#cb813-3" aria-hidden="true" tabindex="-1"></a>pp[i]<span class="ot">=</span><span class="fu">chisq.test</span>(TRCaS[i,],<span class="at">p=</span><span class="fu">prop.table</span>(<span class="fu">colSums</span>(TRCaS)),<span class="at">simulate.p.value=</span><span class="cn">TRUE</span>,<span class="at">B=</span><span class="dv">10000</span>)<span class="sc">$</span>p.value</span>
@@ -5185,7 +5185,7 @@ Figura 7.13:
 Figura 7.14: 
 </p>
 </div>
-<p>En la tabla que sigue, para cada grupo y cada ola, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo y esa ola es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.</p>
+<p>En la tabla que sigue, para cada grupo y cada ola, el p-valor es del contraste <span class="math inline">\(\chi^2\)</span> de si la distribución de los síntomas de las infectadas de ese grupo y esa ola es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.</p>
 <div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="grupos-robson.html#cb819-1" aria-hidden="true" tabindex="-1"></a>pp<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb819-2"><a href="grupos-robson.html#cb819-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">10</span>)){</span>
 <span id="cb819-3"><a href="grupos-robson.html#cb819-3" aria-hidden="true" tabindex="-1"></a>pp[i]<span class="ot">=</span><span class="fu">chisq.test</span>(TRCa1wS[i,],<span class="at">p=</span><span class="fu">prop.table</span>(TRCa1wS<span class="sc">+</span>TRCa2wS,<span class="at">margin=</span><span class="dv">1</span>)[i,],<span class="at">simulate.p.value=</span><span class="cn">TRUE</span>,<span class="at">B=</span><span class="dv">10000</span>)<span class="sc">$</span>p.value</span>
@@ -8940,7 +8940,7 @@ Figura 7.17:
 Figura 7.18: 
 </p>
 </div>
-<p>En la tabla que sigue, para cada grupo y cada momento de diagnóatico, el p-valor es del contraste ji cuadrado de si la distribución de los síntomas de las infectadas de ese grupo y ese momento es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.</p>
+<p>En la tabla que sigue, para cada grupo y cada momento de diagnóatico, el p-valor es del contraste <span class="math inline">\(\chi^2\)</span> de si la distribución de los síntomas de las infectadas de ese grupo y ese momento es igual o diferente de la distribución de los síntomas de las infectadas de ese grupo en el total de las dos olas.</p>
 <div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="grupos-robson.html#cb839-1" aria-hidden="true" tabindex="-1"></a>pp<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb839-2"><a href="grupos-robson.html#cb839-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,<span class="dv">10</span>)){</span>
 <span id="cb839-3"><a href="grupos-robson.html#cb839-3" aria-hidden="true" tabindex="-1"></a>pp[i]<span class="ot">=</span><span class="fu">chisq.test</span>(TRCa1wS[i,],<span class="at">p=</span><span class="fu">prop.table</span>(TRCa1wS<span class="sc">+</span>TRCa2wS,<span class="at">margin=</span><span class="dv">1</span>)[i,],<span class="at">simulate.p.value=</span><span class="cn">TRUE</span>,<span class="at">B=</span><span class="dv">10000</span>)<span class="sc">$</span>p.value</span>
