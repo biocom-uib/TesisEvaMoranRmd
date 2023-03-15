@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2023-03-14" />
+<meta name="date" content="2023-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -581,13 +581,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-12"><a href="descripción-de-la-muestra-global.html#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb17-13"><a href="descripción-de-la-muestra-global.html#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>,<span class="at">outlier.fill=</span><span class="st">&quot;black&quot;</span>,</span>
 <span id="cb17-14"><a href="descripción-de-la-muestra-global.html#cb17-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="descripción-de-la-muestra-global.html#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme_ipsum() +</span></span>
-<span id="cb17-16"><a href="descripción-de-la-muestra-global.html#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb17-17"><a href="descripción-de-la-muestra-global.html#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb17-18"><a href="descripción-de-la-muestra-global.html#cb17-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
-<span id="cb17-19"><a href="descripción-de-la-muestra-global.html#cb17-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb17-20"><a href="descripción-de-la-muestra-global.html#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb17-21"><a href="descripción-de-la-muestra-global.html#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Edades (años)&quot;</span>)</span></code></pre></div>
+<span id="cb17-15"><a href="descripción-de-la-muestra-global.html#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb17-16"><a href="descripción-de-la-muestra-global.html#cb17-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb17-17"><a href="descripción-de-la-muestra-global.html#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb17-18"><a href="descripción-de-la-muestra-global.html#cb17-18" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-19"><a href="descripción-de-la-muestra-global.html#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb17-20"><a href="descripción-de-la-muestra-global.html#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Edades (años)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:1"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/1-1.png" alt="\s" width="50%" />
 <p class="caption">
@@ -1152,9 +1151,8 @@ Figura 1.4:
 <span id="cb26-10"><a href="descripción-de-la-muestra-global.html#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-11"><a href="descripción-de-la-muestra-global.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">fill=</span>Grupo, <span class="at">y=</span>valor, <span class="at">x=</span>base)) <span class="sc">+</span> </span>
 <span id="cb26-12"><a href="descripción-de-la-muestra-global.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>, <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)<span class="sc">+</span></span>
-<span id="cb26-13"><a href="descripción-de-la-muestra-global.html#cb26-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">#theme_ipsum() +</span></span>
-<span id="cb26-14"><a href="descripción-de-la-muestra-global.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">&quot;Etnias&quot;</span>)<span class="sc">+</span></span>
-<span id="cb26-15"><a href="descripción-de-la-muestra-global.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<span id="cb26-13"><a href="descripción-de-la-muestra-global.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">xlab</span>(<span class="st">&quot;Etnias&quot;</span>)<span class="sc">+</span></span>
+<span id="cb26-14"><a href="descripción-de-la-muestra-global.html#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:5"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/5-1.png" alt="\s" width="50%" />
 <p class="caption">
@@ -3109,13 +3107,12 @@ No infectadas
 <span id="cb46-8"><a href="descripción-de-la-muestra-global.html#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb46-9"><a href="descripción-de-la-muestra-global.html#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>,<span class="at">outlier.fill=</span><span class="st">&quot;black&quot;</span>,</span>
 <span id="cb46-10"><a href="descripción-de-la-muestra-global.html#cb46-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-11"><a href="descripción-de-la-muestra-global.html#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme_ipsum() +</span></span>
-<span id="cb46-12"><a href="descripción-de-la-muestra-global.html#cb46-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb46-13"><a href="descripción-de-la-muestra-global.html#cb46-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb46-14"><a href="descripción-de-la-muestra-global.html#cb46-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
-<span id="cb46-15"><a href="descripción-de-la-muestra-global.html#cb46-15" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb46-16"><a href="descripción-de-la-muestra-global.html#cb46-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb46-17"><a href="descripción-de-la-muestra-global.html#cb46-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Edades gestacionales (semanas)&quot;</span>)</span></code></pre></div>
+<span id="cb46-11"><a href="descripción-de-la-muestra-global.html#cb46-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb46-12"><a href="descripción-de-la-muestra-global.html#cb46-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb46-13"><a href="descripción-de-la-muestra-global.html#cb46-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb46-14"><a href="descripción-de-la-muestra-global.html#cb46-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb46-15"><a href="descripción-de-la-muestra-global.html#cb46-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb46-16"><a href="descripción-de-la-muestra-global.html#cb46-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Edades gestacionales (semanas)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:6"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/6-1.png" alt="\s" width="50%" />
 <p class="caption">
@@ -4743,13 +4740,12 @@ Total Fetos
 <span id="cb70-12"><a href="descripción-de-la-muestra-global.html#cb70-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="fl">0.9</span>) <span class="sc">+</span></span>
 <span id="cb70-13"><a href="descripción-de-la-muestra-global.html#cb70-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>,<span class="at">outlier.fill=</span><span class="st">&quot;black&quot;</span>,</span>
 <span id="cb70-14"><a href="descripción-de-la-muestra-global.html#cb70-14" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb70-15"><a href="descripción-de-la-muestra-global.html#cb70-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme_ipsum() +</span></span>
-<span id="cb70-16"><a href="descripción-de-la-muestra-global.html#cb70-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb70-17"><a href="descripción-de-la-muestra-global.html#cb70-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb70-18"><a href="descripción-de-la-muestra-global.html#cb70-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
-<span id="cb70-19"><a href="descripción-de-la-muestra-global.html#cb70-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb70-20"><a href="descripción-de-la-muestra-global.html#cb70-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb70-21"><a href="descripción-de-la-muestra-global.html#cb70-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Pesos (gramos)&quot;</span>)</span></code></pre></div>
+<span id="cb70-15"><a href="descripción-de-la-muestra-global.html#cb70-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb70-16"><a href="descripción-de-la-muestra-global.html#cb70-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb70-17"><a href="descripción-de-la-muestra-global.html#cb70-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb70-18"><a href="descripción-de-la-muestra-global.html#cb70-18" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb70-19"><a href="descripción-de-la-muestra-global.html#cb70-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb70-20"><a href="descripción-de-la-muestra-global.html#cb70-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Pesos (gramos)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:12"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/12-1.png" alt="\s" width="50%" />
 <p class="caption">
@@ -10301,14 +10297,13 @@ Cesárea urgente
 <span id="cb143-10"><a href="descripción-de-la-muestra-global.html#cb143-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb143-11"><a href="descripción-de-la-muestra-global.html#cb143-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>,<span class="at">outlier.fill=</span><span class="st">&quot;black&quot;</span>,</span>
 <span id="cb143-12"><a href="descripción-de-la-muestra-global.html#cb143-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb143-13"><a href="descripción-de-la-muestra-global.html#cb143-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme_ipsum() +</span></span>
-<span id="cb143-14"><a href="descripción-de-la-muestra-global.html#cb143-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb143-15"><a href="descripción-de-la-muestra-global.html#cb143-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb143-16"><a href="descripción-de-la-muestra-global.html#cb143-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
-<span id="cb143-17"><a href="descripción-de-la-muestra-global.html#cb143-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb143-18"><a href="descripción-de-la-muestra-global.html#cb143-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb143-19"><a href="descripción-de-la-muestra-global.html#cb143-19" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">&quot;Edades gestacionales (semanas)&quot;</span>)<span class="sc">+</span></span>
-<span id="cb143-20"><a href="descripción-de-la-muestra-global.html#cb143-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) </span></code></pre></div>
+<span id="cb143-13"><a href="descripción-de-la-muestra-global.html#cb143-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb143-14"><a href="descripción-de-la-muestra-global.html#cb143-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb143-15"><a href="descripción-de-la-muestra-global.html#cb143-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb143-16"><a href="descripción-de-la-muestra-global.html#cb143-16" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb143-17"><a href="descripción-de-la-muestra-global.html#cb143-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb143-18"><a href="descripción-de-la-muestra-global.html#cb143-18" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">&quot;Edades gestacionales (semanas)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb143-19"><a href="descripción-de-la-muestra-global.html#cb143-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:41"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/41-1.png" alt="\s" width="50%" />
 <p class="caption">
@@ -10474,14 +10469,13 @@ Neumonía
 <span id="cb145-14"><a href="descripción-de-la-muestra-global.html#cb145-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb145-15"><a href="descripción-de-la-muestra-global.html#cb145-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">alpha=</span><span class="fl">0.2</span>,<span class="at">outlier.fill=</span><span class="st">&quot;black&quot;</span>,</span>
 <span id="cb145-16"><a href="descripción-de-la-muestra-global.html#cb145-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb145-17"><a href="descripción-de-la-muestra-global.html#cb145-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#theme_ipsum() +</span></span>
-<span id="cb145-18"><a href="descripción-de-la-muestra-global.html#cb145-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb145-19"><a href="descripción-de-la-muestra-global.html#cb145-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
-<span id="cb145-20"><a href="descripción-de-la-muestra-global.html#cb145-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
-<span id="cb145-21"><a href="descripción-de-la-muestra-global.html#cb145-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb145-22"><a href="descripción-de-la-muestra-global.html#cb145-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb145-23"><a href="descripción-de-la-muestra-global.html#cb145-23" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">&quot;Pesos (gramos)&quot;</span>)<span class="sc">+</span></span>
-<span id="cb145-24"><a href="descripción-de-la-muestra-global.html#cb145-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) </span></code></pre></div>
+<span id="cb145-17"><a href="descripción-de-la-muestra-global.html#cb145-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb145-18"><a href="descripción-de-la-muestra-global.html#cb145-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb145-19"><a href="descripción-de-la-muestra-global.html#cb145-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb145-20"><a href="descripción-de-la-muestra-global.html#cb145-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb145-21"><a href="descripción-de-la-muestra-global.html#cb145-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
+<span id="cb145-22"><a href="descripción-de-la-muestra-global.html#cb145-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ylab</span>(<span class="st">&quot;Pesos (gramos)&quot;</span>)<span class="sc">+</span></span>
+<span id="cb145-23"><a href="descripción-de-la-muestra-global.html#cb145-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:42"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/42-1.png" alt="\s" width="50%" />
 <p class="caption">

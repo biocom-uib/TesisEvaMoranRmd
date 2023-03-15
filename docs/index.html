@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2023-03-14" />
+<meta name="date" content="2023-03-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -558,14 +558,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="header">
 <h1 class="title">Tesis de Eva Morán. Análisis estadístico.</h1>
-<p class="date"><em>2023-03-14</em></p>
+<p class="date"><em>2023-03-15</em></p>
 </div>
 <div id="presentación" class="section level1 unnumbered hasAnchor">
 <h1>Presentación<a href="index.html#presentación" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>El análisis tanto descriptivo como inferencial de los datos se ha llevado a cabo usando R versión 4.2.2. Para los gráficos se ha usado el paquete <code>ggplot2</code> de R. Este documento se ha escrito en <em>R Markdown</em>, usando <em>RStudio</em> como editor de textos y el paquete <code>bookdown</code> para compilar los ficheros <em>markdown</em> y producir el documento html final. Todos los valores que aparecen dentro del texto se han producido mediante bloques de código. Los ficheros <em>markdown</em> originales se encuentran en el repositorio <a href="https://github.com/biocom-uib/TesisEvaMoranRmd" class="uri">https://github.com/biocom-uib/TesisEvaMoranRmd</a>.</p>
 <p><strong>Variables numéricas</strong>: Dado el gran tamaño de las muestras, se han usado tests de Shapiro-Wilks para contrastar si las distribuciones de las variables numéricas se ajustan a normalidad, y tests t (suponiendo varianzas iguales o diferentes, según correspondiera), para comparar pares de medias. Como nunca se ha podido aceptar la normalidad de las muestras, se han usado tests de Fligner-Killeen para contrastar la igualdad de dos o más varianzas y tests de Kruskall-Wallis para contrastar la igualdad de más de dos medias en análisis factoriales. Para los tests posteriores de parejas de medias en análisis factoriales se han usado tests de Mann-Whitney.</p>
 <p><strong>Variables categóricas</strong>: Se ha usado sistemáticamente el test exacto de Fisher para la comparación bilateral de pares de proporciones o de odds ratios, según correspondiera a la naturaleza del contraste. Como el tamaño de las muestras siempre lo ha permitido, los intervalos de confianza para RA se han calculado con la función <code>prop.test</code> con ajuste de continuidad, y los intervalos para RR se han calculado con la función <code>RelRisk</code>del paquete <code>DescTools</code>. La comparación de pares de diferencias de proporciones se ha realizado por el método de marcas de Martin-Herranz-Álvarez; mientras que en la comparación de pares de cocientes de proporciones (pares de RR) o de pares de OR se han usado los tests usuales basados en aproximaciones lognormales. Los tres métodos se han implementado en funciones de R.</p>
-<p>La igualdad de distribuciones de variables categóricas politómicas se ha contrastado sistemáticamente mediante tests ji cuadrado de bondad de ajuste, usando el método de Montecarlo (basado en 10000 simulaciones) cuando no se cumplían las condiciones teóricas para poder usar su versión paramétrica. Al principio del documento se ha fijado la semilla de aleatoriedad (a 2022) para que los resultados de las simulaciones sean reproducibles.</p>
+<p>La igualdad de distribuciones de variables categóricas politómicas se ha contrastado sistemáticamente mediante tests ji cuadrado de bondad de ajuste, usando el método de Montecarlo (basado en 10000 simulaciones) cuando no se cumplían las condiciones teóricas para poder usar su versión paramétrica. A continuación fijamos la semilla de aleatoriedad (a 2022) para que los resultados de las simulaciones sean reproducibles.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span></code></pre></div>
 <p>El análisis multivariante de variables categóricas y el cálculo de odds ratios ajustadas se ha llevado a cabo mediante regresiones logísticas, binomiales o multinomiales según correspondiera al número de niveles (2 o más de 2) de la variable respuesta.</p>
 <p><strong>Variables ordinales</strong>: La igualdad de tendencia en distribuciones de variables ordinales se ha contrastado sistemáticamente mediante tests de tendencia de Cochrane-Armitage (función <code>prop.trend.test</code>).</p>
 <div id="paquetes-usados" class="section level3 hasAnchor" number="0.0.1">

@@ -33,7 +33,6 @@ data %>%
     geom_violin(width=1) +
     geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
                outlier.size=1) +
-    #theme_ipsum() +
     theme(
       legend.position="none",
       plot.title = element_text(size=11)
@@ -231,7 +230,6 @@ data <- data.frame(base,Grupo,valor)
 
 ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
   geom_bar(position="dodge", stat="identity")+
-      #theme_ipsum() +
 xlab("Etnias")+
   ylab("")
 
@@ -908,7 +906,6 @@ data %>%
     geom_violin(width=1) +
     geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
                outlier.size=1) +
-    #theme_ipsum() +
     theme(
       legend.position="none",
       plot.title = element_text(size=11)
@@ -1590,7 +1587,6 @@ data %>%
     geom_violin(width=0.9) +
     geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
                outlier.size=1) +
-    #theme_ipsum() +
     theme(
       legend.position="none",
       plot.title = element_text(size=11)
@@ -2866,7 +2862,6 @@ data %>%
     geom_violin(width=1) +
     geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
                outlier.size=1) +
-    #theme_ipsum() +
     theme(
       legend.position="none",
       plot.title = element_text(size=11)
@@ -2945,7 +2940,6 @@ data %>%
     geom_violin(width=1) +
     geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
                outlier.size=1) +
-    #theme_ipsum() +
     theme(
       legend.position="none",
       plot.title = element_text(size=11)

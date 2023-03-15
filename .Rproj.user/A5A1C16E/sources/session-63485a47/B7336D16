@@ -1,26 +1,26 @@
 {
-    "id": "515ABE25",
+    "id": "B7336D16",
     "path": "~/Documents/GitHub/TesisEvaMoranRmd/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1678783740499.0,
+    "created": 1678859517384.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "46,438",
-        "scrollLine": "44"
+        "cursorPosition": "42,421",
+        "scrollLine": "40"
     },
     "folds": "",
-    "lastKnownWriteTime": 1678797868,
+    "lastKnownWriteTime": 1678859928,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1678797868032,
+    "last_content_update": 1678859928400,
     "read_only": false,
     "read_only_alternatives": []
 }
