@@ -1,4 +1,0 @@
-"0","EE=rbind(as.vector(table(I))[2:1],"
-"0","         as.vector(table(NI))[2:1])"
-"0","FT=fisher.test(EE)"
-"0","PT=prop.test(EE[,1],rowSums(EE))"

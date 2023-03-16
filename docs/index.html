@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2023-03-15" />
+<meta name="date" content="2023-03-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -506,6 +506,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.1" data-path="grupos-robson.html"><a href="grupos-robson.html#infectadas"><i class="fa fa-check"></i><b>7.1.1</b> Infectadas</a></li>
 <li class="chapter" data-level="7.1.2" data-path="grupos-robson.html"><a href="grupos-robson.html#no-infectadas"><i class="fa fa-check"></i><b>7.1.2</b> No infectadas</a></li>
 <li class="chapter" data-level="7.1.3" data-path="grupos-robson.html"><a href="grupos-robson.html#diferencias"><i class="fa fa-check"></i><b>7.1.3</b> Diferencias?</a></li>
+<li class="chapter" data-level="7.1.4" data-path="grupos-robson.html"><a href="grupos-robson.html#grupos-sintomáticos"><i class="fa fa-check"></i><b>7.1.4</b> Grupos sintomáticos</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="grupos-robson.html"><a href="grupos-robson.html#a-ola"><i class="fa fa-check"></i><b>7.2</b> 1<sup>a</sup> ola</a>
 <ul>
@@ -558,17 +559,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="header">
 <h1 class="title">Tesis de Eva Morán. Análisis estadístico.</h1>
-<p class="date"><em>2023-03-15</em></p>
+<p class="date"><em>2023-03-16</em></p>
 </div>
 <div id="presentación" class="section level1 unnumbered hasAnchor">
 <h1>Presentación<a href="index.html#presentación" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>El análisis tanto descriptivo como inferencial de los datos se ha llevado a cabo usando R versión 4.2.2. Para los gráficos se ha usado el paquete <code>ggplot2</code> de R. Este documento se ha escrito en <em>R Markdown</em>, usando <em>RStudio</em> como editor de textos y el paquete <code>bookdown</code> para compilar los ficheros <em>markdown</em> y producir el documento html final. Todos los valores que aparecen dentro del texto se han producido mediante bloques de código. Los ficheros <em>markdown</em> originales se encuentran en el repositorio <a href="https://github.com/biocom-uib/TesisEvaMoranRmd" class="uri">https://github.com/biocom-uib/TesisEvaMoranRmd</a>.</p>
-<p><strong>Variables numéricas</strong>: Dado el gran tamaño de las muestras, se han usado tests de Shapiro-Wilks para contrastar si las distribuciones de las variables numéricas se ajustan a normalidad, y tests t (suponiendo varianzas iguales o diferentes, según correspondiera), para comparar pares de medias. Como nunca se ha podido aceptar la normalidad de las muestras, se han usado tests de Fligner-Killeen para contrastar la igualdad de dos o más varianzas y tests de Kruskall-Wallis para contrastar la igualdad de más de dos medias en análisis factoriales. Para los tests posteriores de parejas de medias en análisis factoriales se han usado tests de Mann-Whitney.</p>
+<p><strong>Variables numéricas</strong>: Dado el gran tamaño de las muestras, se han usado tests de Shapiro-Wilks para contrastar si las distribuciones de las variables numéricas se ajustan a normalidad, y tests t (suponiendo varianzas iguales o diferentes, según correspondiera), para comparar pares de medias. Como nunca se ha podido aceptar la normalidad de las muestras, se han usado tests de Fligner-Killeen para contrastar la igualdad de dos o más varianzas y tests de Kruskall-Wallis para contrastar la igualdad de más de dos medias en análisis factoriales. Para los tests posteriores de parejas de medias en análisis factoriales se han usado tests t o tests de Mann-Whitney, según se considerara adecuado.</p>
 <p><strong>Variables categóricas</strong>: Se ha usado sistemáticamente el test exacto de Fisher para la comparación bilateral de pares de proporciones o de odds ratios, según correspondiera a la naturaleza del contraste. Como el tamaño de las muestras siempre lo ha permitido, los intervalos de confianza para RA se han calculado con la función <code>prop.test</code> con ajuste de continuidad, y los intervalos para RR se han calculado con la función <code>RelRisk</code>del paquete <code>DescTools</code>. La comparación de pares de diferencias de proporciones se ha realizado por el método de marcas de Martin-Herranz-Álvarez; mientras que en la comparación de pares de cocientes de proporciones (pares de RR) o de pares de OR se han usado los tests usuales basados en aproximaciones lognormales. Los tres métodos se han implementado en funciones de R.</p>
 <p>La igualdad de distribuciones de variables categóricas politómicas se ha contrastado sistemáticamente mediante tests ji cuadrado de bondad de ajuste, usando el método de Montecarlo (basado en 10000 simulaciones) cuando no se cumplían las condiciones teóricas para poder usar su versión paramétrica. A continuación fijamos la semilla de aleatoriedad (a 2022) para que los resultados de las simulaciones sean reproducibles.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2022</span>)</span></code></pre></div>
 <p>El análisis multivariante de variables categóricas y el cálculo de odds ratios ajustadas se ha llevado a cabo mediante regresiones logísticas, binomiales o multinomiales según correspondiera al número de niveles (2 o más de 2) de la variable respuesta.</p>
-<p><strong>Variables ordinales</strong>: La igualdad de tendencia en distribuciones de variables ordinales se ha contrastado sistemáticamente mediante tests de tendencia de Cochrane-Armitage (función <code>prop.trend.test</code>).</p>
+<p><strong>Variables ordinales</strong>: La igualdad de tendencia en distribuciones de variables ordinales se ha contrastado sistemáticamente mediante tests <span class="math inline">\(\chi^2\)</span>.</p>
 <div id="paquetes-usados" class="section level3 hasAnchor" number="0.0.1">
 <h3><span class="header-section-number">0.0.1</span> Paquetes usados<a href="index.html#paquetes-usados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
@@ -592,7 +593,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-19"><a href="index.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
 <span id="cb2-20"><a href="index.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rootSolve)</span>
 <span id="cb2-21"><a href="index.html#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
-<span id="cb2-22"><a href="index.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(samplesizeCMH)</span></code></pre></div>
+<span id="cb2-22"><a href="index.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(samplesizeCMH)</span>
+<span id="cb2-23"><a href="index.html#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pwr)</span></code></pre></div>
 </div>
 <div id="importación-de-datos" class="section level3 hasAnchor" number="0.0.2">
 <h3><span class="header-section-number">0.0.2</span> Importación de datos<a href="index.html#importación-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -882,7 +884,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-64"><a href="index.html#cb14-64" aria-hidden="true" tabindex="-1"></a>Res<span class="ot">=</span><span class="fu">rbind</span>(<span class="fu">c</span>(p.val,IC))</span>
 <span id="cb14-65"><a href="index.html#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Res)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;p-valor&quot;</span>,<span class="st">&quot;IC-inferior&quot;</span>,<span class="st">&quot;IC-superior&quot;</span>)</span>
 <span id="cb14-66"><a href="index.html#cb14-66" aria-hidden="true" tabindex="-1"></a><span class="fu">return</span>(Res)</span>
-<span id="cb14-67"><a href="index.html#cb14-67" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb14-67"><a href="index.html#cb14-67" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-68"><a href="index.html#cb14-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-69"><a href="index.html#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de tendencia</span></span>
+<span id="cb14-70"><a href="index.html#cb14-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-71"><a href="index.html#cb14-71" aria-hidden="true" tabindex="-1"></a>Prop.trend.test<span class="ot">=</span><span class="cf">function</span>(x,X){</span>
+<span id="cb14-72"><a href="index.html#cb14-72" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">rbind</span>(x,X))<span class="sc">$</span>p.value  </span>
+<span id="cb14-73"><a href="index.html#cb14-73" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="tablas-y-gráficos" class="section level4 hasAnchor" number="0.0.4.2">
 <h4><span class="header-section-number">0.0.4.2</span> Tablas y gráficos<a href="index.html#tablas-y-gráficos" class="anchor-section" aria-label="Anchor link to header"></a></h4>

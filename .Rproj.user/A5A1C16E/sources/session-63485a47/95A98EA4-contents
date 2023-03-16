@@ -644,12 +644,12 @@ pp=c()
 for(i in c(1:4,8,10)){
 EEw=TRCa1wSC[,,i]
 EE=TRCa1wSC[,,i]+TRCa2wSC[,,i]
-pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+pp[i]=Prop.trend.test(EEw[1,],colSums(EEw))
 }
 for(i in c(11:14,18,20)){
 EEw=TRCa2wSC[,,i-10]
 EE=TRCa1wSC[,,i-10]+TRCa2wSC[,,i-10]
-pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+pp[i]=Prop.trend.test(EEw[1,],colSums(EEw))
 }
 pp=pp[!is.na(pp)]
 
@@ -753,9 +753,9 @@ En la lista que sigue, los p-valores son los del contraste si las proporciones d
 ```{r}
 pp=c()
 EE=dades[c(1:4,8,10),c(2,3,5,6,8,9)]
-pp[1]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,4])/(EE[,1]+EE[,3]))$p.value
-pp[2]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,6])/(EE[,1]+EE[,5]))$p.value
-pp[3]=prop.trend.test(EE[,4],EE[,3],score=(EE[,4]+EE[,6])/(EE[,3]+EE[,5]))$p.value
+pp[1]=Prop.trend.test(EE[,2],EE[,1])
+pp[2]=Prop.trend.test(EE[,2],EE[,1])
+pp[3]=Prop.trend.test(EE[,4],EE[,3])
 ```
 
 * Asintomáticas contra síntomas leves: $`r signif(pp[1],1)`$
@@ -1081,12 +1081,12 @@ pp=c()
 for(i in c(1:4,8,10)){
 EEw=TRCa1wSC[,,i]
 EE=TRCa1wSC[,,i]+TRCa2wSC[,,i]
-pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+pp[i]=Prop.trend.test(EEw[1,],colSums(EEw))
 }
 for(i in c(11:14,18,20)){
 EEw=TRCa2wSC[,,i-10]
 EE=TRCa1wSC[,,i-10]+TRCa2wSC[,,i-10]
-pp[i]=prop.trend.test(EEw[1,],colSums(EEw),score=prop.table(EE,margin=2)[1,])$p.value
+pp[i]=Prop.trend.test(EEw[1,],colSums(EEw))
 }
 pp=pp[!is.na(pp)]
 
@@ -1190,9 +1190,9 @@ En la lista que sigue, los p-valores son los del contraste si las proporciones d
 ```{r}
 pp=c()
 EE=dades[c(1:4,8,10),c(2,3,5,6,8,9)]
-pp[1]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,4])/(EE[,1]+EE[,3]))$p.value
-pp[2]=prop.trend.test(EE[,2],EE[,1],score=(EE[,2]+EE[,6])/(EE[,1]+EE[,5]))$p.value
-pp[3]=prop.trend.test(EE[,4],EE[,3],score=(EE[,4]+EE[,6])/(EE[,3]+EE[,5]))$p.value
+pp[1]=Prop.trend.test(EE[,2],EE[,1])
+pp[2]=Prop.trend.test(EE[,2],EE[,1])
+pp[3]=Prop.trend.test(EE[,4],EE[,3])
 ```
 
 * Asintomáticas contra síntomas leves: $`r signif(pp[1],1)`$

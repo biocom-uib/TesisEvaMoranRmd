@@ -1773,6 +1773,21 @@ PT=prop.test(EE[,1],rowSums(EE))
 ## Descripción de casos por sintomatología
 
 
+```{r sint,fig.cap="\\s"}
+Síntomas=ordered(c("Asintomática", "Síntomas leves", "Neumonía"),levels=c("Asintomática", "Síntomas leves", "Neumonía"))
+valor=as.vector(prop.table(table(Sint)))
+data <- data.frame(Síntomas,valor)
+
+ggplot(data, aes(x=Síntomas, y=valor,fill=Síntomas)) + 
+  geom_bar(stat="identity")+
+  xlab("")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position="none")
+```
+
+
+
 
 ### Trimestre de infección
 
@@ -1950,7 +1965,7 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 EE=taula
 ppTR=rep(0,dim(EE)[1])
 for (i in 1:dim(EE)[1]){
-ppTR[i]=prop.trend.test(EE[i,],colSums(EE),score=prop.table(table(Sint)))$p.value
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
 }
 ppTR=p.adjust(ppTR,method="bonferroni")
 dt=data.frame(franja=c("18-30","31-40",">40"),ppTR)
@@ -2016,7 +2031,7 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 EE=taula
 ppTR=rep(0,dim(EE)[1])
 for (i in 1:dim(EE)[1]){
-ppTR[i]=prop.trend.test(EE[i,],colSums(EE),score=prop.table(table(Sint)))$p.value
+ppTR[i]=chisq.test(rbind(EE[i,],colSums(EE)))$p.value
 }
 ppTR=p.adjust(ppTR,method="bonferroni")
 dt=data.frame(franja=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra"),ppTR)
@@ -2046,8 +2061,10 @@ Barplot.DGS(Casos$FUMADORA_CAT,"Fumadoras", "No fumadoras")
 
 * Asociación entre los grupos de sintomatología y el hábito tabáquico: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 ### Sintomatología vs obesidad
@@ -2065,8 +2082,10 @@ Barplot.DGS(Casos$Obesidad,"Obesas", "No obesas")
 
 * Asociación entre los grupos de sintomatología y la obesidad: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 ### Sintomatología vs hipertensión pregestacional
@@ -2083,7 +2102,10 @@ Barplot.DGS(Casos$Hipertensión.pregestacional,"HTA", "No HTA")
 * Asociación entre los grupos de sintomatología y la HTA: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs diabetes
 
@@ -2101,7 +2123,10 @@ Barplot.DGS(Casos$DIABETES,"DM", "No DM")
 * Asociación entre los grupos de sintomatología y la diabetes: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs cardiopatía
 
@@ -2118,8 +2143,10 @@ Barplot.DGS(Casos$Enfermedad.cardiaca.crónica,"ECC", "No ECC")
 * Asociación entre los grupos de sintomatología y  ECC: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs enfermedad pulmonar crónica 
 
@@ -2140,8 +2167,10 @@ Barplot.DGS(I.EPC,"EPC", "No EPC")
 * Asociación entre los grupos de sintomatología y EPC: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatologia vs gestación múltiple
 
@@ -2157,8 +2186,10 @@ Barplot.DGS(Casos$Gestación.Múltiple,"Gestación múltiple", "Gestación únic
 * Asociación entre los grupos de sintomatología y gestación múltiple: test $\chi^2$ , p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatologia vs paridad
 
@@ -2175,8 +2206,10 @@ Barplot.DGS(Casos$NULIPARA,"Multípara", "Nulípara")
 * Asociación entre los grupos de sintomatología y paridad: test $\chi^2$ , p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs anomalía congénita
 
@@ -2184,7 +2217,7 @@ Barplot.DGS(Casos$NULIPARA,"Multípara", "Nulípara")
 
 
 
-```{r 24 ,fig.cap="\\s"}
+```{r 24, fig.cap="\\s"}
 taula=table(data.frame(Casos$Diagnóstico.de.malformación.ecográfica._.semana.20._,Sint))[c(2,1) ,1:3]
 Tabla.DGS(Casos$Diagnóstico.de.malformación.ecográfica._.semana.20._,"Anomalías congénitas", "No anomalías congénitas")
 Barplot.DGS(Casos$Diagnóstico.de.malformación.ecográfica._.semana.20._,"Anomalías congénitas", "No anomalías congénitas")
@@ -2195,7 +2228,9 @@ Barplot.DGS(Casos$Diagnóstico.de.malformación.ecográfica._.semana.20._,"Anoma
 * Asociación entre los grupos de sintomatología y anomalía congénita: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs retraso del crecimiento intrauterino 
 
@@ -2215,7 +2250,9 @@ Barplot.DGS(Casos$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.,"R
 * Asociación entre los grupos de sintomatología y retraso del crecimiento intrauterino : test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs diabetes gestacional 
 
@@ -2234,7 +2271,9 @@ Barplot.DGS(Casos$Diabetes.gestacional,"DG", "No DG")
 * Asociación entre los grupos de sintomatología y diabetes gestacional: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs hipertensión gestacional
 
@@ -2252,7 +2291,9 @@ Barplot.DGS(Casos$Hipertensión.gestacional,"HG", "No HG")
 * Asociación entre los grupos de sintomatología e hipertensión gestacional: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs rotura prematura de membranas
 
@@ -2269,8 +2310,10 @@ Barplot.DGS(Casos$Bolsa.rota.anteparto,"RPM", "No RPM")
 * Asociación entre los grupos de sintomatología y rotura prematura de membranas: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs preeclampsia
 
@@ -2291,8 +2334,10 @@ Barplot.DGS(Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL,"PE", "No PE")
 
 * Asociación entre los grupos de sintomatología y preeclampsia: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs preeclampsia con criterios de gravedad
 
@@ -2307,16 +2352,16 @@ DF=data.frame(Factor=I,Síntomas=Sint[Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL==1])
 taula=table(DF)[c(2,1),1:3]
 proptaula=round(100*prop.table(taula,margin=2),2)
 
-EEExt=cbind(c(as.vector(taula[,1]),n_AS-sum(as.vector(taula[,1]))),
-            round(100*c(as.vector(taula[,1]),n_AS-sum(as.vector(taula[,1])))/n_AS,2),
-            c(as.vector(taula[,2]),n_SL-sum(as.vector(taula[,2]))),
-            round(100*c(as.vector(taula[,2]),n_SL-sum(as.vector(taula[,2])))/n_SL,2),
-             c(as.vector(taula[,3]),n_NE-sum(as.vector(taula[,3]))),
-            round(100*c(as.vector(taula[,3]),n_NE-sum(as.vector(taula[,3])))/n_NE,2)
+EEExt=cbind(as.vector(taula[,1]),
+            round(100*as.vector(prop.table(taula[,1])),2),
+            as.vector(taula[,2]),
+            round(100*as.vector(prop.table(taula[,2])),2),
+             as.vector(taula[,3]),
+            round(100*as.vector(prop.table(taula[,3])),2)
            )
-EEExt=rbind(EEExt,c(n_AS,100,n_SL,100,n_NE,100))
+EEExt=rbind(EEExt)
 
-rownames(EEExt)=c("PE con CG", "PE sin CG","Pérdidas","Total")
+rownames(EEExt)=c("PE con CG", "PE sin CG")
 colnames(EEExt)=Columnes.Sint
 
 EEExt %>%
@@ -2341,8 +2386,10 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 
 * Asociación entre los grupos de sintomatología y preeclampsia con CG en preeclampsia: test $\chi^2$, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint[Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL==1])))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 ### Sintomatología vs eventos hemorrágicos
@@ -2362,8 +2409,10 @@ Barplot.DGS(Casos$EVENTOS_HEMORRAGICOS_TOTAL,"Eventos hemorrágicos", "No evento
 * Asociación entre los grupos de sintomatología y evento hemorrágico: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs hemorragia postparto
 
@@ -2387,9 +2436,11 @@ Barplot.DGS(I.sino,"HPP", "No HPP")
 * Asociación entre los grupos de sintomatología y evento hemorrágico: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 
@@ -2454,7 +2505,9 @@ Barplot.DGS(Casos$EVENTOS_TROMBO_TOTALES,"Eventos trombóticos", "No eventos tro
 
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,1)`$
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(Prop.trend.test(taula[1,],colSums(taula)),1)`$
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs UCi madre (Sí-No)
 
@@ -2473,8 +2526,10 @@ Barplot.DGS(Casos$UCI,"UCI", "No UCI")
 
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,1)`$
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(Prop.trend.test(taula[1,],colSums(taula)),1)`$
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs UCi madre (antes-después)
 
@@ -2486,16 +2541,12 @@ DF=data.frame(Factor=I,Síntomas=Sint)
 taula=table(DF)[c(2,1),1:3]
 proptaula=round(100*prop.table(taula,margin=2),2)
 
-EEExt=cbind(c(as.vector(taula[,1]),n_AS-sum(as.vector(taula[,1]))),
-            round(100*c(as.vector(taula[,1]),n_AS-sum(as.vector(taula[,1])))/n_AS,2),
-            c(as.vector(taula[,2]),n_SL-sum(as.vector(taula[,2]))),
-            round(100*c(as.vector(taula[,2]),n_SL-sum(as.vector(taula[,2])))/n_SL,2),
-             c(as.vector(taula[,3]),n_NE-sum(as.vector(taula[,3]))),
-            round(100*c(as.vector(taula[,3]),n_NE-sum(as.vector(taula[,3])))/n_NE,2)
+EEExt=cbind(as.vector(taula[,1]), round(100*as.vector(prop.table(taula[,1])),2),
+            as.vector(taula[,2]), round(100*as.vector(prop.table(taula[,2])),2),
+            as.vector(taula[,3]), round(100*as.vector(prop.table(taula[,3])),2)
            )
-EEExt=rbind(EEExt,c(n_AS,100,n_SL,100,n_NE,100))
 
-rownames(EEExt)=c("UCI antes del parto", "UCI después del parto","Pérdidas","Total")
+rownames(EEExt)=c("UCI antes del parto", "UCI después del parto")
 colnames(EEExt)=Columnes.Sint
 
 EEExt %>%
@@ -2522,8 +2573,10 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global de UCI: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint[Casos$UCI==1])))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global de UCI: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs prematuridad
 
@@ -2542,8 +2595,10 @@ Barplot.DGS(Casos$PREMATURO,"Prematuro", "A término")
 * Asociación entre los grupos de sintomatología y prematures:  test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,1)`$
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(Prop.trend.test(taula[1,],colSums(taula)),1)`$
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 ### Sintomatología vs APGAR
 
@@ -2597,7 +2652,9 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 
 * Asociación entre los grupos de sintomatología y APGAR bajo: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 ### Sintomatología vs UCI neonato
@@ -2648,8 +2705,10 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 * Asociación entre los grupos de sintomatología y ingreso en UCIN: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,1)`$
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(Prop.trend.test(taula[1,],colSums(taula)),1)`$
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 ### Sintomatología vs Fetos muertos anteparto 
@@ -2706,8 +2765,10 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 
 * Asociación entre los grupos de sintomatología y muerte antepartio: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,4)`
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,4)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 
 
 
@@ -2763,7 +2824,7 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 EE=taula
 ppTR=rep(0,dim(EE)[1])
 for (i in 1:dim(EE)[1]){
-ppTR[i]=prop.trend.test(EE[i,],colSums(EE),score=prop.table(table(Sint)))$p.value
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
 }
 ppTR=p.adjust(ppTR,method="bonferroni")
 dt=data.frame(franja=c("Espontáneo", "Inducido","Cesárea programada"),ppTR)
@@ -2827,6 +2888,9 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 
 * Asociación entre los grupos de sintomatología y tipos de parto: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
 
+* Asociación entre los grupos de sintomatología y tipos de parto diferentes de la cesárea programada: test $\chi^2$, p-valor `r round(chisq.test(taula[-3,])$p.value,3)`
+
+
 * Tabla de p-valores  ajustados por Bonferroni de tests de diferencia en la tendencia de la gravedad en cada franja de edad respecto del global: 
 
 
@@ -2834,7 +2898,7 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 EE=taula
 ppTR=rep(0,dim(EE)[1])
 for (i in 1:dim(EE)[1]){
-ppTR[i]=prop.trend.test(EE[i,],colSums(EE),score=prop.table(table(Sint)))$p.value
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
 }
 ppTR=p.adjust(ppTR,method="bonferroni")
 dt=data.frame(franja=c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ppTR)
@@ -3035,6 +3099,8 @@ ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) +
 * Asociación entre los grupos de sintomatología y bajo peso: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
 
 
-* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(prop.trend.test(taula[1,],colSums(taula),score=prop.table(table(Sint)))$p.value,3)`
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),3)`
 
+
+* Potencia del test: `r round(pwr.chisq.test(w =sqrt(chisq.test(taula)$statistic/sum(taula)), N =sum(taula) , df =chisq.test(taula)$parameter, sig.level =0.05 )$power,3)`
 

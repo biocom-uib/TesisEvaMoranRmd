@@ -35,7 +35,7 @@ par(cex.main=0.9,cex.axis=0.8,cex.lab=0.8)
 
 El análisis tanto descriptivo como inferencial de los datos se ha llevado a cabo usando R versión 4.2.2. Para los gráficos se ha usado el paquete `ggplot2` de R. Este documento se ha escrito en *R Markdown*, usando *RStudio* como editor de textos y el paquete `bookdown` para compilar los ficheros *markdown* y producir el documento html final. Todos los valores que aparecen dentro del texto se han producido mediante bloques de código. Los ficheros *markdown* originales se encuentran en el repositorio https://github.com/biocom-uib/TesisEvaMoranRmd. 
 
-**Variables numéricas**: Dado el gran tamaño de las muestras, se han usado tests de Shapiro-Wilks para contrastar si las distribuciones de las variables numéricas se ajustan a normalidad, y tests t (suponiendo varianzas iguales o diferentes, según correspondiera), para comparar pares de medias. Como nunca se ha podido aceptar la normalidad de las muestras, se han usado tests de Fligner-Killeen para contrastar la igualdad de dos o más varianzas y tests de Kruskall-Wallis para contrastar la igualdad de más de dos medias en análisis factoriales. Para los tests posteriores de parejas de medias en análisis factoriales se han usado tests de Mann-Whitney. 
+**Variables numéricas**: Dado el gran tamaño de las muestras, se han usado tests de Shapiro-Wilks para contrastar si las distribuciones de las variables numéricas se ajustan a normalidad, y tests t (suponiendo varianzas iguales o diferentes, según correspondiera), para comparar pares de medias. Como nunca se ha podido aceptar la normalidad de las muestras, se han usado tests de Fligner-Killeen para contrastar la igualdad de dos o más varianzas y tests de Kruskall-Wallis para contrastar la igualdad de más de dos medias en análisis factoriales. Para los tests posteriores de parejas de medias en análisis factoriales se han usado tests t o tests de Mann-Whitney, según se considerara adecuado. 
 
 **Variables categóricas**: Se ha usado sistemáticamente el test exacto de Fisher para la comparación bilateral de pares de proporciones o de odds ratios, según correspondiera a la naturaleza del contraste. Como el tamaño de las muestras siempre lo ha permitido, los intervalos de confianza para RA se han calculado con la función `prop.test` con ajuste de continuidad, y los intervalos para RR se han calculado con la función `RelRisk`del paquete `DescTools`. La comparación de pares de diferencias de proporciones se ha realizado por el método de marcas de Martin-Herranz-Álvarez; mientras que en la comparación de pares de cocientes de proporciones  (pares de RR) o de pares de OR se han usado los tests usuales basados en aproximaciones lognormales. Los tres métodos se han implementado en funciones de R. 
 
@@ -48,7 +48,7 @@ set.seed(2022)
 
 El análisis multivariante de variables categóricas y el cálculo de odds ratios ajustadas se ha llevado a cabo mediante regresiones logísticas, binomiales o multinomiales según correspondiera al número de niveles (2 o más de 2) de la variable respuesta.
 
-**Variables ordinales**: La igualdad de tendencia en distribuciones de variables ordinales se ha contrastado sistemáticamente mediante tests de tendencia de Cochrane-Armitage (función `prop.trend.test`). 
+**Variables ordinales**: La igualdad de tendencia en distribuciones de variables ordinales se ha contrastado sistemáticamente mediante tests $\chi^2$.
 
 
 
@@ -77,7 +77,7 @@ library(gtsummary)
 library(rootSolve)
 library(DescTools)
 library(samplesizeCMH)
-
+library(pwr)
 ```
 
 ### Importación de datos
@@ -425,6 +425,12 @@ IC=exp(LOR1-LOR2+qnorm((1+conf.level)/2)*sqrt(sum(1/M))*c(-1,1))
 Res=rbind(c(p.val,IC))
 colnames(Res)=c("p-valor","IC-inferior","IC-superior")
 return(Res)
+}
+
+# Test de tendencia
+
+Prop.trend.test=function(x,X){
+chisq.test(rbind(x,X))$p.value  
 }
 ```
 
