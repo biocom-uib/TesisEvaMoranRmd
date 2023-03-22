@@ -1,0 +1,119 @@
+"0","library(knitr)"
+"0","library(readxl)"
+"0","library(kableExtra)"
+"0","library(PropCIs)"
+"0","library(epiR)"
+"2","Loading required package: survival
+"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","Package epiR 2.0.57 is loaded
+"
+"2","Type help(epi.about) for summary information
+"
+"2","Type browseVignettes(package = 'epiR') to learn how to use epiR for applied epidemiological analyses
+"
+"2","
+
+"
+"0","library(ExactCIdiff)"
+"0","library(ggplot2)"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following object is masked from ‘package:kableExtra’:
+
+    group_rows
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(hrbrthemes)"
+"2","NOTE: Either Arial Narrow or Roboto Condensed fonts are required to use these themes.
+"
+"2","      Please use hrbrthemes::import_roboto_condensed() to install Roboto Condensed and
+"
+"2","      if Arial Narrow is not on your system, please see https://bit.ly/arialnarrow
+"
+"0","library(viridis)"
+"2","Loading required package: viridisLite
+"
+"0","library(ggmosaic)"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"0","library(rcompanion)"
+"0","library(basecamb)"
+"0","library(pscl)"
+"2","Classes and Methods for R developed in the
+Political Science Computational Laboratory
+Department of Political Science
+Stanford University
+Simon Jackman
+hurdle and zeroinfl functions by Achim Zeileis
+"
+"0","library(caret)"
+"2","Loading required package: lattice
+"
+"2","
+Attaching package: ‘caret’
+
+"
+"2","The following object is masked from ‘package:survival’:
+
+    cluster
+
+"
+"0","library(car)"
+"2","Loading required package: carData
+"
+"2","
+Attaching package: ‘car’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    recode
+
+"
+"0","library(nnet)"
+"0","library(ggeffects)"
+"0","library(gtsummary)"
+"2","#Uighur
+"
+"0","library(rootSolve)"
+"0","library(DescTools)"
+"2","
+Attaching package: ‘DescTools’
+
+"
+"2","The following object is masked from ‘package:car’:
+
+    Recode
+
+"
+"2","The following objects are masked from ‘package:caret’:
+
+    MAE, RMSE
+
+"
+"2","The following object is masked from ‘package:ExactCIdiff’:
+
+    BinomCI
+
+"
+"0","library(samplesizeCMH)"
+"0","library(pwr)"

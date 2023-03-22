@@ -5,5 +5,5 @@
 "0","n_I2=dim(Casos2w)[1]"
 "0","n_NI2=dim(Controls2w)[1]"
 "0","n_AS=length(Casos$SINTOMAS_DIAGNOSTICO[Casos$SINTOMAS_DIAGNOSTICO==""Asintomática""])"
-"0","n_SL=length(Casos$SINTOMAS_DIAGNOSTICO[Casos$SINTOMAS_DIAGNOSTICO==""Síntomas leves""])"
-"0","n_NE=length(Casos$SINTOMAS_DIAGNOSTICO[Casos$SINTOMAS_DIAGNOSTICO==""Neumonía""])"
+"0","n_SL=length(Casos$SINTOMAS_DIAGNOSTICO[Casos$SINTOMAS_DIAGNOSTICO==""Leve""])"
+"0","n_NE=length(Casos$SINTOMAS_DIAGNOSTICO[Casos$SINTOMAS_DIAGNOSTICO==""Grave""])"

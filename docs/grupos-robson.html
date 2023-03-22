@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2023-03-16" />
+<meta name="date" content="2023-03-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1473,9 +1473,9 @@ Inf
 <span id="cb796-5"><a href="grupos-robson.html#cb796-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaAsin),TCaAsin[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaAsin,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>),</span>
 <span id="cb796-6"><a href="grupos-robson.html#cb796-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaSL),TCaSL[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaSL,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>),</span>
 <span id="cb796-7"><a href="grupos-robson.html#cb796-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaNeu),TCaNeu[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaNeu,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>))</span>
-<span id="cb796-8"><a href="grupos-robson.html#cb796-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. asintomáticas&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>, </span>
-<span id="cb796-9"><a href="grupos-robson.html#cb796-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. síntomas leves&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,</span>
-<span id="cb796-10"><a href="grupos-robson.html#cb796-10" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. Neumonía&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>)</span>
+<span id="cb796-8"><a href="grupos-robson.html#cb796-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. Asintomática&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>, </span>
+<span id="cb796-9"><a href="grupos-robson.html#cb796-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. leve&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,</span>
+<span id="cb796-10"><a href="grupos-robson.html#cb796-10" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. grave&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>)</span>
 <span id="cb796-11"><a href="grupos-robson.html#cb796-11" aria-hidden="true" tabindex="-1"></a>dades <span class="sc">%&gt;%</span></span>
 <span id="cb796-12"><a href="grupos-robson.html#cb796-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb796-13"><a href="grupos-robson.html#cb796-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()<span class="sc">%&gt;%</span>     </span>
@@ -1488,7 +1488,7 @@ Inf
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Inf. asintomáticas
+Inf. Asintomática
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -1497,7 +1497,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Inf. síntomas leves
+Inf. leve
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -1506,7 +1506,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Inf. Neumonía
+Inf. grave
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -1847,11 +1847,11 @@ NaN
 <span id="cb797-4"><a href="grupos-robson.html#cb797-4" aria-hidden="true" tabindex="-1"></a>pp[<span class="dv">2</span>]<span class="ot">=</span><span class="fu">Prop.trend.test</span>(EE[,<span class="dv">2</span>],EE[,<span class="dv">1</span>])</span>
 <span id="cb797-5"><a href="grupos-robson.html#cb797-5" aria-hidden="true" tabindex="-1"></a>pp[<span class="dv">3</span>]<span class="ot">=</span><span class="fu">Prop.trend.test</span>(EE[,<span class="dv">4</span>],EE[,<span class="dv">3</span>])</span></code></pre></div>
 <ul>
-<li>Asintomáticas contra síntomas leves: <span class="math inline">\(2\times 10^{-9}\)</span></li>
-<li>Asintomáticas contra neumonía: <span class="math inline">\(2\times 10^{-9}\)</span></li>
-<li>Síntomas leves contra neumonía: <span class="math inline">\(8\times 10^{-9}\)</span></li>
+<li>Asintomática contra Leve: <span class="math inline">\(2\times 10^{-9}\)</span></li>
+<li>Asintomática contra Grave: <span class="math inline">\(2\times 10^{-9}\)</span></li>
+<li>Leve contra Grave: <span class="math inline">\(8\times 10^{-9}\)</span></li>
 </ul>
-<p>Qué pasa si agrupamos asintomáticas+síntomas leves contra neumonía? Hay diferencia en la 10</p>
+<p>Qué pasa si agrupamos Asintomática+Leve contra Grave? Hay diferencia en la 10</p>
 <div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="grupos-robson.html#cb798-1" aria-hidden="true" tabindex="-1"></a>Casos<span class="sc">$</span>SintGrave<span class="ot">=</span><span class="cn">NA</span></span>
 <span id="cb798-2"><a href="grupos-robson.html#cb798-2" aria-hidden="true" tabindex="-1"></a>Casos<span class="sc">$</span>SintGrave[Casos<span class="sc">$</span>SINTOMAS_CAT<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span>Casos<span class="sc">$</span>SINTOMAS_CAT<span class="sc">==</span><span class="dv">2</span>]<span class="ot">=</span><span class="dv">0</span></span>
 <span id="cb798-3"><a href="grupos-robson.html#cb798-3" aria-hidden="true" tabindex="-1"></a>Casos<span class="sc">$</span>SintGrave[Casos<span class="sc">$</span>SINTOMAS_CAT<span class="sc">==</span><span class="dv">3</span>]<span class="ot">=</span><span class="dv">1</span></span>
@@ -1869,7 +1869,7 @@ NaN
 <span id="cb798-15"><a href="grupos-robson.html#cb798-15" aria-hidden="true" tabindex="-1"></a>pp[i]<span class="ot">=</span>FT<span class="sc">$</span>p.value       }</span>
 <span id="cb798-16"><a href="grupos-robson.html#cb798-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb798-17"><a href="grupos-robson.html#cb798-17" aria-hidden="true" tabindex="-1"></a>dt<span class="ot">=</span><span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="fu">colSums</span>(EE1),EE1[<span class="dv">1</span>,],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(EE1,<span class="at">margin=</span><span class="dv">2</span>)[<span class="dv">1</span>,],<span class="dv">2</span>),<span class="fu">colSums</span>(EE2),EE2[<span class="dv">1</span>,],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(EE2,<span class="at">margin=</span><span class="dv">2</span>)[<span class="dv">1</span>,],<span class="dv">2</span>),<span class="fu">round</span>(OR,<span class="dv">2</span>),<span class="fu">round</span>(pp,<span class="dv">3</span>))</span>
-<span id="cb798-18"><a href="grupos-robson.html#cb798-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. asintomáticas o leves&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,  <span class="st">&quot;Inf. Neumonía&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,<span class="st">&quot;OR&quot;</span>,<span class="st">&quot;p-valor test de Fisher&quot;</span>)</span>
+<span id="cb798-18"><a href="grupos-robson.html#cb798-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. Asintomática o leve&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,  <span class="st">&quot;Inf. Grave&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,<span class="st">&quot;OR&quot;</span>,<span class="st">&quot;p-valor test de Fisher&quot;</span>)</span>
 <span id="cb798-19"><a href="grupos-robson.html#cb798-19" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
 <span id="cb798-20"><a href="grupos-robson.html#cb798-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb798-21"><a href="grupos-robson.html#cb798-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()<span class="sc">%&gt;%</span>     </span>
@@ -1882,7 +1882,7 @@ NaN
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Inf. asintomáticas o leves
+Inf. Asintomática o leve
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -1891,7 +1891,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Inf. Neumonía
+Inf. Grave
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -4790,7 +4790,7 @@ NaN
 <span id="cb815-10"><a href="grupos-robson.html#cb815-10" aria-hidden="true" tabindex="-1"></a><span class="at">Neum=</span>TRCaS[,<span class="dv">3</span>],</span>
 <span id="cb815-11"><a href="grupos-robson.html#cb815-11" aria-hidden="true" tabindex="-1"></a><span class="at">pNeum=</span>pTRCaS[,<span class="dv">3</span>])</span>
 <span id="cb815-12"><a href="grupos-robson.html#cb815-12" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(DFTRCaS)<span class="ot">=</span><span class="fu">c</span>()</span>
-<span id="cb815-13"><a href="grupos-robson.html#cb815-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas&quot;</span>, <span class="st">&quot;Asintomáticas&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb815-13"><a href="grupos-robson.html#cb815-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas&quot;</span>, <span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Grave&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb815-14"><a href="grupos-robson.html#cb815-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb815-15"><a href="grupos-robson.html#cb815-15" aria-hidden="true" tabindex="-1"></a>DFTRCaS <span class="sc">%&gt;%</span>  </span>
 <span id="cb815-16"><a href="grupos-robson.html#cb815-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -4807,19 +4807,19 @@ Grupo Robson
 Total infectadas
 </th>
 <th style="text-align:right;">
-Asintomáticas
+Asintomática
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Síntomas leves
+Leve
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Neumonía
+Grave
 </th>
 <th style="text-align:right;">
 %
@@ -5116,7 +5116,7 @@ Pérdidas
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="grupos-robson.html#cb816-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="grupos-robson.html#cb816-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
 <span id="cb816-2"><a href="grupos-robson.html#cb816-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">3</span>))</span>
 <span id="cb816-3"><a href="grupos-robson.html#cb816-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(TRCaS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span>
 <span id="cb816-4"><a href="grupos-robson.html#cb816-4" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(Grupo,Tipo,valor)</span>
@@ -5270,7 +5270,7 @@ p-valor
 <span id="cb818-20"><a href="grupos-robson.html#cb818-20" aria-hidden="true" tabindex="-1"></a><span class="at">Neum2w=</span>TRCa2wS[,<span class="dv">3</span>],</span>
 <span id="cb818-21"><a href="grupos-robson.html#cb818-21" aria-hidden="true" tabindex="-1"></a>pTRCa2wS[,<span class="dv">3</span>])</span>
 <span id="cb818-22"><a href="grupos-robson.html#cb818-22" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>()</span>
-<span id="cb818-23"><a href="grupos-robson.html#cb818-23" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas 1a ola&quot;</span>, <span class="st">&quot;Asintomáticas 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Síntomas leves 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Neumonía 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>,<span class="st">&quot;Total infectadas 2a ola&quot;</span>, <span class="st">&quot;Asintomáticas 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Síntomas leves 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Neumonía 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb818-23"><a href="grupos-robson.html#cb818-23" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas 1a ola&quot;</span>, <span class="st">&quot;Asintomática 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Leve 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Grave 1a ola&quot;</span>, <span class="st">&quot;%&quot;</span>,<span class="st">&quot;Total infectadas 2a ola&quot;</span>, <span class="st">&quot;Asintomática 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Leve 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Grave 2a ola&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb818-24"><a href="grupos-robson.html#cb818-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb818-25"><a href="grupos-robson.html#cb818-25" aria-hidden="true" tabindex="-1"></a>DFTRCaWS <span class="sc">%&gt;%</span>  </span>
 <span id="cb818-26"><a href="grupos-robson.html#cb818-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -5287,19 +5287,19 @@ Grupo Robson
 Total infectadas 1a ola
 </th>
 <th style="text-align:right;">
-Asintomáticas 1a ola
+Asintomática 1a ola
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Síntomas leves 1a ola
+Leve 1a ola
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Neumonía 1a ola
+Grave 1a ola
 </th>
 <th style="text-align:right;">
 %
@@ -5308,19 +5308,19 @@ Neumonía 1a ola
 Total infectadas 2a ola
 </th>
 <th style="text-align:right;">
-Asintomáticas 2a ola
+Asintomática 2a ola
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Síntomas leves 2a ola
+Leve 2a ola
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Neumonía 2a ola
+Grave 2a ola
 </th>
 <th style="text-align:right;">
 %
@@ -5848,7 +5848,7 @@ Pérdidas
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="grupos-robson.html#cb819-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="grupos-robson.html#cb819-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
 <span id="cb819-2"><a href="grupos-robson.html#cb819-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">3</span>))</span>
 <span id="cb819-3"><a href="grupos-robson.html#cb819-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(TRCa1wS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span>
 <span id="cb819-4"><a href="grupos-robson.html#cb819-4" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(Grupo,Tipo,valor)</span>
@@ -5865,7 +5865,7 @@ Pérdidas
 Figura 7.11: 
 </p>
 </div>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="grupos-robson.html#cb820-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">10</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="grupos-robson.html#cb820-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">10</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb820-2"><a href="grupos-robson.html#cb820-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">3</span>))</span>
 <span id="cb820-3"><a href="grupos-robson.html#cb820-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(TRCa2wS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span>
 <span id="cb820-4"><a href="grupos-robson.html#cb820-4" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(Grupo,Tipo,valor)</span>
@@ -5882,7 +5882,7 @@ Figura 7.11:
 Figura 7.12: 
 </p>
 </div>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="grupos-robson.html#cb821-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="dv">20</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="grupos-robson.html#cb821-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="dv">20</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb821-2"><a href="grupos-robson.html#cb821-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>)) ),<span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>, <span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span></span>
 <span id="cb821-3"><a href="grupos-robson.html#cb821-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>)) ),<span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>, <span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>))</span>
 <span id="cb821-4"><a href="grupos-robson.html#cb821-4" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">c</span>()</span>
@@ -5903,7 +5903,7 @@ Figura 7.12:
 Figura 7.13: 
 </p>
 </div>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="grupos-robson.html#cb822-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="dv">20</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="grupos-robson.html#cb822-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="dv">20</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb822-2"><a href="grupos-robson.html#cb822-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>)) ),<span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>, <span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span></span>
 <span id="cb822-3"><a href="grupos-robson.html#cb822-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">c</span>(<span class="fu">sort</span>(<span class="fu">c</span>(<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>),<span class="fu">paste</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>)) ),<span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 1a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>, <span class="st">&quot;10 </span><span class="sc">\n</span><span class="st"> 2a</span><span class="sc">\n</span><span class="st"> ola&quot;</span>))</span>
 <span id="cb822-4"><a href="grupos-robson.html#cb822-4" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">c</span>()</span>
@@ -6210,7 +6210,7 @@ NA
 <span id="cb824-21"><a href="grupos-robson.html#cb824-21" aria-hidden="true" tabindex="-1"></a>DFTRCaWSC<span class="ot">=</span>DFTRCaWSC[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">10</span>),]</span>
 <span id="cb824-22"><a href="grupos-robson.html#cb824-22" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb824-23"><a href="grupos-robson.html#cb824-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb824-24"><a href="grupos-robson.html#cb824-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Asintomáticas 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en asintomáticas 1a ola&quot;</span>, <span class="st">&quot;Síntomas leves 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en síntomas leves 1a ola&quot;</span>, <span class="st">&quot;Neumonías 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en neumonía 1a ola&quot;</span>,  <span class="st">&quot;Asintomáticas 2a ola&quot;</span>,<span class="st">&quot;% cesáreas en asintomáticas 2a ola&quot;</span>, <span class="st">&quot;Síntomas leves 2a ola&quot;</span>, <span class="st">&quot;% cesáreas en síntomas leves 2a ola&quot;</span>, <span class="st">&quot;Neumonías 2a ola&quot;</span>, <span class="st">&quot;% cesáreas en neumonía 2a ola&quot;</span>)</span>
+<span id="cb824-24"><a href="grupos-robson.html#cb824-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Asintomática 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en Asintomática 1a ola&quot;</span>, <span class="st">&quot;Leve 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en Leve 1a ola&quot;</span>, <span class="st">&quot;Graves 1a ola&quot;</span>, <span class="st">&quot;% cesáreas en Grave 1a ola&quot;</span>,  <span class="st">&quot;Asintomática 2a ola&quot;</span>,<span class="st">&quot;% cesáreas en Asintomática 2a ola&quot;</span>, <span class="st">&quot;Leve 2a ola&quot;</span>, <span class="st">&quot;% cesáreas en Leve 2a ola&quot;</span>, <span class="st">&quot;Graves 2a ola&quot;</span>, <span class="st">&quot;% cesáreas en Grave 2a ola&quot;</span>)</span>
 <span id="cb824-25"><a href="grupos-robson.html#cb824-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb824-26"><a href="grupos-robson.html#cb824-26" aria-hidden="true" tabindex="-1"></a>DFTRCaWSC <span class="sc">%&gt;%</span>  </span>
 <span id="cb824-27"><a href="grupos-robson.html#cb824-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -6224,40 +6224,40 @@ NA
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Asintomáticas 1a ola
+Asintomática 1a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en asintomáticas 1a ola
+% cesáreas en Asintomática 1a ola
 </th>
 <th style="text-align:right;">
-Síntomas leves 1a ola
+Leve 1a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en síntomas leves 1a ola
+% cesáreas en Leve 1a ola
 </th>
 <th style="text-align:right;">
-Neumonías 1a ola
+Graves 1a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en neumonía 1a ola
+% cesáreas en Grave 1a ola
 </th>
 <th style="text-align:right;">
-Asintomáticas 2a ola
+Asintomática 2a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en asintomáticas 2a ola
+% cesáreas en Asintomática 2a ola
 </th>
 <th style="text-align:right;">
-Síntomas leves 2a ola
+Leve 2a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en síntomas leves 2a ola
+% cesáreas en Leve 2a ola
 </th>
 <th style="text-align:right;">
-Neumonías 2a ola
+Graves 2a ola
 </th>
 <th style="text-align:right;">
-% cesáreas en neumonía 2a ola
+% cesáreas en Grave 2a ola
 </th>
 </tr>
 </thead>
@@ -6729,7 +6729,7 @@ p-valor
 <span id="cb826-33"><a href="grupos-robson.html#cb826-33" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(ORN,<span class="dv">4</span>),</span>
 <span id="cb826-34"><a href="grupos-robson.html#cb826-34" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(ppN,<span class="dv">4</span>)</span>
 <span id="cb826-35"><a href="grupos-robson.html#cb826-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb826-36"><a href="grupos-robson.html#cb826-36" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;OR asintomáticas&quot;</span>, <span class="st">&quot;p-valor asintomáticas&quot;</span>,<span class="st">&quot;OR síntomas leves&quot;</span>,<span class="st">&quot;p-valor síntomas leves&quot;</span>,<span class="st">&quot;OR neumonía&quot;</span>,<span class="st">&quot;p-valor neumonía&quot;</span>)</span>
+<span id="cb826-36"><a href="grupos-robson.html#cb826-36" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;OR Asintomática&quot;</span>, <span class="st">&quot;p-valor Asintomática&quot;</span>,<span class="st">&quot;OR Leve&quot;</span>,<span class="st">&quot;p-valor Leve&quot;</span>,<span class="st">&quot;OR Grave&quot;</span>,<span class="st">&quot;p-valor Grave&quot;</span>)</span>
 <span id="cb826-37"><a href="grupos-robson.html#cb826-37" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb826-38"><a href="grupos-robson.html#cb826-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb826-39"><a href="grupos-robson.html#cb826-39" aria-hidden="true" tabindex="-1"></a>tabla <span class="sc">%&gt;%</span>  </span>
@@ -6744,22 +6744,22 @@ p-valor
 Grupo Robson
 </th>
 <th style="text-align:right;">
-OR asintomáticas
+OR Asintomática
 </th>
 <th style="text-align:right;">
-p-valor asintomáticas
+p-valor Asintomática
 </th>
 <th style="text-align:right;">
-OR síntomas leves
+OR Leve
 </th>
 <th style="text-align:right;">
-p-valor síntomas leves
+p-valor Leve
 </th>
 <th style="text-align:right;">
-OR neumonía
+OR Grave
 </th>
 <th style="text-align:right;">
-p-valor neumonía
+p-valor Grave
 </th>
 </tr>
 </thead>
@@ -6915,10 +6915,10 @@ Inf
 <span id="cb827-4"><a href="grupos-robson.html#cb827-4" aria-hidden="true" tabindex="-1"></a>Casos<span class="sc">$</span>PreP[<span class="fu">round</span>((Casos<span class="sc">$</span>EG_TOTAL_PARTO<span class="sc">-</span>Casos<span class="sc">$</span>EDAD.GEST.TOTAL)<span class="sc">*</span><span class="dv">7</span>)<span class="sc">&gt;</span><span class="dv">2</span>]<span class="ot">=</span><span class="st">&quot;Anteparto&quot;</span>  </span>
 <span id="cb827-5"><a href="grupos-robson.html#cb827-5" aria-hidden="true" tabindex="-1"></a>Casos<span class="sc">$</span>PreP[<span class="fu">round</span>((Casos<span class="sc">$</span>EG_TOTAL_PARTO<span class="sc">-</span>Casos<span class="sc">$</span>EDAD.GEST.TOTAL)<span class="sc">*</span><span class="dv">7</span>)<span class="sc">&lt;=</span><span class="dv">2</span>]<span class="ot">=</span><span class="st">&quot;Periparto&quot;</span></span>
 <span id="cb827-6"><a href="grupos-robson.html#cb827-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb827-7"><a href="grupos-robson.html#cb827-7" aria-hidden="true" tabindex="-1"></a>CasosPeriLeves<span class="ot">=</span>Casos</span>
-<span id="cb827-8"><a href="grupos-robson.html#cb827-8" aria-hidden="true" tabindex="-1"></a>CasosPeriLeves<span class="ot">=</span>CasosPeriLeves[CasosPeriLeves<span class="sc">$</span>Sint<span class="sc">==</span><span class="dv">1</span><span class="sc">|</span>CasosPeriLeves<span class="sc">$</span>Sint<span class="sc">==</span><span class="dv">2</span>,]</span>
-<span id="cb827-9"><a href="grupos-robson.html#cb827-9" aria-hidden="true" tabindex="-1"></a>CasosPeriLeves<span class="ot">=</span>CasosPeriLeves[CasosPeriLeves<span class="sc">$</span>PreP<span class="sc">!=</span><span class="st">&quot;Anteparto&quot;</span>,]</span>
-<span id="cb827-10"><a href="grupos-robson.html#cb827-10" aria-hidden="true" tabindex="-1"></a>CasosPeriLeves<span class="ot">=</span><span class="fu">droplevels</span>(CasosPeriLeves)</span>
+<span id="cb827-7"><a href="grupos-robson.html#cb827-7" aria-hidden="true" tabindex="-1"></a>CasosPerileve<span class="ot">=</span>Casos</span>
+<span id="cb827-8"><a href="grupos-robson.html#cb827-8" aria-hidden="true" tabindex="-1"></a>CasosPerileve<span class="ot">=</span>CasosPerileve[CasosPerileve<span class="sc">$</span>Sint<span class="sc">==</span><span class="dv">1</span><span class="sc">|</span>CasosPerileve<span class="sc">$</span>Sint<span class="sc">==</span><span class="dv">2</span>,]</span>
+<span id="cb827-9"><a href="grupos-robson.html#cb827-9" aria-hidden="true" tabindex="-1"></a>CasosPerileve<span class="ot">=</span>CasosPerileve[CasosPerileve<span class="sc">$</span>PreP<span class="sc">!=</span><span class="st">&quot;Anteparto&quot;</span>,]</span>
+<span id="cb827-10"><a href="grupos-robson.html#cb827-10" aria-hidden="true" tabindex="-1"></a>CasosPerileve<span class="ot">=</span><span class="fu">droplevels</span>(CasosPerileve)</span>
 <span id="cb827-11"><a href="grupos-robson.html#cb827-11" aria-hidden="true" tabindex="-1"></a>CasosPeriGraves<span class="ot">=</span>Casos</span>
 <span id="cb827-12"><a href="grupos-robson.html#cb827-12" aria-hidden="true" tabindex="-1"></a>CasosPeriGraves<span class="ot">=</span>CasosPeriGraves[CasosPeriGraves<span class="sc">$</span>Sint<span class="sc">==</span><span class="dv">3</span>,]</span>
 <span id="cb827-13"><a href="grupos-robson.html#cb827-13" aria-hidden="true" tabindex="-1"></a>CasosPeriGraves<span class="ot">=</span>CasosPeriGraves[CasosPeriGraves<span class="sc">$</span>PreP<span class="sc">!=</span><span class="st">&quot;Anteparto&quot;</span>,]</span>
@@ -6926,7 +6926,7 @@ Inf
 <span id="cb827-15"><a href="grupos-robson.html#cb827-15" aria-hidden="true" tabindex="-1"></a>CasosPeriGraves<span class="sc">$</span>Robson<span class="ot">=</span><span class="fu">factor</span>(CasosPeriGraves<span class="sc">$</span>Robson,<span class="at">levels=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="grupos-robson.html#cb828-1" aria-hidden="true" tabindex="-1"></a>TRcaPreP<span class="ot">=</span><span class="fu">table</span>(Casos<span class="sc">$</span>Robson[Casos<span class="sc">$</span>PreP<span class="sc">==</span><span class="st">&quot;Anteparto&quot;</span>],Casos<span class="sc">$</span>Cesárea[Casos<span class="sc">$</span>PreP<span class="sc">==</span><span class="st">&quot;Anteparto&quot;</span>])</span>
 <span id="cb828-2"><a href="grupos-robson.html#cb828-2" aria-hidden="true" tabindex="-1"></a>TRcaPeriP<span class="ot">=</span><span class="fu">table</span>(Casos<span class="sc">$</span>Robson[Casos<span class="sc">$</span>PreP<span class="sc">==</span><span class="st">&quot;Periparto&quot;</span>],Casos<span class="sc">$</span>Cesárea[Casos<span class="sc">$</span>PreP<span class="sc">==</span><span class="st">&quot;Periparto&quot;</span>])</span>
-<span id="cb828-3"><a href="grupos-robson.html#cb828-3" aria-hidden="true" tabindex="-1"></a>TRCaPL<span class="ot">=</span><span class="fu">table</span>(CasosPeriLeves<span class="sc">$</span>Robson,CasosPeriLeves<span class="sc">$</span>Cesárea) </span>
+<span id="cb828-3"><a href="grupos-robson.html#cb828-3" aria-hidden="true" tabindex="-1"></a>TRCaPL<span class="ot">=</span><span class="fu">table</span>(CasosPerileve<span class="sc">$</span>Robson,CasosPerileve<span class="sc">$</span>Cesárea) </span>
 <span id="cb828-4"><a href="grupos-robson.html#cb828-4" aria-hidden="true" tabindex="-1"></a>TRCaPG<span class="ot">=</span><span class="fu">table</span>(CasosPeriGraves<span class="sc">$</span>Robson,CasosPeriGraves<span class="sc">$</span>Cesárea) </span></code></pre></div>
 <div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="grupos-robson.html#cb829-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Cesárea&quot;</span>,<span class="st">&quot;No cesárea&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
 <span id="cb829-2"><a href="grupos-robson.html#cb829-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">2</span>))</span>
@@ -6937,7 +6937,7 @@ Inf
 <span id="cb829-7"><a href="grupos-robson.html#cb829-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;stack&quot;</span>, <span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)<span class="sc">+</span></span>
 <span id="cb829-8"><a href="grupos-robson.html#cb829-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
 <span id="cb829-9"><a href="grupos-robson.html#cb829-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)<span class="sc">+</span></span>
-<span id="cb829-10"><a href="grupos-robson.html#cb829-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Cesáreas en grupos Robson de infectadas periparto asintomáticas o leves&quot;</span>)<span class="sc">+</span></span>
+<span id="cb829-10"><a href="grupos-robson.html#cb829-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Cesáreas en grupos Robson de infectadas periparto Asintomática o leve&quot;</span>)<span class="sc">+</span></span>
 <span id="cb829-11"><a href="grupos-robson.html#cb829-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Pastel1&quot;</span>) </span></code></pre></div>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-679"></span>
 <img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/unnamed-chunk-679-1.png" alt="\s" width="50%" />
@@ -7309,7 +7309,7 @@ p-valor test de Fisher
 </table>
 </div>
 <p>Qué grupos tienen proporciones de cesáreas en infectadas periparto no graves o no infectadas significativamente diferentes? Ninguno:</p>
-<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="grupos-robson.html#cb833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TablaRobsonGlobal</span>(TRCaPL,TRCo,<span class="st">&quot;Peripartos asintomáticos o leves&quot;</span>,<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="grupos-robson.html#cb833-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TablaRobsonGlobal</span>(TRCaPL,TRCo,<span class="st">&quot;Peripartos asintomáticos o leve&quot;</span>,<span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div style="border: 0px;overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -7318,7 +7318,7 @@ p-valor test de Fisher
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Casos Peripartos asintomáticos o leves
+Casos Peripartos asintomáticos o leve
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -7638,7 +7638,7 @@ Inf
 </table>
 </div>
 <p>Qué grupos tienen proporciones de cesáreas en infectadas periparto graves o no infectadas significativamente diferentes? Algunos!</p>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="grupos-robson.html#cb834-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TablaRobsonGlobal</span>(TRCaPG,TRCo,<span class="st">&quot;Peripartos neumonías&quot;</span>,<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="grupos-robson.html#cb834-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TablaRobsonGlobal</span>(TRCaPG,TRCo,<span class="st">&quot;Peripartos Graves&quot;</span>,<span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <div style="border: 0px;overflow-x: scroll; width:100%; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -7647,7 +7647,7 @@ Inf
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Casos Peripartos neumonías
+Casos Peripartos Graves
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -7966,7 +7966,7 @@ NaN
 </tbody>
 </table>
 </div>
-<p>Qué grupos tienen proporciones de cesáreas en infectadas periparto no graves o neumonias significativamente diferentes? Bastantes!</p>
+<p>Qué grupos tienen proporciones de cesáreas en infectadas periparto no graves o graves significativamente diferentes? Bastantes!</p>
 <div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="grupos-robson.html#cb835-1" aria-hidden="true" tabindex="-1"></a>EE1<span class="ot">=</span><span class="fu">t</span>(TRCaPG)[<span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]</span>
 <span id="cb835-2"><a href="grupos-robson.html#cb835-2" aria-hidden="true" tabindex="-1"></a>EE2<span class="ot">=</span><span class="fu">t</span>(TRCaPL)[<span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>,<span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>]</span>
 <span id="cb835-3"><a href="grupos-robson.html#cb835-3" aria-hidden="true" tabindex="-1"></a>OR<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">10</span>)</span>
@@ -7977,7 +7977,7 @@ NaN
 <span id="cb835-8"><a href="grupos-robson.html#cb835-8" aria-hidden="true" tabindex="-1"></a>pp[i]<span class="ot">=</span>FT<span class="sc">$</span>p.value       }</span>
 <span id="cb835-9"><a href="grupos-robson.html#cb835-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb835-10"><a href="grupos-robson.html#cb835-10" aria-hidden="true" tabindex="-1"></a>dt<span class="ot">=</span><span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="fu">colSums</span>(EE1),EE1[<span class="dv">1</span>,],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(EE1,<span class="at">margin=</span><span class="dv">2</span>)[<span class="dv">1</span>,],<span class="dv">2</span>),<span class="fu">colSums</span>(EE2),EE2[<span class="dv">1</span>,],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(EE2,<span class="at">margin=</span><span class="dv">2</span>)[<span class="dv">1</span>,],<span class="dv">2</span>),<span class="fu">round</span>(OR,<span class="dv">2</span>),<span class="fu">round</span>(pp,<span class="dv">3</span>))</span>
-<span id="cb835-11"><a href="grupos-robson.html#cb835-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Periparto neumonía&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,  <span class="st">&quot;Periparto no neumonía&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,<span class="st">&quot;OR&quot;</span>,<span class="st">&quot;p-valor test de Fisher&quot;</span>)</span>
+<span id="cb835-11"><a href="grupos-robson.html#cb835-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Periparto Grave&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,  <span class="st">&quot;Periparto no Grave&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,<span class="st">&quot;OR&quot;</span>,<span class="st">&quot;p-valor test de Fisher&quot;</span>)</span>
 <span id="cb835-12"><a href="grupos-robson.html#cb835-12" aria-hidden="true" tabindex="-1"></a>dt <span class="sc">%&gt;%</span></span>
 <span id="cb835-13"><a href="grupos-robson.html#cb835-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb835-14"><a href="grupos-robson.html#cb835-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()<span class="sc">%&gt;%</span>     </span>
@@ -7990,7 +7990,7 @@ NaN
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Periparto neumonía
+Periparto Grave
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -7999,7 +7999,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Periparto no neumonía
+Periparto no Grave
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -8332,7 +8332,7 @@ NaN
 <span id="cb837-19"><a href="grupos-robson.html#cb837-19" aria-hidden="true" tabindex="-1"></a><span class="at">Neum2w=</span>TRCa2wS[,<span class="dv">3</span>],</span>
 <span id="cb837-20"><a href="grupos-robson.html#cb837-20" aria-hidden="true" tabindex="-1"></a>pTRCa2wS[,<span class="dv">3</span>])</span>
 <span id="cb837-21"><a href="grupos-robson.html#cb837-21" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>()</span>
-<span id="cb837-22"><a href="grupos-robson.html#cb837-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas anteparto&quot;</span>, <span class="st">&quot;Asintomáticas prepartp&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Síntomas leves anteparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Neumonía anteparto&quot;</span>, <span class="st">&quot;%&quot;</span>,<span class="st">&quot;Total infectadas periparto&quot;</span>, <span class="st">&quot;Asintomáticas periparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Síntomas leves periparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Neumonía peripartoa&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
+<span id="cb837-22"><a href="grupos-robson.html#cb837-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWS)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Total infectadas anteparto&quot;</span>, <span class="st">&quot;Asintomática prepartp&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Leve anteparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Grave anteparto&quot;</span>, <span class="st">&quot;%&quot;</span>,<span class="st">&quot;Total infectadas periparto&quot;</span>, <span class="st">&quot;Asintomática periparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Leve periparto&quot;</span>, <span class="st">&quot;%&quot;</span>, <span class="st">&quot;Grave peripartoa&quot;</span>, <span class="st">&quot;%&quot;</span>)</span>
 <span id="cb837-23"><a href="grupos-robson.html#cb837-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb837-24"><a href="grupos-robson.html#cb837-24" aria-hidden="true" tabindex="-1"></a>DFTRCaWS <span class="sc">%&gt;%</span>  </span>
 <span id="cb837-25"><a href="grupos-robson.html#cb837-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -8349,19 +8349,19 @@ Grupo Robson
 Total infectadas anteparto
 </th>
 <th style="text-align:right;">
-Asintomáticas prepartp
+Asintomática prepartp
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Síntomas leves anteparto
+Leve anteparto
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Neumonía anteparto
+Grave anteparto
 </th>
 <th style="text-align:right;">
 %
@@ -8370,19 +8370,19 @@ Neumonía anteparto
 Total infectadas periparto
 </th>
 <th style="text-align:right;">
-Asintomáticas periparto
+Asintomática periparto
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Síntomas leves periparto
+Leve periparto
 </th>
 <th style="text-align:right;">
 %
 </th>
 <th style="text-align:right;">
-Neumonía peripartoa
+Grave peripartoa
 </th>
 <th style="text-align:right;">
 %
@@ -8910,7 +8910,7 @@ Pérdidas
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="grupos-robson.html#cb838-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="grupos-robson.html#cb838-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">10</span>))</span>
 <span id="cb838-2"><a href="grupos-robson.html#cb838-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">3</span>))</span>
 <span id="cb838-3"><a href="grupos-robson.html#cb838-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(TRCa1wS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span>
 <span id="cb838-4"><a href="grupos-robson.html#cb838-4" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(Grupo,Tipo,valor)</span>
@@ -8927,7 +8927,7 @@ Pérdidas
 Figura 7.17: 
 </p>
 </div>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="grupos-robson.html#cb839-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">10</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>,<span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="grupos-robson.html#cb839-1" aria-hidden="true" tabindex="-1"></a>Tipo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">10</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>,<span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb839-2"><a href="grupos-robson.html#cb839-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">factor</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span> , <span class="dv">3</span>))</span>
 <span id="cb839-3"><a href="grupos-robson.html#cb839-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(TRCa2wS[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,])</span>
 <span id="cb839-4"><a href="grupos-robson.html#cb839-4" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(Grupo,Tipo,valor)</span>
@@ -9230,7 +9230,7 @@ Periparto
 <span id="cb841-21"><a href="grupos-robson.html#cb841-21" aria-hidden="true" tabindex="-1"></a>DFTRCaWSC<span class="ot">=</span>DFTRCaWSC[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">10</span>),]</span>
 <span id="cb841-22"><a href="grupos-robson.html#cb841-22" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb841-23"><a href="grupos-robson.html#cb841-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb841-24"><a href="grupos-robson.html#cb841-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Asintomáticas anteparto&quot;</span>, <span class="st">&quot;% cesáreas en asintomáticas anteparto&quot;</span>, <span class="st">&quot;Síntomas leves anteparto&quot;</span>, <span class="st">&quot;% cesáreas en síntomas leves anteparto&quot;</span>, <span class="st">&quot;Neumonías anteparto&quot;</span>, <span class="st">&quot;% cesáreas en neumonía anteparto&quot;</span>,  <span class="st">&quot;Asintomáticas periparto&quot;</span>,<span class="st">&quot;% cesáreas en asintomáticas periparto&quot;</span>, <span class="st">&quot;Síntomas leves periparto&quot;</span>, <span class="st">&quot;% cesáreas en síntomas leves periparto&quot;</span>, <span class="st">&quot;Neumonías periparto&quot;</span>, <span class="st">&quot;% cesáreas en neumonía periparto&quot;</span>)</span>
+<span id="cb841-24"><a href="grupos-robson.html#cb841-24" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(DFTRCaWSC)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Asintomática anteparto&quot;</span>, <span class="st">&quot;% cesáreas en Asintomática anteparto&quot;</span>, <span class="st">&quot;Leve anteparto&quot;</span>, <span class="st">&quot;% cesáreas en Leve anteparto&quot;</span>, <span class="st">&quot;Graves anteparto&quot;</span>, <span class="st">&quot;% cesáreas en Grave anteparto&quot;</span>,  <span class="st">&quot;Asintomática periparto&quot;</span>,<span class="st">&quot;% cesáreas en Asintomática periparto&quot;</span>, <span class="st">&quot;Leve periparto&quot;</span>, <span class="st">&quot;% cesáreas en Leve periparto&quot;</span>, <span class="st">&quot;Graves periparto&quot;</span>, <span class="st">&quot;% cesáreas en Grave periparto&quot;</span>)</span>
 <span id="cb841-25"><a href="grupos-robson.html#cb841-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb841-26"><a href="grupos-robson.html#cb841-26" aria-hidden="true" tabindex="-1"></a>DFTRCaWSC <span class="sc">%&gt;%</span>  </span>
 <span id="cb841-27"><a href="grupos-robson.html#cb841-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -9244,40 +9244,40 @@ Periparto
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Asintomáticas anteparto
+Asintomática anteparto
 </th>
 <th style="text-align:right;">
-% cesáreas en asintomáticas anteparto
+% cesáreas en Asintomática anteparto
 </th>
 <th style="text-align:right;">
-Síntomas leves anteparto
+Leve anteparto
 </th>
 <th style="text-align:right;">
-% cesáreas en síntomas leves anteparto
+% cesáreas en Leve anteparto
 </th>
 <th style="text-align:right;">
-Neumonías anteparto
+Graves anteparto
 </th>
 <th style="text-align:right;">
-% cesáreas en neumonía anteparto
+% cesáreas en Grave anteparto
 </th>
 <th style="text-align:right;">
-Asintomáticas periparto
+Asintomática periparto
 </th>
 <th style="text-align:right;">
-% cesáreas en asintomáticas periparto
+% cesáreas en Asintomática periparto
 </th>
 <th style="text-align:right;">
-Síntomas leves periparto
+Leve periparto
 </th>
 <th style="text-align:right;">
-% cesáreas en síntomas leves periparto
+% cesáreas en Leve periparto
 </th>
 <th style="text-align:right;">
-Neumonías periparto
+Graves periparto
 </th>
 <th style="text-align:right;">
-% cesáreas en neumonía periparto
+% cesáreas en Grave periparto
 </th>
 </tr>
 </thead>
@@ -9748,7 +9748,7 @@ Periparto
 <span id="cb843-33"><a href="grupos-robson.html#cb843-33" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(ORN,<span class="dv">4</span>),</span>
 <span id="cb843-34"><a href="grupos-robson.html#cb843-34" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(ppN,<span class="dv">4</span>)</span>
 <span id="cb843-35"><a href="grupos-robson.html#cb843-35" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb843-36"><a href="grupos-robson.html#cb843-36" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;OR asintomáticas&quot;</span>, <span class="st">&quot;p-valor asintomáticas&quot;</span>,<span class="st">&quot;OR síntomas leves&quot;</span>,<span class="st">&quot;p-valor síntomas leves&quot;</span>,<span class="st">&quot;OR neumonía&quot;</span>,<span class="st">&quot;p-valor neumonía&quot;</span>)</span>
+<span id="cb843-36"><a href="grupos-robson.html#cb843-36" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;OR Asintomática&quot;</span>, <span class="st">&quot;p-valor Asintomática&quot;</span>,<span class="st">&quot;OR Leve&quot;</span>,<span class="st">&quot;p-valor Leve&quot;</span>,<span class="st">&quot;OR Grave&quot;</span>,<span class="st">&quot;p-valor Grave&quot;</span>)</span>
 <span id="cb843-37"><a href="grupos-robson.html#cb843-37" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(tabla)<span class="ot">=</span><span class="fu">c</span>()</span>
 <span id="cb843-38"><a href="grupos-robson.html#cb843-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb843-39"><a href="grupos-robson.html#cb843-39" aria-hidden="true" tabindex="-1"></a>tabla <span class="sc">%&gt;%</span>  </span>
@@ -9763,22 +9763,22 @@ Periparto
 Grupo Robson
 </th>
 <th style="text-align:right;">
-OR asintomáticas
+OR Asintomática
 </th>
 <th style="text-align:right;">
-p-valor asintomáticas
+p-valor Asintomática
 </th>
 <th style="text-align:right;">
-OR síntomas leves
+OR Leve
 </th>
 <th style="text-align:right;">
-p-valor síntomas leves
+p-valor Leve
 </th>
 <th style="text-align:right;">
-OR neumonía
+OR Grave
 </th>
 <th style="text-align:right;">
-p-valor neumonía
+p-valor Grave
 </th>
 </tr>
 </thead>
@@ -9931,9 +9931,9 @@ Inf
 <span id="cb844-5"><a href="grupos-robson.html#cb844-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaAsin),TCaAsin[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaAsin,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>),</span>
 <span id="cb844-6"><a href="grupos-robson.html#cb844-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaSL),TCaSL[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaSL,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>),</span>
 <span id="cb844-7"><a href="grupos-robson.html#cb844-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(TCaNeu),TCaNeu[,<span class="dv">1</span>],<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">prop.table</span>(TCaNeu,<span class="at">margin=</span><span class="dv">1</span>)[,<span class="dv">1</span>],<span class="dv">2</span>))</span>
-<span id="cb844-8"><a href="grupos-robson.html#cb844-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. asintomáticas&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>, </span>
-<span id="cb844-9"><a href="grupos-robson.html#cb844-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. síntomas leves&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,</span>
-<span id="cb844-10"><a href="grupos-robson.html#cb844-10" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. Neumonía&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>)</span>
+<span id="cb844-8"><a href="grupos-robson.html#cb844-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">names</span>(dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Grupo Robson&quot;</span>, <span class="st">&quot;Inf. Asintomática&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>, </span>
+<span id="cb844-9"><a href="grupos-robson.html#cb844-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. Leve&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>,</span>
+<span id="cb844-10"><a href="grupos-robson.html#cb844-10" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&quot;Inf. Grave&quot;</span>, <span class="st">&quot;Cesáreas&quot;</span>, <span class="st">&quot;Porcentaje&quot;</span>)</span>
 <span id="cb844-11"><a href="grupos-robson.html#cb844-11" aria-hidden="true" tabindex="-1"></a>dades <span class="sc">%&gt;%</span></span>
 <span id="cb844-12"><a href="grupos-robson.html#cb844-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb844-13"><a href="grupos-robson.html#cb844-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()<span class="sc">%&gt;%</span>     </span>
@@ -9946,7 +9946,7 @@ Inf
 Grupo Robson
 </th>
 <th style="text-align:right;">
-Inf. asintomáticas
+Inf. Asintomática
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -9955,7 +9955,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Inf. síntomas leves
+Inf. Leve
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -9964,7 +9964,7 @@ Cesáreas
 Porcentaje
 </th>
 <th style="text-align:right;">
-Inf. Neumonía
+Inf. Grave
 </th>
 <th style="text-align:right;">
 Cesáreas
@@ -10305,9 +10305,9 @@ NaN
 <span id="cb845-4"><a href="grupos-robson.html#cb845-4" aria-hidden="true" tabindex="-1"></a>pp[<span class="dv">2</span>]<span class="ot">=</span><span class="fu">Prop.trend.test</span>(EE[,<span class="dv">2</span>],EE[,<span class="dv">1</span>])</span>
 <span id="cb845-5"><a href="grupos-robson.html#cb845-5" aria-hidden="true" tabindex="-1"></a>pp[<span class="dv">3</span>]<span class="ot">=</span><span class="fu">Prop.trend.test</span>(EE[,<span class="dv">4</span>],EE[,<span class="dv">3</span>])</span></code></pre></div>
 <ul>
-<li>Asintomáticas contra síntomas leves: <span class="math inline">\(2\times 10^{-9}\)</span></li>
-<li>Asintomáticas contra neumonía: <span class="math inline">\(2\times 10^{-9}\)</span></li>
-<li>Síntomas leves contra neumonía: <span class="math inline">\(8\times 10^{-9}\)</span></li>
+<li>Asintomática contra Leve: <span class="math inline">\(2\times 10^{-9}\)</span></li>
+<li>Asintomática contra Grave: <span class="math inline">\(2\times 10^{-9}\)</span></li>
+<li>Leve contra Grave: <span class="math inline">\(8\times 10^{-9}\)</span></li>
 </ul>
 </div>
 </div>

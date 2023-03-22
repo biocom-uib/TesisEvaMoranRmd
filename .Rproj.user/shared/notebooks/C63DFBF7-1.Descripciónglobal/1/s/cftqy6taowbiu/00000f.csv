@@ -1,2 +1,0 @@
-"0","taula=table(data.frame(Casos$Enfermedad.cardiaca.crónica,Sint))[c(2,1) ,1:3]"
-"0","Tabla.DGS(Casos$Enfermedad.cardiaca.crónica,""ECC"", ""No ECC"")"

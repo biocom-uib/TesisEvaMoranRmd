@@ -22,7 +22,7 @@
 
 
 
-<meta name="date" content="2023-03-16" />
+<meta name="date" content="2023-03-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -5171,7 +5171,7 @@ Pérdidas
 </div>
 <div id="descripción-de-casos-por-sintomatología" class="section level2 hasAnchor" number="1.4">
 <h2><span class="header-section-number">1.4</span> Descripción de casos por sintomatología<a href="descripción-de-la-muestra-global.html#descripción-de-casos-por-sintomatología" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="descripción-de-la-muestra-global.html#cb76-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="descripción-de-la-muestra-global.html#cb76-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb76-2"><a href="descripción-de-la-muestra-global.html#cb76-2" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(Sint)))</span>
 <span id="cb76-3"><a href="descripción-de-la-muestra-global.html#cb76-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Síntomas,valor)</span>
 <span id="cb76-4"><a href="descripción-de-la-muestra-global.html#cb76-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -5224,16 +5224,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -5333,7 +5333,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="descripción-de-la-muestra-global.html#cb78-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="descripción-de-la-muestra-global.html#cb78-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb78-2"><a href="descripción-de-la-muestra-global.html#cb78-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;1er trimestre&quot;</span>, <span class="st">&quot;2o trimestre&quot;</span>, <span class="st">&quot;3er trimestre&quot;</span>) , <span class="dv">3</span>)</span>
 <span id="cb78-3"><a href="descripción-de-la-muestra-global.html#cb78-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb78-4"><a href="descripción-de-la-muestra-global.html#cb78-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -5371,15 +5371,15 @@ Figura 1.14:
 <span id="cb79-17"><a href="descripción-de-la-muestra-global.html#cb79-17" aria-hidden="true" tabindex="-1"></a> <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;Dark2&quot;</span>)</span></code></pre></div>
 <p><img src="Tesis-Eva-Mor%C3%A1n_files/figure-html/unnamed-chunk-106-1.png" width="50%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="descripción-de-la-muestra-global.html#cb80-1" aria-hidden="true" tabindex="-1"></a>I1<span class="ot">=</span>I[Casos<span class="sc">$</span>SINTOMAS_DIAGNOSTICO<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>]</span>
-<span id="cb80-2"><a href="descripción-de-la-muestra-global.html#cb80-2" aria-hidden="true" tabindex="-1"></a>I2<span class="ot">=</span>I[Casos<span class="sc">$</span>SINTOMAS_DIAGNOSTICO<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>]</span>
-<span id="cb80-3"><a href="descripción-de-la-muestra-global.html#cb80-3" aria-hidden="true" tabindex="-1"></a>I3<span class="ot">=</span>I[Casos<span class="sc">$</span>SINTOMAS_DIAGNOSTICO<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>]</span>
+<span id="cb80-2"><a href="descripción-de-la-muestra-global.html#cb80-2" aria-hidden="true" tabindex="-1"></a>I2<span class="ot">=</span>I[Casos<span class="sc">$</span>SINTOMAS_DIAGNOSTICO<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>]</span>
+<span id="cb80-3"><a href="descripción-de-la-muestra-global.html#cb80-3" aria-hidden="true" tabindex="-1"></a>I3<span class="ot">=</span>I[Casos<span class="sc">$</span>SINTOMAS_DIAGNOSTICO<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>]</span>
 <span id="cb80-4"><a href="descripción-de-la-muestra-global.html#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb80-5"><a href="descripción-de-la-muestra-global.html#cb80-5" aria-hidden="true" tabindex="-1"></a>Dades<span class="ot">=</span><span class="fu">rbind</span>(<span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I1,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I1,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I1,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I1,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">quantile</span>(I1,<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">sd</span>(I1,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),</span>
 <span id="cb80-6"><a href="descripción-de-la-muestra-global.html#cb80-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I2,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I2,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I2,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I2,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">quantile</span>(I2,<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">sd</span>(I2,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),</span>
 <span id="cb80-7"><a href="descripción-de-la-muestra-global.html#cb80-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I3,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I3,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I3,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I3,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">quantile</span>(I3,<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">sd</span>(I3,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)))</span>
 <span id="cb80-8"><a href="descripción-de-la-muestra-global.html#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb80-9"><a href="descripción-de-la-muestra-global.html#cb80-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Edad mínima&quot;</span>,<span class="st">&quot;Edad máxima&quot;</span>,<span class="st">&quot;Edad  media&quot;</span>, <span class="st">&quot;Edad  mediana&quot;</span>, <span class="st">&quot;1er cuartil&quot;</span>, <span class="st">&quot;3er cuartil&quot;</span>, <span class="st">&quot;Desv. típica&quot;</span>)</span>
-<span id="cb80-10"><a href="descripción-de-la-muestra-global.html#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomáticas&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>,<span class="st">&quot;Neumonías&quot;</span>)</span>
+<span id="cb80-10"><a href="descripción-de-la-muestra-global.html#cb80-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>,<span class="st">&quot;Grave&quot;</span>)</span>
 <span id="cb80-11"><a href="descripción-de-la-muestra-global.html#cb80-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb80-12"><a href="descripción-de-la-muestra-global.html#cb80-12" aria-hidden="true" tabindex="-1"></a>Dades <span class="sc">%&gt;%</span></span>
 <span id="cb80-13"><a href="descripción-de-la-muestra-global.html#cb80-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -5417,7 +5417,7 @@ Desv. típica
 <tbody>
 <tr>
 <td style="text-align:left;">
-Asintomáticas
+Asintomática
 </td>
 <td style="text-align:right;">
 18
@@ -5443,7 +5443,7 @@ Asintomáticas
 </tr>
 <tr>
 <td style="text-align:left;">
-Síntomas leves
+Leve
 </td>
 <td style="text-align:right;">
 18
@@ -5469,7 +5469,7 @@ Síntomas leves
 </tr>
 <tr>
 <td style="text-align:left;">
-Neumonías
+Grave
 </td>
 <td style="text-align:right;">
 18
@@ -5502,7 +5502,7 @@ Neumonías
 <li><p>Desviaciones típicas: test de Fligner-Killeen, p-valor 0.91</p></li>
 <li><p>Contrastes post hoc por parejas</p></li>
 </ul>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="descripción-de-la-muestra-global.html#cb81-1" aria-hidden="true" tabindex="-1"></a>Contraste<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asíntomatica vs Síntomas leves&quot;</span>,<span class="st">&quot;Asíntomatica vs Neumonía&quot;</span>, <span class="st">&quot;Síntomas leves vs Neumonía&quot;</span>)</span>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="descripción-de-la-muestra-global.html#cb81-1" aria-hidden="true" tabindex="-1"></a>Contraste<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asíntomatica vs Leve&quot;</span>,<span class="st">&quot;Asíntomatica vs Grave&quot;</span>, <span class="st">&quot;Leve vs Grave&quot;</span>)</span>
 <span id="cb81-2"><a href="descripción-de-la-muestra-global.html#cb81-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb81-3"><a href="descripción-de-la-muestra-global.html#cb81-3" aria-hidden="true" tabindex="-1"></a>pvals<span class="ot">=</span><span class="fu">round</span>(<span class="dv">3</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">t.test</span>(I1,I2,<span class="at">var.equal=</span><span class="cn">TRUE</span>)<span class="sc">$</span>p.value, <span class="fu">t.test</span>(I1,I3,<span class="at">var.equal=</span><span class="cn">TRUE</span>)<span class="sc">$</span>p.value,</span>
 <span id="cb81-4"><a href="descripción-de-la-muestra-global.html#cb81-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t.test</span>(I2,I3,<span class="at">var.equal=</span><span class="cn">TRUE</span>)<span class="sc">$</span>p.value),<span class="dv">4</span>)</span>
@@ -5526,7 +5526,7 @@ p.valor
 <tbody>
 <tr>
 <td style="text-align:left;">
-Asíntomatica vs Síntomas leves
+Asíntomatica vs Leve
 </td>
 <td style="text-align:right;">
 0.9667
@@ -5534,7 +5534,7 @@ Asíntomatica vs Síntomas leves
 </tr>
 <tr>
 <td style="text-align:left;">
-Asíntomatica vs Neumonía
+Asíntomatica vs Grave
 </td>
 <td style="text-align:right;">
 0.2546
@@ -5542,7 +5542,7 @@ Asíntomatica vs Neumonía
 </tr>
 <tr>
 <td style="text-align:left;">
-Síntomas leves vs Neumonía
+Leve vs Grave
 </td>
 <td style="text-align:right;">
 0.0414
@@ -5585,16 +5585,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -5717,7 +5717,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="descripción-de-la-muestra-global.html#cb83-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="descripción-de-la-muestra-global.html#cb83-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb83-2"><a href="descripción-de-la-muestra-global.html#cb83-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;18-30&quot;</span>,<span class="st">&quot;31-40&quot;</span>,<span class="st">&quot;&gt;40&quot;</span>) , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;18-30&quot;</span>,<span class="st">&quot;31-40&quot;</span>,<span class="st">&quot;&gt;40&quot;</span>))</span>
 <span id="cb83-3"><a href="descripción-de-la-muestra-global.html#cb83-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb83-4"><a href="descripción-de-la-muestra-global.html#cb83-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -5826,16 +5826,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6004,7 +6004,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="descripción-de-la-muestra-global.html#cb86-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">5</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="descripción-de-la-muestra-global.html#cb86-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">5</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb86-2"><a href="descripción-de-la-muestra-global.html#cb86-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Árabe&quot;</span>, <span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;Blanca&quot;</span>, <span class="st">&quot;Latinoamericana&quot;</span>,<span class="st">&quot;Negra&quot;</span>) , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Árabe&quot;</span>, <span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;Blanca&quot;</span>, <span class="st">&quot;Latinoamericana&quot;</span>,<span class="st">&quot;Negra&quot;</span>))</span>
 <span id="cb86-3"><a href="descripción-de-la-muestra-global.html#cb86-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb86-4"><a href="descripción-de-la-muestra-global.html#cb86-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -6110,16 +6110,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6249,16 +6249,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6388,16 +6388,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6527,16 +6527,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6666,16 +6666,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6809,16 +6809,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -6948,16 +6948,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7087,16 +7087,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7226,16 +7226,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7365,16 +7365,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7504,16 +7504,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7643,16 +7643,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7782,16 +7782,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -7922,16 +7922,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8082,16 +8082,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8145,7 +8145,7 @@ PE sin CG
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="descripción-de-la-muestra-global.html#cb117-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="descripción-de-la-muestra-global.html#cb117-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb117-2"><a href="descripción-de-la-muestra-global.html#cb117-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb117-3"><a href="descripción-de-la-muestra-global.html#cb117-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb117-4"><a href="descripción-de-la-muestra-global.html#cb117-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -8184,16 +8184,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8327,16 +8327,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8483,16 +8483,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8638,7 +8638,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="descripción-de-la-muestra-global.html#cb123-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">4</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="descripción-de-la-muestra-global.html#cb123-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">4</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb123-2"><a href="descripción-de-la-muestra-global.html#cb123-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
 <span id="cb123-3"><a href="descripción-de-la-muestra-global.html#cb123-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb123-4"><a href="descripción-de-la-muestra-global.html#cb123-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -8655,7 +8655,8 @@ Figura 1.34:
 </p>
 </div>
 <ul>
-<li>Asociación entre los grupos de sintomatología y el tipo de hemorragia postparto: test <span class="math inline">\(\chi^2\)</span> de Montecarlo, p-valor 0.611</li>
+<li><p>Asociación entre los grupos de sintomatología y el tipo de hemorragia postparto: test <span class="math inline">\(\chi^2\)</span> de Montecarlo, p-valor 0.611</p></li>
+<li><p>Potencia del test: 0.232</p></li>
 </ul>
 </div>
 <div id="sintomatología-vs-eventos-trombóticos" class="section level3 hasAnchor" number="1.4.21">
@@ -8675,16 +8676,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8814,16 +8815,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -8969,16 +8970,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9032,7 +9033,7 @@ UCI después del parto
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="descripción-de-la-muestra-global.html#cb129-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="descripción-de-la-muestra-global.html#cb129-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb129-2"><a href="descripción-de-la-muestra-global.html#cb129-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb129-3"><a href="descripción-de-la-muestra-global.html#cb129-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb129-4"><a href="descripción-de-la-muestra-global.html#cb129-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -9071,16 +9072,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9238,16 +9239,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9347,7 +9348,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="descripción-de-la-muestra-global.html#cb133-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="descripción-de-la-muestra-global.html#cb133-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb133-2"><a href="descripción-de-la-muestra-global.html#cb133-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb133-3"><a href="descripción-de-la-muestra-global.html#cb133-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb133-4"><a href="descripción-de-la-muestra-global.html#cb133-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -9407,16 +9408,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9516,7 +9517,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="descripción-de-la-muestra-global.html#cb135-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="descripción-de-la-muestra-global.html#cb135-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb135-2"><a href="descripción-de-la-muestra-global.html#cb135-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb135-3"><a href="descripción-de-la-muestra-global.html#cb135-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb135-4"><a href="descripción-de-la-muestra-global.html#cb135-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -9582,16 +9583,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9690,7 +9691,7 @@ Total
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="descripción-de-la-muestra-global.html#cb137-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="descripción-de-la-muestra-global.html#cb137-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb137-2"><a href="descripción-de-la-muestra-global.html#cb137-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb137-3"><a href="descripción-de-la-muestra-global.html#cb137-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb137-4"><a href="descripción-de-la-muestra-global.html#cb137-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -9748,16 +9749,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -9880,7 +9881,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="descripción-de-la-muestra-global.html#cb139-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="descripción-de-la-muestra-global.html#cb139-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">3</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb139-2"><a href="descripción-de-la-muestra-global.html#cb139-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
 <span id="cb139-3"><a href="descripción-de-la-muestra-global.html#cb139-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb139-4"><a href="descripción-de-la-muestra-global.html#cb139-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -9994,16 +9995,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -10149,7 +10150,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="descripción-de-la-muestra-global.html#cb142-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">4</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="descripción-de-la-muestra-global.html#cb142-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">4</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb142-2"><a href="descripción-de-la-muestra-global.html#cb142-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
 <span id="cb142-3"><a href="descripción-de-la-muestra-global.html#cb142-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb142-4"><a href="descripción-de-la-muestra-global.html#cb142-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>
@@ -10234,7 +10235,7 @@ Cesárea urgente
 <div id="edades-gestacionales" class="section level3 hasAnchor" number="1.4.30">
 <h3><span class="header-section-number">1.4.30</span> Edades gestacionales<a href="descripción-de-la-muestra-global.html#edades-gestacionales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="descripción-de-la-muestra-global.html#cb144-1" aria-hidden="true" tabindex="-1"></a>I<span class="ot">=</span>Casos<span class="sc">$</span>EG_TOTAL_PARTO</span>
-<span id="cb144-2"><a href="descripción-de-la-muestra-global.html#cb144-2" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(Sint,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Síntomas leves&quot;</span>,      <span class="st">&quot;Neumonía&quot;</span>  ))</span>
+<span id="cb144-2"><a href="descripción-de-la-muestra-global.html#cb144-2" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(Sint,<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Leve&quot;</span>,      <span class="st">&quot;Grave&quot;</span>  ))</span>
 <span id="cb144-3"><a href="descripción-de-la-muestra-global.html#cb144-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span><span class="fu">data.frame</span>(</span>
 <span id="cb144-4"><a href="descripción-de-la-muestra-global.html#cb144-4" aria-hidden="true" tabindex="-1"></a>  Síntomas,</span>
 <span id="cb144-5"><a href="descripción-de-la-muestra-global.html#cb144-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Edades=</span>I</span>
@@ -10262,15 +10263,15 @@ Figura 1.44:
 <span id="cb145-2"><a href="descripción-de-la-muestra-global.html#cb145-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
 <span id="cb145-3"><a href="descripción-de-la-muestra-global.html#cb145-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
 <span id="cb145-4"><a href="descripción-de-la-muestra-global.html#cb145-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),</span>
-<span id="cb145-5"><a href="descripción-de-la-muestra-global.html#cb145-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb145-6"><a href="descripción-de-la-muestra-global.html#cb145-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb145-7"><a href="descripción-de-la-muestra-global.html#cb145-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),         </span>
-<span id="cb145-8"><a href="descripción-de-la-muestra-global.html#cb145-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb145-9"><a href="descripción-de-la-muestra-global.html#cb145-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>))          )</span>
+<span id="cb145-5"><a href="descripción-de-la-muestra-global.html#cb145-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb145-6"><a href="descripción-de-la-muestra-global.html#cb145-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb145-7"><a href="descripción-de-la-muestra-global.html#cb145-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),         </span>
+<span id="cb145-8"><a href="descripción-de-la-muestra-global.html#cb145-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb145-9"><a href="descripción-de-la-muestra-global.html#cb145-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>))          )</span>
 <span id="cb145-10"><a href="descripción-de-la-muestra-global.html#cb145-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb145-11"><a href="descripción-de-la-muestra-global.html#cb145-11" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Edad gest. mínima&quot;</span>,<span class="st">&quot;Edad gest.  máxima&quot;</span>,<span class="st">&quot;Edad gest.  media&quot;</span>,</span>
 <span id="cb145-12"><a href="descripción-de-la-muestra-global.html#cb145-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&quot;Edad gest. mediana&quot;</span>, <span class="st">&quot;1er cuartil&quot;</span>, <span class="st">&quot;3er cuartil&quot;</span>,<span class="st">&quot;Desv. típica&quot;</span>)</span>
-<span id="cb145-13"><a href="descripción-de-la-muestra-global.html#cb145-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Síntomas leves&quot;</span>,      <span class="st">&quot;Neumonía&quot;</span>  )</span>
+<span id="cb145-13"><a href="descripción-de-la-muestra-global.html#cb145-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Leve&quot;</span>,      <span class="st">&quot;Grave&quot;</span>  )</span>
 <span id="cb145-14"><a href="descripción-de-la-muestra-global.html#cb145-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb145-15"><a href="descripción-de-la-muestra-global.html#cb145-15" aria-hidden="true" tabindex="-1"></a>Dades <span class="sc">%&gt;%</span></span>
 <span id="cb145-16"><a href="descripción-de-la-muestra-global.html#cb145-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -10334,7 +10335,7 @@ Asintomática
 </tr>
 <tr>
 <td style="text-align:left;">
-Síntomas leves
+Leve
 </td>
 <td style="text-align:right;">
 16.4
@@ -10360,7 +10361,7 @@ Síntomas leves
 </tr>
 <tr>
 <td style="text-align:left;">
-Neumonía
+Grave
 </td>
 <td style="text-align:right;">
 23.9
@@ -10393,9 +10394,9 @@ Neumonía
 <li><p>Edades gestacionales medias: test de Kruskal-Wallis, p-valor <span class="math inline">\(2\times 10^{-7}\)</span></p></li>
 <li><p>Contrastes posteriores de edades gestacionales medias por parejas: tests de Mann-Whitney,p-valores ajustados por Bonferroni:</p>
 <ul>
-<li>Asintomáticas vs Síntomas leves: 0.188</li>
-<li>Asintomáticas vs Neumonía: <span class="math inline">\(9\times 10^{-8}\)</span></li>
-<li>Síntomas leves vs Neumonía: <span class="math inline">\(10^{-4}\)</span></li>
+<li>Asintomática vs Leve: 0.188</li>
+<li>Asintomática vs Grave: <span class="math inline">\(9\times 10^{-8}\)</span></li>
+<li>Leve vs Grave: <span class="math inline">\(10^{-4}\)</span></li>
 </ul></li>
 </ul>
 </div>
@@ -10434,13 +10435,13 @@ Figura 1.45:
 <span id="cb147-2"><a href="descripción-de-la-muestra-global.html#cb147-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
 <span id="cb147-3"><a href="descripción-de-la-muestra-global.html#cb147-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
 <span id="cb147-4"><a href="descripción-de-la-muestra-global.html#cb147-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),</span>
-<span id="cb147-5"><a href="descripción-de-la-muestra-global.html#cb147-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb147-6"><a href="descripción-de-la-muestra-global.html#cb147-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb147-7"><a href="descripción-de-la-muestra-global.html#cb147-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),         </span>
-<span id="cb147-8"><a href="descripción-de-la-muestra-global.html#cb147-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
-<span id="cb147-9"><a href="descripción-de-la-muestra-global.html#cb147-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>))          )</span>
+<span id="cb147-5"><a href="descripción-de-la-muestra-global.html#cb147-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb147-6"><a href="descripción-de-la-muestra-global.html#cb147-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb147-7"><a href="descripción-de-la-muestra-global.html#cb147-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>)),         </span>
+<span id="cb147-8"><a href="descripción-de-la-muestra-global.html#cb147-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">max</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>), <span class="fu">round</span>(<span class="fu">mean</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">median</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),</span>
+<span id="cb147-9"><a href="descripción-de-la-muestra-global.html#cb147-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">round</span>(<span class="fu">quantile</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="fu">c</span>(<span class="fl">0.25</span>,<span class="fl">0.75</span>),<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>),<span class="fu">round</span>(<span class="fu">sd</span>(I[data<span class="sc">$</span>Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">1</span>))          )</span>
 <span id="cb147-10"><a href="descripción-de-la-muestra-global.html#cb147-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Peso. mínimo&quot;</span>,<span class="st">&quot;Peso.  máximo&quot;</span>,<span class="st">&quot;Peso.  medio&quot;</span>,<span class="st">&quot;Peso mediano&quot;</span>, <span class="st">&quot;1er cuartil&quot;</span>, <span class="st">&quot;3er cuartil&quot;</span>,<span class="st">&quot;Desv. típica&quot;</span>)</span>
-<span id="cb147-11"><a href="descripción-de-la-muestra-global.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Síntomas leves&quot;</span>,      <span class="st">&quot;Neumonía&quot;</span>  )</span>
+<span id="cb147-11"><a href="descripción-de-la-muestra-global.html#cb147-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(Dades)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span> ,<span class="st">&quot;Leve&quot;</span>,      <span class="st">&quot;Grave&quot;</span>  )</span>
 <span id="cb147-12"><a href="descripción-de-la-muestra-global.html#cb147-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb147-13"><a href="descripción-de-la-muestra-global.html#cb147-13" aria-hidden="true" tabindex="-1"></a>Dades <span class="sc">%&gt;%</span></span>
 <span id="cb147-14"><a href="descripción-de-la-muestra-global.html#cb147-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
@@ -10504,7 +10505,7 @@ Asintomática
 </tr>
 <tr>
 <td style="text-align:left;">
-Síntomas leves
+Leve
 </td>
 <td style="text-align:right;">
 680
@@ -10530,7 +10531,7 @@ Síntomas leves
 </tr>
 <tr>
 <td style="text-align:left;">
-Neumonía
+Grave
 </td>
 <td style="text-align:right;">
 680
@@ -10573,12 +10574,12 @@ Neumonía
 <span id="cb148-6"><a href="descripción-de-la-muestra-global.html#cb148-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb148-7"><a href="descripción-de-la-muestra-global.html#cb148-7" aria-hidden="true" tabindex="-1"></a>EEExt<span class="ot">=</span><span class="fu">cbind</span>(<span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">1</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">1</span>]))),</span>
 <span id="cb148-8"><a href="descripción-de-la-muestra-global.html#cb148-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">1</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">1</span>])))<span class="sc">/</span><span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>]),<span class="dv">2</span>),</span>
-<span id="cb148-9"><a href="descripción-de-la-muestra-global.html#cb148-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]))),</span>
-<span id="cb148-10"><a href="descripción-de-la-muestra-global.html#cb148-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>])))<span class="sc">/</span><span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>]),<span class="dv">2</span>),</span>
-<span id="cb148-11"><a href="descripción-de-la-muestra-global.html#cb148-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]))),</span>
-<span id="cb148-12"><a href="descripción-de-la-muestra-global.html#cb148-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>])))<span class="sc">/</span><span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>]),<span class="dv">2</span>)</span>
+<span id="cb148-9"><a href="descripción-de-la-muestra-global.html#cb148-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]))),</span>
+<span id="cb148-10"><a href="descripción-de-la-muestra-global.html#cb148-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">2</span>])))<span class="sc">/</span><span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>]),<span class="dv">2</span>),</span>
+<span id="cb148-11"><a href="descripción-de-la-muestra-global.html#cb148-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]))),</span>
+<span id="cb148-12"><a href="descripción-de-la-muestra-global.html#cb148-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">c</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>]),<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>])<span class="sc">-</span><span class="fu">sum</span>(<span class="fu">as.vector</span>(taula[,<span class="dv">3</span>])))<span class="sc">/</span><span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>]),<span class="dv">2</span>)</span>
 <span id="cb148-13"><a href="descripción-de-la-muestra-global.html#cb148-13" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb148-14"><a href="descripción-de-la-muestra-global.html#cb148-14" aria-hidden="true" tabindex="-1"></a>EEExt<span class="ot">=</span><span class="fu">rbind</span>(EEExt,<span class="fu">c</span>(<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>]),<span class="dv">100</span>,<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Síntomas leves&quot;</span>]),<span class="dv">100</span>,<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Neumonía&quot;</span>]),<span class="dv">100</span>))</span>
+<span id="cb148-14"><a href="descripción-de-la-muestra-global.html#cb148-14" aria-hidden="true" tabindex="-1"></a>EEExt<span class="ot">=</span><span class="fu">rbind</span>(EEExt,<span class="fu">c</span>(<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Asintomática&quot;</span>]),<span class="dv">100</span>,<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Leve&quot;</span>]),<span class="dv">100</span>,<span class="fu">length</span>(I.cut[Síntomas<span class="sc">==</span><span class="st">&quot;Grave&quot;</span>]),<span class="dv">100</span>))</span>
 <span id="cb148-15"><a href="descripción-de-la-muestra-global.html#cb148-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb148-16"><a href="descripción-de-la-muestra-global.html#cb148-16" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(EEExt)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Bajo peso&quot;</span>, <span class="st">&quot;No bajo peso&quot;</span>,<span class="st">&quot;Pérdidas&quot;</span>,<span class="st">&quot;Total&quot;</span>)</span>
 <span id="cb148-17"><a href="descripción-de-la-muestra-global.html#cb148-17" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(EEExt)<span class="ot">=</span>Columnes.Sint</span>
@@ -10600,16 +10601,16 @@ Asintomáticas (N)
 Asintomáticas (%)
 </th>
 <th style="text-align:right;">
-Síntomas leves (N)
+Leves (N)
 </th>
 <th style="text-align:right;">
-Síntomas leves (%)
+Leves (%)
 </th>
 <th style="text-align:right;">
-Neumonía (N)
+Graves (N)
 </th>
 <th style="text-align:right;">
-Neumonía (%)
+Graves (%)
 </th>
 </tr>
 </thead>
@@ -10709,7 +10710,7 @@ Total
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="descripción-de-la-muestra-global.html#cb149-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Síntomas leves&quot;</span>, <span class="st">&quot;Neumonía&quot;</span>))</span>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="descripción-de-la-muestra-global.html#cb149-1" aria-hidden="true" tabindex="-1"></a>Síntomas<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>), <span class="at">each=</span><span class="dv">2</span>),<span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;Asintomática&quot;</span>, <span class="st">&quot;Leve&quot;</span>, <span class="st">&quot;Grave&quot;</span>))</span>
 <span id="cb149-2"><a href="descripción-de-la-muestra-global.html#cb149-2" aria-hidden="true" tabindex="-1"></a>Grupo<span class="ot">=</span><span class="fu">ordered</span>(<span class="fu">rep</span>(<span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] , <span class="dv">3</span>),<span class="at">levels=</span><span class="fu">rownames</span>(EEExt)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
 <span id="cb149-3"><a href="descripción-de-la-muestra-global.html#cb149-3" aria-hidden="true" tabindex="-1"></a>valor<span class="ot">=</span><span class="fu">as.vector</span>(<span class="fu">prop.table</span>(taula, <span class="at">margin=</span><span class="dv">1</span>))</span>
 <span id="cb149-4"><a href="descripción-de-la-muestra-global.html#cb149-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Grupo,Síntomas,valor)</span>

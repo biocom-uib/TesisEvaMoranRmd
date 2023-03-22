@@ -1,0 +1,2 @@
+"0","taula=table(data.frame(Casos$Bolsa.rota.anteparto,Sint))[c(2,1) ,1:3]"
+"0","Tabla.DGS(Casos$Bolsa.rota.anteparto,""RPM"", ""No RPM"")"
