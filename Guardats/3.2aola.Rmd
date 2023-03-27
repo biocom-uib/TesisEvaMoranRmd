@@ -1,0 +1,2841 @@
+
+# Descripción  de la muestra de la segunda ola 
+
+
+## Descripción global 
+
+Hay `r n_I2` infectadas y `r n_NI2` no infectadas en la muestra de la primera ola.
+
+
+### Edades
+
+
+
+```{r}
+I=Casos2w$Edad._años_
+NI=Controls2w$Edad._años_
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+
+```{r 201,fig.cap="\\s"}
+data =data.frame(
+  name=c(rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Edades=c(I,NI)
+  )
+
+sample_size = data %>% group_by(name) %>% summarize(num=n())
+
+data %>%
+ left_join(sample_size) %>%
+  mutate(myaxis = paste0(name, "\n", "n=", num)) %>%
+  ggplot( aes(x=myaxis, y=Edades, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Edades (años)")
+```
+
+
+```{r}
+Dades=rbind(c(min(I,na.rm=TRUE),max(I,na.rm=TRUE), round(mean(I,na.rm=TRUE),1),round(median(I,na.rm=TRUE),1),round(quantile(I,c(0.25,0.75),na.rm=TRUE),1), round(sd(I,na.rm=TRUE),1)),
+            c(min(NI,na.rm=TRUE),max(NI,na.rm=TRUE), round(mean(NI,na.rm=TRUE),1),round(median(NI,na.rm=TRUE),1),round(quantile(NI,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Edad mínima","Edad máxima","Edad media", "Edad mediana", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Infectadas", "No infectadas")
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r,include=FALSE}
+shapiro.test(I)$p.value
+shapiro.test(NI)$p.value
+```
+
+
+
+```{r}
+I.cut=cut(I,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+NI.cut=cut(NI,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+```
+
+
+```{r}
+EE=rbind(as.vector(table(I.cut)),as.vector(table(NI.cut)))
+EEExt=rbind(c(as.vector(table(I.cut)),NA_I),
+            round(100*c(as.vector(table(I.cut)),NA_I)/n_I2,1),
+            c(as.vector(table(NI.cut)),NA_NI),
+            round(100*c(as.vector(table(NI.cut)),NA_NI)/n_NI2,1)
+            )
+EEExt=cbind(EEExt,c(n_I2,100,n_NI2,100))
+
+
+
+colnames(EEExt)=c("18-30","31-40",">40","Pérdidas","Total")
+rownames(EEExt)=c("Infectadas (N)", "Infectadas (%)","No infectadas (N)", "No infectadas (%)")
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+```{r 202,fig.cap="\\s"}
+df =data.frame(
+  Factor=c(rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Edades=c( I.cut,NI.cut )
+)
+
+base=ordered(rep(c("18-30","31-40",">40"), each=2),levels=c("18-30", "31-40",   ">40"))
+Grupo=rep(c("Infectada","No infectada") , length(levels(I.cut)))
+valor=as.vector(prop.table(table(df), margin=1))
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
+  geom_bar(position="dodge", stat="identity")+
+      #theme_ipsum() +
+xlab("Grupos de edad")+
+      #theme_ipsum() +
+  ylab("")
+
+```
+
+* Ajuste de las edades de infectadas y no infectadas a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I)$p.value,1)`$ y $`r 
+signif(shapiro.test(NI)$p.value,1)`$, respectivamente
+
+
+
+* Desviaciones típicas: test de Fligner-Killeen, p-valor `r round(fligner.test(list(I,NI))$p.value,3)`
+
+* Edades medias: test t, p-valor `r round(t.test(I,NI)$p.value,2)`, IC del 95% para la diferencia de medias [`r round(t.test(I,NI)$conf.int,2)`] años
+
+* Composiciones por edades de los grupos de casos y de controles: test $\chi^2$, p-valor `r round(chisq.test(EE)$p.value,3)`). 
+
+En la tabla que sigue:
+
+* p-valor ajustado: p-valores de tests de Fisher bilateral ajustados por Bonferroni calculados para la muestra sin pérdidas
+* OR: la odds ratio univariante estimada de infectarse relativa a la franja de dead
+* IC: el intervalo de confianza del 95% para la OR
+
+```{r}
+pp=rep(0,dim(EE)[2])
+for (i in 1:dim(EE)[2]){
+pp[i]=prop.test(c(EE[1,i],sum(EE[1,-i])),
+                c(sum(EE[,i]),sum(EE[,-i])))$p.value
+}
+pp=p.adjust(pp,method="bonferroni")
+OR=rep(0,dim(EE)[2])
+CI1=rep(0,dim(EE)[2])
+CI2=rep(0,dim(EE)[2])
+
+for (i in 1:dim(EE)[2]){
+FT=fisher.test(rbind(c(EE[1,i],sum(EE[1,-i])),
+                  c(EE[2,i],sum(EE[2,-i]))))
+OR[i]=round(FT$estimate,2)
+CI1[i]=round(FT$conf.int[1],2)
+CI2[i]=round(FT$conf.int[2],2)
+                }
+dt=data.frame(franja=c("18-30","31-40",">40"),pp,OR,CI1,CI2)
+names(dt)=c("Franja", "p-valor ajustado","OR","Extremo inferior de IC", "Extremo superior de IC")
+dt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+### Etnias
+
+```{r}
+I=Casos2w$Etnia
+I[I=="Asia"]="Asiática"
+I=factor(I)
+NI=factor(Controls2w$Etnia)
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+```{r}
+EE=rbind(as.vector(table(I)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I)),NA_I),
+            round(100*c(as.vector(table(I)),NA_I)/n_I2,1),
+            c(as.vector(table(NI)),NA_NI),
+            round(100*c(as.vector(table(NI)),NA_NI)/n_NI2,1))
+colnames(EEExt)=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra","Pérdidas")
+rownames(EEExt)=Columnes
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 203,fig.cap="\\s"}
+df =data.frame(
+  Factor=c(rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Etnias=c(I,NI)
+)
+base=rep(levels(I) , each=2)
+Grupo=rep(c("Infectada","No infectada") , length(levels(I)))
+valor=as.vector(prop.table(table(df), margin=1))
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
+  geom_bar(position="dodge", stat="identity")+
+      #theme_ipsum() +
+xlab("Etnias")+
+  ylab("")
+
+```
+
+
+
+
+```{r,include=FALSE}
+chisq.test(EE)
+```
+
+* Composiciones por edades de los grupos de casos y de controles: test $\chi^2$, p-valor  $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+En la tabla que sigue:
+
+* p-valor ajustado: p-valores de tests de Fisher bilateral ajustados por Bonferroni calculados para la muestra sin pérdidas
+* OR: la odds ratio univariante estimada de infectarse relativa a la etnia
+* IC: el intervalo de confianza del 95% para la OR
+
+```{r}
+pp=rep(0,dim(EE)[2])
+OR=rep(0,dim(EE)[2])
+CI1=rep(0,dim(EE)[2])
+CI2=rep(0,dim(EE)[2])
+
+for (i in 1:dim(EE)[2]){
+FT=fisher.test(rbind(c(EE[1,i],sum(EE[1,-i])),
+                  c(EE[2,i],sum(EE[2,-i]))))
+pp[i]=FT$p.value
+OR[i]=round(FT$estimate,2)
+CI1[i]=round(FT$conf.int[1],2)
+CI2[i]=round(FT$conf.int[2],2)
+                  }
+pp=p.adjust(pp,method="bonferroni")
+dt=data.frame(franja=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra"),pp,OR,CI1,CI2)
+names(dt)=c("Franja","p-valor ajustado","OR","Extremo inferior de IC", "Extremo superior de IC")
+dt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+
+### Hábito tabáquico
+
+
+
+```{r}
+I=Casos2w$FUMADORA_CAT
+NI=Controls2w$Fumadora_cat
+Tabla.DMG2(I,NI,"Fumadoras","No fumadoras")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+
+* Comparación de proporciones de fumadoras en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser fumadora, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+### Obesidad 
+
+
+```{r}
+I=Casos2w$Obesidad
+NI=Controls2w$Obesidad
+Tabla.DMG2(I,NI,"Obesas","No obesas")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+* Comparación de proporciones de obesas en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser obesa, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+### Hipertensión pregestacional
+
+
+```{r}
+I=Casos2w$Hipertensión.pregestacional
+NI=Controls2w$Hipertensión.pregestacional
+Tabla.DMG2(I,NI,"HTA","No HTA")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+* Comparación de proporciones de hipertensas en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser hipertensa, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+
+### Diabetes Mellitus 
+
+```{r}
+I=Casos2w$DIABETES
+NI=Controls2w$Diabetes
+Tabla.DMG2(I,NI,"DM","No DM")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+* Comparación de proporciones de diabéticas en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser diabética, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+### Enfermedades cardiacas crónicas 
+
+```{r}
+I=Casos2w$Enfermedad.cardiaca.crónica
+NI=Controls2w$ENF.CARDIACA.TODO
+Tabla.DMG2(I,NI,"ECC","No ECC")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+
+* Comparación de proporciones de ECC en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser ECC, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+
+### Enfermedades pulmonares crónicas (incluyendo asma)
+
+<!--
+
+#### No Asma
+
+```{r}
+I=Casos2w$Enfermedad.pulmonar.crónica.no.asma
+NI=Controls2w$Enfermedad.pulmonar.crónica.no.asma
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+#table(I)
+#table(NI)
+```
+
+
+```{r}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I))[2:1],NA_I),
+            round(100*c(as.vector(table(I))[2:1],NA_I)/n_I2,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_NI2,1))
+rownames(EEExt)=Columnes
+colnames(EEExt)=c("EPC", "No EPC","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r}
+FT=fisher.test(EE)
+```
+
+* test de Fisher, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a tener EPC no asma `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+#### Asma
+
+
+```{r}
+I=Casos2w$Diagnóstico.clínico.de.Asma
+NI=Controls2w$Diagnóstico.clínico.de.Asma
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+#table(I)
+#table(NI)
+```
+
+
+```{r}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I))[2:1],NA_I),
+            round(100*c(as.vector(table(I))[2:1],NA_I)/n_I2,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_NI2,1))
+rownames(EEExt)=Columnes
+colnames(EEExt)=c("Asma", "No Asma","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r}
+FT=fisher.test(EE)
+```
+
+* test de Fisher, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a tener asma, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+#### Total
+
+-->
+
+
+```{r,warning=FALSE}
+INA=Casos2w$Enfermedad.pulmonar.crónica.no.asma
+NINA=Controls2w$Enfermedad.pulmonar.crónica.no.asma
+NINA[NINA==0]="No"
+NINA[NINA==1]="Sí"
+IA=Casos2w$Diagnóstico.clínico.de.Asma
+NIA=Controls2w$Diagnóstico.clínico.de.Asma
+NIA[NIA==0]="No"
+NIA[NIA==1]="Sí"
+
+I=rep(NA,n_I2)
+for (i in 1:n_I2){I[i]=max(INA[i],IA[i],na.rm=TRUE)}
+NI=rep(NA,n_NI2)
+for (i in 1:n_NI2){NI[i]=max(NINA[i],NIA[i],na.rm=TRUE)}
+NI[NI==-Inf]=NA
+
+Tabla.DMG2(I,NI,"EPC","No EPC")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+
+* Comparación de proporciones de EPC en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser EPC, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+### Paridad
+
+
+
+```{r}
+I=Casos2w$NULIPARA
+NI=Controls2w$Nuliparous
+Tabla.DMG2(I,NI,"Nuliparas", "Multiparas")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+
+* Comparación de proporciones de nulíparas en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a ser nulípara, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+## Embarazos
+
+
+
+### Gestación múltiple
+
+
+```{r}
+I=Casos2w$Gestación.Múltiple
+NI=Controls2w$Gestación.Múltiple
+Tabla.DMG2(I,NI,"Gestación múltiple", "Gestación única")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+```
+
+
+* Comparación de proporciones de gestaciones múltiples en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+* OR univariante estimada de infección relativa a tener gestación múltiple, `r round(FT$estimate,2)`; 
+* IC del 95% para esta OR, [`r round(FT$conf.int,2)`]
+
+
+
+### Anomalías congénitas
+
+
+```{r}
+I=Casos2w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+NI=Controls2w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+Tabla.DMG2(I,NI,"Anomalías congénitas", "No anomalías congénitas")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de anomalía congénita en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de anomalía congénita relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+ 
+
+### Retraso del crecimiento intrauterino 
+
+
+```{r}
+I=Casos2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.
+NI=Controls2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.
+Tabla.DMG2(I,NI,"RCIU", "No RCIU")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de retraso del crecimiento intrauterino  en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de retraso del crecimiento intrauterino  relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+### Diabetes gestacional 
+
+```{r}
+I=Casos2w$Diabetes.gestacional
+NI=Controls2w$Diabetes.gestacional
+Tabla.DMG2(I,NI,"DG", "No DG")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de diabetes gestacional en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de diabetes gestacional relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+### Hipertensión gestacional 
+
+
+```{r}
+I=Casos2w$Hipertensión.gestacional
+NI=Controls2w$Hipertensión.gestacional
+Tabla.DMG2(I,NI,"HG", "No HG")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de hipertensión gestacional en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de hipertensión gestacional relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+### Preeclampsia 
+
+
+
+```{r}
+I=Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL
+NI=Controls2w$PREECLAMPSIA
+Tabla.DMG2(I,NI,"PE", "No PE")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de preeclampsia en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de preeclampsia relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+### Preeclampsia con CG
+
+
+
+
+```{r}
+n_PI=sum(Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL)
+n_PNI=sum(Controls2w$PREECLAMPSIA)
+I=Casos2w[Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL==1,]$Preeclampsia.grave_HELLP_ECLAMPSIA
+
+NI1=Controls2w[Controls2w$PREECLAMPSIA==1,]$preeclampsia_severa
+NI2=Controls2w[Controls2w$PREECLAMPSIA==1,]$Preeclampsia.grave.No.HELLP 
+NI=rep(NA,length(NI1))
+for (i in 1:length(NI1)){NI[i]=max(NI1[i],NI2[i],na.rm=TRUE)}
+#table(I)
+#table(NI)
+```
+
+```{r}
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I))[2:1],NA_I),
+            round(100*c(as.vector(table(I))[2:1],NA_I)/length(I),1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/length(NI),1))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("PE con CG", "PE sin CG","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+```{r,include=FALSE}
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de preeclampsia con CG en infectadas y no infectadas que dessrrollaron preeclampsia: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de preeclampsia con CG relativo a infección en preeclámpsicas: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+### Rotura prematura de membranas 
+
+
+
+```{r}
+I=Casos2w$Bolsa.rota.anteparto
+NI=Controls2w$Bolsa.rota.anteparto
+Tabla.DMG2(I,NI,"RPM", "No RPM")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de rotura prematura de membranas  en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de rotura prematura de membranas  relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+### Edad gestacional en el momento del parto 
+
+
+
+```{r}
+I=Casos2w$EG_TOTAL_PARTO
+NI=Controls2w$EDAD_GEST   
+```
+
+
+```{r}
+Dades=rbind(c(min(I,na.rm=TRUE),max(I,na.rm=TRUE), round(mean(I,na.rm=TRUE),1),round(median(I,na.rm=TRUE),1),round(quantile(I,c(0.25,0.75),na.rm=TRUE),1), round(sd(I,na.rm=TRUE),1)),
+            c(min(NI,na.rm=TRUE),max(NI,na.rm=TRUE), round(mean(NI,na.rm=TRUE),1),round(median(NI,na.rm=TRUE),1),round(quantile(NI,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Edad mínima","Edad máxima","Edad media", "Edad mediana", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Infectadas", "No infectadas")
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+
+
+```
+
+```{r 204,fig.cap="\\s"}
+data =data.frame(
+  name=c( rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Edades=c( I,NI )
+)
+
+data %>%
+  ggplot( aes(x=name, y=Edades, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Edades gestacionales (semanas)")
+```
+
+
+
+```{r,include=FALSE}
+shapiro.test(I)$p.value
+shapiro.test(NI)$p.value
+fligner.test(list(I,NI))
+ttest=t.test(I,NI)
+```
+
+* Ajuste de las edades gestacionales de infectadas y no infectadas a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I)$p.value,1)`$ y $`r 
+signif(shapiro.test(NI)$p.value,1)`$, respectivamente
+
+
+* Edades medias: test t, p-valor $`r signif(ttest$p.value,1)`$, IC del 95% para la diferencia de medias [`r round(ttest$conf.int,2)`]
+
+* Desviaciones típicas: test de Fligner-Killeen, p-valor $`r signif(fligner.test(list(I,NI))$p.value,1)`$
+
+
+### Ingreso materno en  UCI
+
+
+
+```{r}
+I=Casos2w$UCI
+NI=Controls2w$UCI...9
+NI=factor(NI,levels=0:1)
+Tabla.DMG2(I,NI,"UCI", "No UCI")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de UCI en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de UCI relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: $`r round(PT$estimate[1]/PT$estimate[2],2)`$
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [$`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`$]
+
+### Ingreso materno en UCI según el momento del parto o cesárea
+
+
+```{r}
+UCI.I=sum(Casos2w$UCI,na.rm=TRUE)
+UCI.NI=sum(Controls2w$UCI...9,na.rm=TRUE)
+I=Casos2w$UCI_ANTES.DESPUES.DEL.PARTO
+NI=Controls2w$UCI.ANTES.DEL.PARTO  #Vacía
+
+EE=rbind(as.vector(table(I)),
+         c(0,UCI.NI))
+EEExt=rbind(c(as.vector(table(I)),0),
+            round(100*c(as.vector(table(I)),0)/UCI.I,1),
+            c(0,UCI.NI,0),
+            c(0,100,0))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("UCI antes del parto", " UCI después del parto","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+Al no haber ingresos en UCI en no infectadas, no tiene sentido comparar proprociones
+
+### Embarazos con algún feto muerto anteparto 
+
+
+```{r}
+I=Casos2w$Feto.muerto.intraútero
+I[I=="Sí"]=1
+I[I=="No"]=0
+NI1=Controls2w$Feto.vivo...194
+NI1[NI1=="Sí"]=0
+NI1[NI1=="No"]=1
+NI2=Controls2w$Feto.vivo...245
+NI2[NI2=="Sí"]=0
+NI2[NI2=="No"]=1
+NI=NI1
+for (i in 1:length(NI1)){NI[i]=max(NI1[i],NI2[i],na.rm=TRUE)}
+NI=factor(NI,levels=0:1)
+Tabla.DMG2(I,NI,"Algún feto muerto anteparto", "Ningún feto muerto anteparto")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de algún feto muerto anteparto en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de feto muerto anteparto relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: $`r round(PT$estimate[1]/PT$estimate[2],2)`$
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [$`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`$]
+
+
+
+### Inicio del parto
+
+
+```{r}
+I=factor(Casos2w$Inicio.de.parto)
+NI=Controls2w$Inicio.de.parto
+NI[NI=="Cesárea programada"]="Cesárea"
+NI=factor(NI)
+
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+```{r}
+EE=rbind(as.vector(table(I))[c(2,3,1)],
+         as.vector(table(NI))[c(2,3,1)])
+EEExt=rbind(c(as.vector(table(I))[c(2,3,1)],NA_I),
+            round(100*c(as.vector(table(I))[c(2,3,1)],NA_I)/n_I2,1),
+            c(as.vector(table(NI))[c(2,3,1)],NA_NI),
+            round(100*c(as.vector(table(NI))[c(2,3,1)],NA_NI)/n_NI2,1))
+colnames(EEExt)=c("Espontáneo", "Inducido", "Cesárea programada","Pérdidas")
+rownames(EEExt)=Columnes
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 205,fig.cap="\\s"}
+df =data.frame(
+  Factor=c( rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Inicios=ordered(c( I,NI ),levels=c("Espontáneo","Inducido","Cesárea"))
+)
+
+base=ordered(rep(c("Espontáneo","Inducido","Cesárea"), each=2),levels=c("Espontáneo","Inducido","Cesárea"))
+Grupo=rep(c("Infectada","No infectada") , 3)
+valor=c(as.vector(prop.table(table(df),margin=1))                 )
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
+  geom_bar(position="dodge", stat="identity")+  
+  xlab("Inicios de parto")+
+  ylab("")
+```
+
+
+
+```{r,include=FALSE}
+FT=chisq.test(EE)
+```
+
+* Distribuciones de los inicios de parto en los grupos de infectadas y no infectadas: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+En la tabla que sigue:
+
+* p-valor ajustado: p-valores de tests de Fisher bilateral ajustados por Bonferroni calculados para la muestra sin pérdidas
+* RA y RR: riesgos absoluto y relativo estimados del inicio de parto relativos a la infección
+* IC-RA e IC-RR: sus intervalos de confianza del 95% respectivos
+
+```{r}
+pp=rep(0,dim(EE)[2])
+RA=rep(0,dim(EE)[2])
+RR=rep(0,dim(EE)[2])
+CIRA1=rep(0,dim(EE)[2])
+CIRA2=rep(0,dim(EE)[2])
+CIRR1=rep(0,dim(EE)[2])
+CIRR2=rep(0,dim(EE)[2])
+
+for (i in 1:dim(EE)[2]){
+EE.temp=rbind(c(EE[1,i],sum(EE[1,-i])),
+                  c(EE[2,i],sum(EE[2,-i])))
+FT=fisher.test(EE.temp)
+PT=prop.test(EE.temp[,1],rowSums(EE.temp))
+pp[i]=FT$p.value
+RA[i]=round(PT$estimate[1]-PT$estimate[2],3)
+RR[i]=round(PT$estimate[1]/PT$estimate[2],3)
+CIRA1[i]=round(PT$conf.int,4)[1]
+CIRA2[i]=round(PT$conf.int,4)[2]
+CIRR1[i]=round(RelRisk(EE.temp,conf.level=0.95,method="wald"),3)[2]
+CIRR2[i]=round(RelRisk(EE.temp,conf.level=0.95,method="wald"),3)[3]
+            }
+pp=p.adjust(pp,method="bonferroni")
+dt=data.frame(franja=c("Espontáneo", "Inducido", "Cesárea programada"),round(pp,16),RA,RR,CIRA1,CIRA2,CIRR1,CIRR2)
+names(dt)=c("Inicio de parto","p-valor ajustado","RA", "RR", "Extr. inf. de IC-RA", "Extr. sup. de IC-RA", "Extr. inf. de IC-RR", "Extr. sup. de IC-RR")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+### Tipo de parto
+
+
+```{r}
+I.In=Casos2w$Inicio.de.parto
+I.In[I.In=="Cesárea"]="Cesárea programada"
+I=Casos2w$Tipo.de.parto
+I[I.In=="Cesárea programada"]="Cesárea programada"
+I[I=="Cesárea"]="Cesárea urgente"
+
+NI.In=Controls2w$Inicio.de.parto
+NI=Controls2w$Tipo.de.parto
+NI[NI.In=="Cesárea programada"]="Cesárea programada"
+NI[NI=="Cesárea"]="Cesárea urgente"
+
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+```{r}
+EE=rbind(as.vector(table(I)[c(3,4,1,2)]),
+         as.vector(table(NI))[c(3,4,1,2)])
+EEExt=rbind(c(as.vector(table(I))[c(3,4,1,2)],NA_I),
+            round(100*c(as.vector(table(I))[c(3,4,1,2)],NA_I)/n_I2,1),
+            c(as.vector(table(NI))[c(3,4,1,2)],NA_NI),
+            round(100*c(as.vector(table(NI))[c(3,4,1,2)],NA_NI)/n_NI2,1))
+colnames(EEExt)=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente", "Pérdidas")
+rownames(EEExt)=Columnes
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r 206,fig.cap="\\s"}
+df =data.frame(
+  Factor=c( rep("Infectadas",length(I)), rep("No infectadas",length(NI))),
+  Inicios=ordered(c( I,NI ),levels=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"))
+)
+
+base=ordered(rep(c("Eutocico", "Instrumental", "Cesárea prog.", "Cesárea urg."), each=2),levels=c("Eutocico", "Instrumental", "Cesárea prog.", "Cesárea urg."))
+Grupo=rep(c("Infectada","No infectada") , 4)
+valor=as.vector(prop.table(table(df), margin=1))
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
+  geom_bar(position="dodge", stat="identity")+  
+  xlab("Tipos de parto")+
+  ylab("")
+```
+
+
+
+```{r,include=FALSE}
+FT=chisq.test(EE)
+```
+
+* Distribuciones de los tipos de parto en los grupos de infectadas y no infectadas: test $\chi^2$, p-valor $`r signif(chisq.test(EE)$p.value,1)`$
+
+
+En la tabla que sigue:
+
+* p-valor ajustado: p-valores de tests de Fisher bilateral ajustados por Bonferroni calculados para la muestra sin pérdidas
+* RA y RR: riesgos absoluto y relativo estimados del tipo de parto relativos a la infección
+* IC-RA e IC-RR: sus intervalos de confianza del 95% respectivos
+
+```{r}
+pp=rep(0,dim(EE)[2])
+RA=rep(0,dim(EE)[2])
+RR=rep(0,dim(EE)[2])
+CIRA1=rep(0,dim(EE)[2])
+CIRA2=rep(0,dim(EE)[2])
+CIRR1=rep(0,dim(EE)[2])
+CIRR2=rep(0,dim(EE)[2])
+
+for (i in 1:dim(EE)[2]){
+EE.temp=rbind(c(EE[1,i],sum(EE[1,-i])),
+                  c(EE[2,i],sum(EE[2,-i])))
+FT=fisher.test(EE.temp)
+PT=prop.test(EE.temp[,1],rowSums(EE.temp))
+pp[i]=FT$p.value
+RA[i]=round(PT$estimate[1]-PT$estimate[2],3)
+RR[i]=round(PT$estimate[1]/PT$estimate[2],3)
+CIRA1[i]=round(PT$conf.int,4)[1]
+CIRA2[i]=round(PT$conf.int,4)[2]
+CIRR1[i]=round(RelRisk(EE.temp,conf.level=0.95,method="wald"),3)[2]
+CIRR2[i]=round(RelRisk(EE.temp,conf.level=0.95,method="wald"),3)[3]
+            }
+pp=p.adjust(pp,method="bonferroni")
+dt=data.frame(franja=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"),pp,RA,RR,CIRA1,CIRA2,CIRR1,CIRR2)
+names(dt)=c("Tipo de parto","p-valor ajustado","RA", "RR", "Extr. inf. de IC-RA", "Extr. sup. de IC-RA", "Extr. inf. de IC-RR", "Extr. sup. de IC-RR")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+### Prematurez 
+
+
+
+```{r}
+I=Casos2w$PREMATURO
+NI=Controls2w$Preterm.deliveries
+Tabla.DMG2(I,NI,"Prematuro", "A término")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de prematurez en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de prematurez relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+
+### Eventos trombóticos
+
+
+
+```{r}
+I=Casos2w$EVENTOS_TROMBO_TOTALES
+NI1=Controls2w$DVT
+NI2=Controls2w$PE
+NI=rep(NA,n_NI2)
+for (i in 1:n_NI2){NI[i]=max(NI1[i],NI2[i],na.rm=TRUE)}
+NI[NI==-Inf]=NA
+NI=factor(NI,levels=0:1)
+Tabla.DMG2(I,NI,"Eventos trombóticos", "No eventos trombóticos")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de evento trombótico en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de evento trombótico relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+### Eventos hemorrágicos
+
+
+
+
+```{r}
+I=Casos2w$EVENTOS_HEMORRAGICOS_TOTAL
+NI=Controls2w$eventos_hemorragicos
+Tabla.DMG2(I,NI,"Eventos hemorrágicos", "No eventos hemorrágicos")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgos de evento hemorrágico en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de evento hemorrágico relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+### Hemorragias potsparto
+
+
+```{r}
+I=Casos2w$Hemorragia.postparto
+I.sino=I
+I.sino[!is.na(I.sino)& I.sino!="No"]="Sí"
+
+
+NI=Controls2w$Hemorragia.postparto
+NI.sino=NI
+NI.sino[!is.na(NI.sino)& NI.sino!="No"]="Sí"
+Tabla.DMG2(I.sino,NI.sino,"HPP", "No HPP")
+```
+
+
+
+```{r,include=FALSE}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de hemorragia postparto en infectadas y no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,4)`; 
+
+* RA estimado de hemorragia postparto relativo a infección: `r round(PT$estimate[1]-PT$estimate[2],4)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,4)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="wald")[2:3],2)`]
+
+
+
+
+```{r}
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+```{r}
+EE=rbind(as.vector(table(I)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I)),NA_I),
+            round(100*c(as.vector(table(I)),NA_I)/n_I2,1),
+            c(as.vector(table(NI)),NA_NI),
+            round(100*c(as.vector(table(NI)),NA_NI)/n_NI2,1))
+colnames(EEExt)=c(names(table(I)), "Pérdidas")
+rownames(EEExt)=Columnes
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 207,fig.cap="\\s"}
+df =data.frame(
+  Factor=c( rep("Infectadas",length(I[I!="No"])), rep("No infectadas",length(NI[NI!="No"]))),
+  Hemos=ordered(c( I[I!="No"],NI[NI!="No"] ),levels=c( "HPP tratamiento médico", "HPP tratamiento quirúrgico conservador","Histerectomía"))
+)
+
+base=ordered(rep(c("Tto. médico", "Tto. Qx conservador","Histerectomía"), each=2),levels=c("Tto. médico", "Tto. Qx conservador","Histerectomía"))
+Grupo=rep(c("Infectada","No infectada") , 3)
+valor=as.vector(prop.table(table(df), margin=1))
+data <- data.frame(base,Grupo,valor)
+
+
+ggplot(data, aes(fill=Grupo, y=valor, x=base)) + 
+  geom_bar(position="dodge", stat="identity")+  
+  xlab("Tratamientos de hemorragia postparto")+
+  ylab("")
+```
+
+
+
+```{r,include=FALSE}
+FT1=chisq.test(EE,simulate.p.value=TRUE,B=10000)
+I=Casos2w$Hemorragia.postparto
+I=I[I!="No"]
+I=I[!is.na(I)]
+NI=Controls2w$Hemorragia.postparto
+NI=NI[NI!="No"]
+NI=NI[!is.na(NI)]
+EE=rbind(as.vector(table(I)),
+         as.vector(table(NI)))
+FT2=chisq.test(EE,simulate.p.value=TRUE,B=10000)
+```
+
+* Distribuciones de los tipos de hemorragia postparto (incluyendo Noes) en los grupos de infectadas y no infectadas: test $\chi^2$ de Montercarlo, p-valor `r round(FT1$p.value,3)`
+
+* Distribuciones de los tipos de hemorragia postparto en los grupos de infectadas y no infectadas que tuvieron hemorragia postparto:  test $\chi^2$ de Montercarlo, p-valor `r round(FT2$p.value,3)`
+
+
+
+
+
+
+
+
+
+
+
+
+## Neonatos
+
+
+
+### Fetos muertos anteparto 
+
+
+
+```{r}
+I1=Casos2w$Feto.muerto.intraútero
+I1[I1=="Sí"]="Muerto"
+I1[I1=="No"]="Vivo"
+I2=Casos2wGM$Feto.vivo
+I2[I2=="Sí"]="Vivo"
+I2[I2=="No"]="Muerto"
+I=c(I1,I2)
+n_I2FT=length(I)
+n_VI=as.vector(table(I))[2]
+
+NI1=Controls2w$Feto.vivo...194
+NI2=Controls2wGM$Feto.vivo...245
+NI=c(NI1,NI2)
+NI[NI=="Sí"]="Vivo"
+NI[NI=="No"]="Muerto"
+NI=factor(NI,levels=c("Muerto","Vivo"))
+n_NI2FT=length(NI)
+n_VNI=as.vector(table(NI))[2]
+```
+
+
+```{r}
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+EE=rbind(as.vector(table(I)),
+         as.vector(table(NI)))
+EEExt=rbind(c(as.vector(table(I)),NA_I,n_I2FT),
+            round(100*c(as.vector(table(I)),NA_I,n_I2FT)/n_I2FT,1),
+            c(as.vector(table(NI)),NA_NI,n_NI2FT),
+            round(100*c(as.vector(table(NI)),NA_NI,n_NI2FT)/n_NI2FT,1))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("Feto muerto anteparto", "Feto vivo anteparto","Pérdidas", "Total Fetos")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r,include=FALSE}
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de muerte anteparto en fetos de infectadas y de no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de muerte anteparto relativo a infección de madre: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: $`r round(PT$estimate[1]/PT$estimate[2],2)`$
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [$`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`$]
+
+
+
+### Peso de neonatos al nacimiento
+
+
+
+```{r}
+I=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Peso._gramos_...125,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Peso._gramos_...148)
+NI=c(Controls2w[Controls2w$Feto.vivo...194=="Sí",]$Peso._gramos_...198,Controls2wGM[Controls2wGM$Feto.vivo...245=="Sí",]$Peso._gramos_...247)
+```
+
+
+```{r 208,fig.cap="\\s"}
+data =data.frame(
+  name=c(rep("Hijos de infectadas",length(I)), rep("Hijos de no infectadas",length(NI))),
+  Pesos=c(I,NI)
+  )
+
+sample_size = data %>% group_by(name) %>% summarize(num=n())
+
+data %>%
+ left_join(sample_size) %>%
+  mutate(myaxis = paste0(name, "\n", "n=", num)) %>%
+  ggplot( aes(x=myaxis, y=Pesos, fill=name)) +
+    geom_violin(width=0.9) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Pesos (gramos)")
+```
+
+
+
+
+```{r}
+Dades=rbind(c(min(I,na.rm=TRUE),max(I,na.rm=TRUE), round(mean(I,na.rm=TRUE),1),
+               round(median(I,na.rm=TRUE),1),
+              round(quantile(I,c(0.25,0.75),na.rm=TRUE),1),round(sd(I,na.rm=TRUE),1)),
+            c(min(NI,na.rm=TRUE),max(NI,na.rm=TRUE), round(mean(NI,na.rm=TRUE),1),round(median(NI,na.rm=TRUE),1),
+              round(quantile(NI,c(0.25,0.75),na.rm=TRUE),1),
+              round(sd(NI,na.rm=TRUE),1)))
+
+
+colnames(Dades)=c("Peso mínimo","Peso máximo","Peso medio","Peso mediano", "1er cuartil", "3er cuartil","Desv. típica")
+
+rownames(Dades)=c("Infectadas", "No infectadas")
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r,include=FALSE}
+shapiro.test(I)$p.value
+shapiro.test(NI)$p.value
+fligner.test(list(I,NI))
+ttest=t.test(I,NI)
+```
+
+* Ajuste de los pesos de hijos de infectadas y no infectadas a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I)$p.value,1)`$ y $`r 
+signif(shapiro.test(NI)$p.value,1)`$, respectivamente
+
+* Pesos medios: test t, p-valor `r round(ttest$p.value,4)`, IC del 95% para la diferencia de medias [`r round(ttest$conf.int,2)`] 
+
+* Desviaciones típicas: test de Fligner-Killeen, p-valor  `r round(fligner.test(list(I,NI))$p.value,4)`
+
+
+**Por lo que refiere a bajo peso:**
+
+
+```{r}
+I.cut=cut(I,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+NI.cut=cut(NI,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+
+n_I1U=length(I)
+n_NI1U=length(NI)
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+```
+
+
+```{r}
+EE=rbind(as.vector(table(I.cut)),
+         as.vector(table(NI.cut)))
+EEExt=rbind(c(as.vector(table(I.cut)),NA_I),
+            round(100*c(as.vector(table(I.cut)),NA_I)/n_I1U,1),
+            c(as.vector(table(NI.cut)),NA_NI),
+            round(100*c(as.vector(table(NI.cut)),NA_NI)/n_NI1U,1))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("Bajo peso", "No bajo peso ","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r,include=FALSE}
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de bajo peso en hijos de madres infectadas y  no infectadas: test de Fisher bilateral, p-valor $`r signif(FT$p.value,1)`$; 
+
+* RA estimado de bajo peso relativo a infección de madre: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,4)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+
+
+
+
+
+###  Tests de Apgar
+
+
+
+```{r}
+I=c(Casos2w$APGAR.5...126,Casos2wGM$APGAR.5...150)
+I.5=cut(I,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+#table(I.5)
+NI=c(Controls2w$APGAR.5...200,Controls2wGM$APGAR.5...249)
+NI.5=cut(NI,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+#table(NI.5)
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+EE=rbind(as.vector(table(I.5)),
+         as.vector(table(NI.5)))
+EEExt=rbind(c(as.vector(table(I.5)),NA_I),
+            round(100*c(as.vector(table(I.5)),NA_I)/length(I),1),
+            c(as.vector(table(NI.5)),NA_NI),
+            round(100*c(as.vector(table(NI.5)),NA_NI)/length(NI),1))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("Apgar.5≤7", "Apgar.5≥8 ","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r,include=FALSE}
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de Apgar.5≤7  en hijos de madres infectadas y  no infectadas: test de Fisher bilateral, p-valor `r round(FT$p.value,3)`; 
+
+* RA estimado de Apgar.5≤7  relativo a infección de madre: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+### Ingreso de los neonatos en UCIN
+
+
+
+```{r}
+I=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Ingreso.en.UCIN,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Ingreso.en.UCI)
+NI=c(Controls2w[Controls2w$Feto.vivo...194=="Sí",]$Ingreso.en.UCI...213,Controls2wGM[Controls2wGM$Feto.vivo...245=="Sí",]$Ingreso.en.UCI...260)
+n_I2U=length(I)
+n_NI2U=length(NI)
+NA_I=length(I[is.na(I)])
+NA_NI=length(NI[is.na(NI)])
+#table(I)
+#table(NI)
+```
+
+
+```{r}
+EE=rbind(as.vector(table(I))[2:1],
+         as.vector(table(NI))[2:1])
+EEExt=rbind(c(as.vector(table(I))[2:1],NA_I),
+            round(100*c(as.vector(table(I))[2:1],NA_I)/n_I2U,1),
+            c(as.vector(table(NI))[2:1],NA_NI),
+            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_NI2U,1))
+rownames(EEExt)=Columnes
+
+colnames(EEExt)=c("UCIN", "No UCIN ","Pérdidas")
+
+
+t(EEExt) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r,include=FALSE}
+FT=fisher.test(EE)
+PT=prop.test(EE[,1],rowSums(EE))
+```
+
+* Comparación de riesgo de ingreso en UCIN  en hijos de madres infectadas y  no infectadas: test de Fisher bilateral, p-valor $`r signif(FT$p.value,1)`$; 
+
+* RA estimado de ingreso en UCIN relativo a infección de madre: `r round(PT$estimate[1]-PT$estimate[2],3)`; RR: `r round(PT$estimate[1]/PT$estimate[2],2)`
+
+* IC 95% para el RA [`r round(PT$conf.int,3)`] y para el RR [`r round(RelRisk(EE,conf.level=0.95,method="score")[2:3],2)`]
+
+
+
+
+
+## Descripción de casos por sintomatología
+
+
+
+```{r sint2w,fig.cap="\\s"}
+Sint=Casos2w$SINTOMAS_DIAGNOSTICO
+Síntomas=ordered(c("Asintomática", "Leve", "Grave"),levels=c("Asintomática", "Leve", "Grave"))
+valor=as.vector(prop.table(table(Sint)))
+data <- data.frame(Síntomas,valor)
+
+ggplot(data, aes(x=Síntomas, y=valor,fill=Síntomas)) + 
+  geom_bar(stat="identity")+
+  xlab("")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position="none")
+```
+
+### Trimestre de infección
+
+```{r}
+Trim=Casos2w$Trim.Diag
+Sint=Casos2w$SINTOMAS_DIAGNOSTICO
+NA_T=length(Trim[is.na(Trim)])
+NA_S=length(Sint[is.na(Sint)])
+
+DF=data.frame(Trimestre=Trim,Síntomas=Sint)
+taula=table(DF)
+proptaula=round(100*prop.table(table(DF)),2)
+
+EEExt=cbind(c(as.vector(taula[,1]),sum(taula[,1])),
+            c(as.vector(proptaula[,1]), round(100*sum(taula[,1])/n_I2,2)),
+            c(as.vector(taula[,2]),sum(taula[,2])),
+            c(as.vector(proptaula[,2]), round(100*sum(taula[,2])/n_I2,2)),
+            c(as.vector(taula[,3]),sum(taula[,3])),
+            c(as.vector(proptaula[,3]), round(100*sum(taula[,3])/n_I2,2))
+            )
+rownames(EEExt)=c("1er trimestre", "2o trimestre", "3er trimestre","Total")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r 209,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=3),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=rep(c("1er trimestre", "2o trimestre", "3er trimestre") , 3)
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Trimestre de infección")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+### Sintomatología vs edad
+
+
+
+```{r}
+I=Casos2w$Edad._años_
+DF=data.frame(Edad=I,Sint=Casos2w$SINTOMAS_DIAGNOSTICO)
+
+
+
+DF %>%
+  ggplot( aes(x=Sint, y=Edad, fill=Sint)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    theme(
+      legend.position="none",
+      plot.title=element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Edades (años)")+
+ scale_fill_brewer(palette="Dark2")
+```
+
+```{r}
+I1=I[Casos2w$SINTOMAS_DIAGNOSTICO=="Asintomática"]
+I2=I[Casos2w$SINTOMAS_DIAGNOSTICO=="Leve"]
+I3=I[Casos2w$SINTOMAS_DIAGNOSTICO=="Grave"]
+
+Dades=rbind(c(round(min(I1,na.rm=TRUE),1),round(max(I1,na.rm=TRUE),1), round(mean(I1,na.rm=TRUE),1),round(median(I1,na.rm=TRUE),1),round(quantile(I1,c(0.25,0.75),na.rm=TRUE),1), round(sd(I1,na.rm=TRUE),1)),
+            c(round(min(I2,na.rm=TRUE),1),round(max(I2,na.rm=TRUE),1), round(mean(I2,na.rm=TRUE),1),round(median(I2,na.rm=TRUE),1),round(quantile(I2,c(0.25,0.75),na.rm=TRUE),1), round(sd(I2,na.rm=TRUE),1)),
+            c(round(min(I3,na.rm=TRUE),1),round(max(I3,na.rm=TRUE),1), round(mean(I3,na.rm=TRUE),1),round(median(I3,na.rm=TRUE),1),round(quantile(I3,c(0.25,0.75),na.rm=TRUE),1), round(sd(I3,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Edad mínima","Edad máxima","Edad  media", "Edad  mediana", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Asintomáticas", "Leve","Grave")
+
+Dades %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+```
+
+
+```{r,include=FALSE}
+
+shapiro.test(I1)$p.value
+shapiro.test(I2)$p.value
+shapiro.test(I3)$p.value
+
+kruskal.test(Edad~Sint,data=DF)$p.value
+
+pairwise.wilcox.test(I,Sint,p.adjust.method = "bonferroni")$p.value
+```
+
+* Ajuste de las edades maternas a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I1)$p.value,1)`$, $`r 
+signif(shapiro.test(I2)$p.value,1)`$ y `r 
+round(shapiro.test(I3)$p.value,4)`, respectivamente
+
+
+
+
+* Edades medias: test de Kruskal-Wallis, p-valor `r kruskal.test(Edad~Sint,data=DF)$p.value`
+
+
+* Desviaciones típicas: test de Fligner-Killeen, p-valor  `r round(fligner.test(list(I,I2,I3))$p.value,3)`
+
+* Contrastes pot hoc por parejas
+
+```{r}
+Contraste=c("Asíntomática vs Leve","Asíntomática vs Grave", "Leve vs Grave")
+
+pvals=round(p.adjust(c(t.test(I1,I2,var.equal=TRUE)$p.value, t.test(I1,I3,var.equal=TRUE)$p.value,
+            t.test(I2,I3,var.equal=TRUE)$p.value),,method="bonferroni"),4)
+dades=data.frame(Contraste=Contraste,"p-valor"=pvals)
+dades %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+```
+
+
+
+```{r}
+I=Casos2w$Edad._años_
+I.cut=cut(I,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+
+DF=data.frame(Edad=I.cut,Síntomas=Sint)
+taula=table(DF)
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("18-30", "31-40", ">40")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 210,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=3),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(c("18-30","31-40",">40") , 3),levels=c("18-30","31-40",">40"))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Edad")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y las franjas de edad: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+* Tabla de p-valores  ajustados por Bonferroni de tests de diferencia en la tendencia de la gravedad en cada franja de edad respecto del global: 
+
+
+```{r}
+EE=taula
+ppTR=rep(0,dim(EE)[1])
+for (i in 1:dim(EE)[1]){
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
+}
+ppTR=p.adjust(ppTR,method="bonferroni")
+dt=data.frame(franja=c("18-30","31-40",">40"),ppTR)
+names(dt)=c("Franja de edad", "p-valor trend test (ajustado)")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+
+### Sintomatología vs etnia 
+
+
+
+```{r}
+I=Casos2w$Etnia
+
+DF=data.frame(Etnia=I,Síntomas=Sint)
+taula=table(DF)[c(1,2,3,4,5),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 211,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=5),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra") , 3),levels=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra"))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Etnia")+
+  ylab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y las etnias: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+* Tabla de p-valores  ajustados por Bonferroni de tests de diferencia en la tendencia de la gravedad en cada franja de edad respecto del global: 
+
+
+```{r}
+EE=taula
+ppTR=rep(0,dim(EE)[1])
+for (i in 1:dim(EE)[1]){
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
+}
+ppTR=p.adjust(ppTR,method="bonferroni")
+dt=data.frame(franja=c("Árabe", "Asia", "Blanca", "Latinoamericana","Negra"),ppTR)
+names(dt)=c("Etnia", "p-valor trend test (ajustado)")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+### Sintomatología vs Gestación múltiple
+
+
+```{r 298,fig.cap="\\s"}
+I=Casos2w$Gestación.Múltiple
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Gestación múltiple", "Gestación única")
+Barplot.DGSW(I,"Gestación múltiple", "Gestación única")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y GM: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+
+
+
+### Sintomatología vs paridad
+
+
+
+```{r 268,fig.cap="\\s"}
+I=Casos2w$NULIPARA
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Nulipara", "Multipara")
+Barplot.DGSW(I,"Nulipara", "Multipara")
+```
+
+* Asociación entre los grupos de sintomatología y paridad: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+
+
+### Sintomatología vs estatus de fumadora
+
+```{r 212,fig.cap="\\s"}
+I=Casos2w$FUMADORA_CAT
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Fumadoras", "No fumadoras")
+Barplot.DGSW(I,"Fumadoras", "No fumadoras")
+```
+
+* Asociación entre los grupos de sintomatología y el hábito tabáquico: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs obesidad
+
+
+
+
+```{r 213,fig.cap="\\s"}
+I=Casos2w$Obesidad
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Obesas", "No obesas")
+Barplot.DGSW(I,"Obesas", "No obesas")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y las obesidad: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs hipertensión
+
+
+
+
+```{r 214,fig.cap="\\s"}
+I=Casos2w$Hipertensión.pregestacional
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"HTA", "No HTA")
+Barplot.DGSW(I,"HTA", "No HTA")
+```
+
+
+
+
+
+* Asociación entre los grupos de sintomatología y la hipertensión: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula, simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs diabetes
+
+
+
+
+
+```{r 215,fig.cap="\\s"}
+I=Casos2w$DIABETES
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"DM", "No DM")
+Barplot.DGSW(I,"DM", "No DM")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y la diabetes: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+### Sintomatología vs cardiopatía
+
+
+
+
+
+```{r 216,fig.cap="\\s"}
+I=Casos2w$Enfermedad.cardiaca.crónica
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"ECC", "No ECC")
+Barplot.DGSW(I,"ECC", "No ECC")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y  ECC: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs enfermedad pulmonar crónica 
+
+
+
+
+
+
+
+```{r 217,fig.cap="\\s"}
+INA=Casos2w$Enfermedad.pulmonar.crónica.no.asma
+IA=Casos2w$Diagnóstico.clínico.de.Asma
+I=rep(NA,length(Sint))
+for (i in 1:length(Sint)){I[i]=max(INA[i],IA[i],na.rm=TRUE)}
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"EPC", "No EPC")
+Barplot.DGSW(I,"EPC", "No EPC")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y EPC: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs anomalía congénita
+
+
+
+
+
+```{r 218,fig.cap="\\s"}
+I=Casos2w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Anomalías congénitas", "No anomalías congénitas")
+Barplot.DGSW(I,"Anomalías congénitas", "No anomalías congénitas")
+```
+
+* Asociación entre los grupos de sintomatología y anomalía congénita: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs retraso del crecimiento intrauterino 
+
+
+
+
+```{r 219,fig.cap="\\s"}
+I=Casos2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"RCIU", "No RCIU")
+Barplot.DGSW(I,"RCIU", "No RCIU")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y retraso del crecimiento intrauterino : test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+### Sintomatología vs diabetes gestacional 
+
+```{r 220,fig.cap="\\s"}
+I=Casos2w$Diabetes.gestacional
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"DG", "No DG")
+Barplot.DGSW(I,"DG", "No DG")
+```
+
+
+* Asociación entre los grupos de sintomatología y diabetes gestacional: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs hipertensión gestacional
+
+
+
+
+
+```{r 221,fig.cap="\\s"}
+I=Casos2w$Hipertensión.gestacional
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"HG", "No HG")
+Barplot.DGSW(I,"HG", "No HG")
+```
+
+
+
+* Asociación entre los grupos de sintomatología e hipertensión gestacional: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+### Sintomatología vs rotura prematura de membranas
+
+
+
+```{r 222,fig.cap="\\s"}
+I=Casos2w$Bolsa.rota.anteparto
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"RPM", "No RPM")
+Barplot.DGSW(I,"RPM", "No RPM")
+```
+
+
+* Asociación entre los grupos de sintomatología y rotura de aguas: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs preeclamspia
+
+
+
+
+
+
+```{r 223,fig.cap="\\s"}
+I=Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"PE", "No PE")
+Barplot.DGSW(I,"PE", "No PE")
+```
+
+
+* Asociación entre los grupos de sintomatología y preeclampsia: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs preeclampsia con CG
+
+
+
+
+```{r}
+n_PI=sum(Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL)
+I=Casos2w[Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL==1,]$Preeclampsia.grave_HELLP_ECLAMPSIA
+DF=data.frame(Factor=I,Síntomas=Sint[Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL==1])
+
+taula=table(DF)[c(2,1),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("PE con CG", "PE sin CG")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 224,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y preeclampsia con CG en preeclampsia: test $\chi^2$ de Montercarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs eventos hemorrágicos
+
+
+```{r 225,fig.cap="\\s"}
+I=Casos2w$EVENTOS_HEMORRAGICOS_TOTAL
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Eventos hemorrágicos", "No eventos hemorrágicos")
+Barplot.DGSW(I,"Eventos hemorrágicos", "No eventos hemorrágicos")
+```
+
+
+
+* Asociación entre los grupos de sintomatología y evento hemorrágico: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs hemorragia postparto
+
+
+
+```{r 266,fig.cap="\\s"}
+I=Casos2w$Hemorragia.postparto
+I.sino=I
+I.sino[!is.na(I.sino)& I.sino!="No"]="Sí"
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I.sino,"HPP", "No HPP")
+Barplot.DGSW(I.sino,"HPP", "No HPP")
+```
+
+
+* Asociación entre los grupos de sintomatología y la presencia de hemorragia postparto: test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+
+```{r}
+I=Casos2w$Hemorragia.postparto
+DF=data.frame(Factor=I,Síntomas=Sint)
+taula=table(DF)[c(1,2,3) ,]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[1:2,1]),
+            as.vector(proptaula[1:2,1]),
+            as.vector(taula[1:2,2]),
+            as.vector(proptaula[1:2,2]),
+            as.vector(taula[1:2,3]),
+            as.vector(proptaula[1:2,3])
+            )
+rownames(EEExt)=c( "Tto. médico",
+  "Tto. Qx. conservador")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 226,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula[1:2,], margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y el tipo de hemorragia postparto: test $\chi^2$ de Montecarlo, p-valor `r  round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+
+
+
+### Sintomatología vs eventos trombóticos
+
+
+
+
+
+```{r 227,fig.cap="\\s"}
+I=Casos2w$EVENTOS_TROMBO_TOTALES
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Eventos trombóticos", "No eventos trombóticos")
+Barplot.DGSW(I,"Eventos trombóticos", "No eventos trombóticos")
+```
+
+
+* Asociación entre los grupos de sintomatología y evento trombótico: test $\chi^2$ de Montecarlo, p-valor $`r signif(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,1)`$
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs UCi madre (Sí-No)
+
+
+
+
+
+```{r 228,fig.cap="\\s"}
+I=Casos2w$UCI
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"UCI", "No UCI")
+Barplot.DGSW(I,"UCI", "No UCI")
+```
+
+
+* Asociación entre los grupos de sintomatología e ingreso en UCI de la madre: test $\chi^2$ de Montecarlo, p-valor $`r signif(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,1)`$
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs UCi madre (antes-después)
+
+
+```{r}
+UCI.I=sum(Casos2w$UCI,na.rm=TRUE)
+I=Casos2w$UCI_ANTES.DESPUES.DEL.PARTO
+DF=data.frame(Factor=I,Síntomas=Sint)
+taula=table(DF)[c(2,1),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("UCI antes del parto", "UCI después del parto")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 229,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y el momento de ingreso en UCI:  test $\chi^2$ de Montecarlo, p-valor `r round(chisq.test(taula,simulate.p.value=TRUE,B=10000)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs prematurez
+
+
+
+```{r 230,fig.cap="\\s"}
+I=Casos2w$PREMATURO
+taula=table(data.frame(I,Sint))[c(2,1) ,]
+Tabla.DGSW(I,"Prematuro", "A término")
+Barplot.DGSW(I,"Prematuro", "A término")
+
+```
+
+
+
+* Asociación entre los grupos de sintomatología y el momento de ingreso en UCI:  test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+### Sintomatología vs APGAR
+
+
+```{r}
+I=c(Casos2w$APGAR.5...126,Casos2wGM$APGAR.5...150)
+I=cut(I,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+
+SintN=c(Casos2w$SINTOMAS_DIAGNOSTICO,Casos2wGM$SINTOMAS_DIAGNOSTICO)
+
+DF=data.frame(Factor=I,Síntomas=SintN)
+taula=table(DF)[c(2,1),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("Apgar.5≤7", "Apgar.5≥8 ")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 231,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y APGAR.5: test $\chi^2$, p-valor `r round(chisq.test(taula)$p.value,3)`
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs UCI neonato
+
+
+
+```{r}
+I=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Ingreso.en.UCIN,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Ingreso.en.UCI)
+SintN=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$SINTOMAS_DIAGNOSTICO,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$SINTOMAS_DIAGNOSTICO)
+
+DF=data.frame(Factor=I,Síntomas=SintN)
+taula=table(DF)[c(2,1),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("UCIN", "No UCIN")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r 232,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y ingreso en UCIN: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+### Sintomatología vs Fetos muertos anteparto 
+
+
+
+```{r}
+I1=Casos2w$Feto.muerto.intraútero
+I1[I1=="Sí"]="Muerto"
+I1[I1=="No"]="Vivo"
+I2=Casos2wGM$Feto.vivo
+I2[I2=="Sí"]="Vivo"
+I2[I2=="No"]="Muerto"
+I=c(I1,I2)
+SintN1=Casos2w$SINTOMAS_DIAGNOSTICO
+SintN2=Casos2wGM$SINTOMAS_DIAGNOSTICO
+SintN=c(SintN1,SintN2)
+
+DF=data.frame(Factor=I,Síntomas=SintN)
+taula=table(DF)[c(1,2),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("Feto muerto anteparto", "Feto vivo")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r 245,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y ingreso en UCIN: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor `r round(Prop.trend.test(taula[1,],colSums(taula)),4)`
+
+
+
+
+
+### Sintomatología vs inicio de parto
+
+
+
+```{r}
+I=Casos2w$Inicio.de.parto
+DF=data.frame(Factor=I,Síntomas=Sint)
+taula=table(DF)[c(2,3,1),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("Espontáneo", "Inducido","Cesárea programada")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+```{r 233,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=3),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("Inicio de parto")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y el inicio de parto: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+* Tabla de p-valores  ajustados por Bonferroni de  tests de diferencia en la tendencia de la gravedad en cada franja de edad respecto del global: 
+
+
+```{r}
+EE=taula
+ppTR=rep(0,dim(EE)[1])
+for (i in 1:dim(EE)[1]){
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
+}
+ppTR=p.adjust(ppTR,method="bonferroni")
+dt=data.frame(franja=c("Espontáneo", "Inducido","Cesárea programada"),ppTR)
+names(dt)=c("Inicio de parto", "p-valor trend test (ajustado)")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+
+### Sintomatología vs tipo de parto
+
+
+
+```{r}
+I.In=Casos2w$Inicio.de.parto
+I.In[I.In=="Cesárea"]="Cesárea programada"
+I=Casos2w$Tipo.de.parto
+I[I.In=="Cesárea programada"]="Cesárea programada"
+I[I=="Cesárea"]="Cesárea urgente"
+
+DF=data.frame(Factor=I,Síntomas=Sint)
+taula=table(DF)[c(3,4,1,2),]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(as.vector(taula[,1]),
+            as.vector(proptaula[,1]),
+            as.vector(taula[,2]),
+            as.vector(proptaula[,2]),
+            as.vector(taula[,3]),
+            as.vector(proptaula[,3])
+            )
+rownames(EEExt)=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+
+```{r 234,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=4),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt) , 3),levels=rownames(EEExt))
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("Tipo de parto")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y tipos de parto: test $\chi^2$, p-valor `r signif(chisq.test(taula)$p.value,1)`
+
+* Tabla de p-valores  ajustados por Bonferroni de tests de diferencia en la tendencia de la gravedad en cada franja de edad respecto del global: 
+
+
+```{r}
+EE=taula
+ppTR=rep(0,dim(EE)[1])
+for (i in 1:dim(EE)[1]){
+ppTR[i]=Prop.trend.test(EE[i,],colSums(EE))
+}
+ppTR=p.adjust(ppTR,method="bonferroni")
+dt=data.frame(franja=c("Eutocico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ppTR)
+names(dt)=c("Tipo de parto", "p-valor trend test (ajustado)")
+dt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+### Edades gestacionales infectadas 2a ola
+
+
+
+
+```{r 235,fig.cap="\\s"}
+I=Casos2w$EG_TOTAL_PARTO
+Síntomas=ordered(Sint,levels=c("Asintomática" ,"Leve",      "Grave"  ))
+data =data.frame(
+  Síntomas,
+  Edades=I
+)
+
+data %>%
+  ggplot( aes(x=Síntomas, y=Edades, fill=Síntomas)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+   ylab("Edades gestacionales (semanas)")+
+  scale_fill_brewer(palette = "Dark2") 
+
+```
+
+
+
+
+```{r}
+Dades=rbind(c(round(min(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),
+              round(median(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Asintomática"],c(0.25,0.75),na.rm=TRUE),1),
+              round(sd(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1)),
+   c(round(min(I[data$Síntomas=="Leve"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Leve"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Leve"],na.rm=TRUE),1),
+       round(median(I[data$Síntomas=="Leve"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Leve"],c(0.25,0.75),na.rm=TRUE),1),round(sd(I[data$Síntomas=="Leve"],na.rm=TRUE),1)),         
+  c(round(min(I[data$Síntomas=="Grave"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Grave"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Grave"],na.rm=TRUE),1),round(median(I[data$Síntomas=="Grave"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Grave"],c(0.25,0.75),na.rm=TRUE),1),round(sd(I[data$Síntomas=="Grave"],na.rm=TRUE),1))          )
+colnames(Dades)=c("Edad gest. mínima","Edad gest.  máxima","Edad gest.  media","Edad gest. mediana", "1er cuartil", "3er cuartil","Desv. típica")
+rownames(Dades)=c("Asintomática" ,"Leve",      "Grave"  )
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+
+
+```
+
+```{r,include=FALSE}
+
+shapiro.test(I)$p.value
+kruskal.test(Factor~Síntomas,data=DF)$p.value
+
+pairwise.wilcox.test(I,Sint,p.adjust.method = "bonferroni")$p.value
+```
+
+* Ajuste de las edades gestacionales de cada nivel a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I[Sint=="Asintomática"])$p.value,1)`$, $`r signif(shapiro.test(I[Sint=="Leve"])$p.value,1)`$, $`r signif(shapiro.test(I[Sint=="Grave"])$p.value,1)`$, respectivamente
+
+* Homocedasticidad: Test de Fligner-Killeen, p-valor $`r signif(fligner.test(I~Síntomas)$p.value,1)`$ 
+
+* Edades gestacionales medias: test de Kruskal-Wallis, p-valor  `r round(kruskal.test(I~Síntomas,data=DF)$p.value,3)`
+
+* Contrastes posteriores de edades gestacionales medias por parejas:  tests de Wilcoxon,p-valores ajustados por Bonferroni:
+
+    * Asintomática vs Leve: `r round(pairwise.wilcox.test(I,Sint,p.adjust.method = "bonferroni")$p.value[1,1],3)`
+    * Asintomática vs Grave: `r round(pairwise.wilcox.test(I,Sint,p.adjust.method = "bonferroni")$p.value[2,1],3)`
+    * Leve  vs Grave: `r round(pairwise.wilcox.test(I,Sint,p.adjust.method = "bonferroni")$p.value[2,2],3)`
+
+    
+
+
+
+### Pesos hijos infectadas 2a ola
+
+```{r 236,fig.cap="\\s"}
+SintN=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$SINTOMAS_DIAGNOSTICO,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$SINTOMAS_DIAGNOSTICO)
+Síntomas=ordered(SintN[!is.na(SintN)],levels=c("Asintomática" ,"Leve",      "Grave"  ))
+Síntomas=SintN[!is.na(SintN)]
+
+I=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Peso._gramos_...125,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Peso._gramos_...148)
+I=I[!is.na(SintN)]
+
+data =data.frame(
+  Síntomas,
+  Pesos=I
+)
+
+data %>%
+  ggplot( aes(x=Síntomas, y=Pesos, fill=Síntomas)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    #theme_ipsum() +
+    theme(
+      legend.position="none",
+      plot.title = element_text(size=11)
+    ) +
+    xlab("")+
+   ylab("Pesos (gramos)")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+
+
+```{r}
+Dades=rbind(c(round(min(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),
+              round(median(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Asintomática"],c(0.25,0.75),na.rm=TRUE),1),
+              round(sd(I[data$Síntomas=="Asintomática"],na.rm=TRUE),1)),
+   c(round(min(I[data$Síntomas=="Leve"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Leve"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Leve"],na.rm=TRUE),1),
+       round(median(I[data$Síntomas=="Leve"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Leve"],c(0.25,0.75),na.rm=TRUE),1),round(sd(I[data$Síntomas=="Leve"],na.rm=TRUE),1)),         
+  c(round(min(I[data$Síntomas=="Grave"],na.rm=TRUE),1),round(max(I[data$Síntomas=="Grave"],na.rm=TRUE),1), round(mean(I[data$Síntomas=="Grave"],na.rm=TRUE),1),round(median(I[data$Síntomas=="Grave"],na.rm=TRUE),1),
+              round(quantile(I[data$Síntomas=="Grave"],c(0.25,0.75),na.rm=TRUE),1),round(sd(I[data$Síntomas=="Grave"],na.rm=TRUE),1))          )
+colnames(Dades)=c("Peso. mínimo","Peso.  máximo","Peso.  medio","Peso mediano", "1er cuartil", "3er cuartil","Desv. típica")
+rownames(Dades)=c("Asintomática" ,"Leve",      "Grave"  )
+
+Dades %>%
+  kbl() %>%
+  kable_styling()
+
+
+```
+
+```{r,include=FALSE}
+
+shapiro.test(I)$p.value
+kruskal.test(I~Síntomas)$p.value
+```
+
+* Ajuste de los pesos de cada nivel a distribuciones normales: test de Shapiro-Wilks, p-valores $`r signif(shapiro.test(I[SintN=="Asintomática"])$p.value,1)`$, $`r signif(shapiro.test(I[SintN=="Leve"])$p.value,1)`$, $`r signif(shapiro.test(I[SintN=="Grave"])$p.value,1)`$, respectivamente
+
+* Homocedasticidad: Test de Fligner-Killeen, p-valor $`r signif(fligner.test(I~Síntomas)$p.value,1)`$ 
+
+
+* Pesos medios: test de Kruskal-Wallis, p-valor  `r round(kruskal.test(I~Síntomas)$p.value,3)`
+
+Bajo peso:
+
+
+```{r}
+I.cut=cut(I,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+
+DF=data.frame(Factor=I.cut,Síntomas=Síntomas)
+taula=table(DF)[,c(1,2,3)]
+proptaula=round(100*prop.table(taula,margin=2),2)
+
+EEExt=cbind(c(as.vector(taula[,1]),length(I.cut[Síntomas=="Asintomática"])-sum(as.vector(taula[,1]))),
+            round(100*c(as.vector(taula[,1]),length(I.cut[Síntomas=="Asintomática"])-sum(as.vector(taula[,1])))/length(I.cut[Síntomas=="Asintomática"]),2),
+            c(as.vector(taula[,2]),length(I.cut[Síntomas=="Leve"])-sum(as.vector(taula[,2]))),
+            round(100*c(as.vector(taula[,2]),length(I.cut[Síntomas=="Leve"])-sum(as.vector(taula[,2])))/length(I.cut[Síntomas=="Leve"]),2),
+             c(as.vector(taula[,3]),length(I.cut[Síntomas=="Grave"])-sum(as.vector(taula[,3]))),
+            round(100*c(as.vector(taula[,3]),length(I.cut[Síntomas=="Grave"])-sum(as.vector(taula[,3])))/length(I.cut[Síntomas=="Grave"]),2)
+           )
+EEExt=rbind(EEExt,c(length(I.cut[Síntomas=="Asintomática"]),100,length(I.cut[Síntomas=="Leve"]),100,length(I.cut[Síntomas=="Grave"]),100))
+
+rownames(EEExt)=c("Bajo peso", "No bajo peso","Pérdidas","Total")
+colnames(EEExt)=Columnes.Sint
+
+EEExt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+```
+
+
+
+```{r 286,fig.cap="\\s"}
+Síntomas=ordered(rep(c("Asintomática", "Leve", "Grave"), each=2),levels=c("Asintomática", "Leve", "Grave"))
+Grupo=ordered(rep(rownames(EEExt)[1:2] , 3),levels=rownames(EEExt)[1:2])
+valor=as.vector(prop.table(taula, margin=1))
+data <- data.frame(Grupo,Síntomas,valor)
+
+ggplot(data, aes(fill=Síntomas, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  ylab("")+
+  xlab("")+
+  scale_fill_brewer(palette = "Dark2") 
+```
+
+* Asociación entre los grupos de sintomatología y bajo peso: test $\chi^2$, p-valor $`r signif(chisq.test(taula)$p.value,1)`$
+
+
+* Test de diferencia en la tendencia de la gravedad respecto del global: p-valor $`r signif(Prop.trend.test(taula[1,],colSums(taula)),1)`$
+

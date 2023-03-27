@@ -1,0 +1,4 @@
+"0","I.cut=cut(I,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)"
+"2","Error in cut.default(I, breaks = c(0, 2500, 10000), labels = c(1, 0),  : 
+  'x' must be numeric
+"

@@ -1,0 +1,3 @@
+"0","I=Casos1w$UCI"
+"0","taula=table(data.frame(I,Sint))[c(2,1) ,]"
+"0","Tabla.DGSW(I,""UCI"", ""No UCI"")"

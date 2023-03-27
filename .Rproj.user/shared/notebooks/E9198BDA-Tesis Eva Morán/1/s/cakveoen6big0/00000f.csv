@@ -1,0 +1,3 @@
+"0","I=c(Casos[Casos$Feto.muerto.intraútero==""No"",]$Peso._gramos_...125,CasosGM[CasosGM$Feto.vivo==""Sí"",]$Peso._gramos_...148)"
+"2","Error: object 'Casos' not found
+"

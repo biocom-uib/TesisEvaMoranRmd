@@ -37,7 +37,7 @@
 "0","EEExt=rbind(c(as.vector(table(I))[2:1],NA_I),"
 "0","            round(100*c(as.vector(table(I))[2:1],NA_I)/n_I1,1),"
 "0","            c(as.vector(table(NI))[2:1],NA_NI),"
-"0","            round(100*c(as.vector(table(NI)),NA_NI)/n_NI1,1))"
+"0","            round(100*c(as.vector(table(NI))[2:1],NA_NI)/n_NI1,1))"
 "0",""
 "0","colnames(EEExt)=c(L1, L2,""Pérdidas"")"
 "0","rownames(EEExt)=c(""Infectadas (N)"", ""Infectadas (%)"",""No infectadas (N)"", ""No infectadas (%)"")"
