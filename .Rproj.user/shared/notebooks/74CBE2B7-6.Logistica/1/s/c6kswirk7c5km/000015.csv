@@ -1,0 +1,62 @@
+"0","mod.COVID=multinom(Sint~Edad.cut+Etnias+Fumadora+Obesidad+Hipertension.Pre+Diabetes+ECP.Tot+ECC+Nulipara+GM,data=DFL.madres,family=binomial(link=""logit""))"
+"1","# weights: "
+"1"," "
+"1","64"
+"1"," ("
+"1",""
+"1","45"
+"1",""
+"1"," variable)
+"
+"1","initial  value 4149.179023 
+"
+"1","iter  10 value 3545.807480
+"
+"1","iter  20 value 3505.449388
+"
+"1","iter  30 value 3501.745288
+"
+"1","iter  40 value 3501.587703
+"
+"1","final  value 3501.587484 
+"
+"1","converged
+"
+"0","DFOR=tbl_regression(mod.COVID, exp = TRUE)"
+"2","[36mℹ[39m Multinomial models have a different underlying structure than the models
+gtsummary was designed for. Other gtsummary functions designed to work with
+[32m[32mtbl_regression[32m[39m objects may yield unexpected results.
+"
+"0","Resultado=data.frame(nivel=DFOR$table_body$groupname_col,"
+"0","                     variable=DFOR$table_body$term,"
+"0","                     OR=round(DFOR$table_body$estimate,3),"
+"0","                     IC1=round(DFOR$table_body$conf.low,3),"
+"0","                     IC2=round(DFOR$table_body$conf.high,3),"
+"0","                    p.valor=DFOR$table_body$p.value)"
+"0","Resultado$nivel[Resultado$nivel==""1""]=""Asintomática"""
+"0","Resultado$nivel[Resultado$nivel==""2""]=""Leve"""
+"0","Resultado$nivel[Resultado$nivel==""3""]=""Pulmonía"""
+"0",""
+"0","Resultado=Resultado[!is.na(Resultado$OR),]"
+"0","rownames(Resultado)=NULL"
+"0","Resultado$variable=c( ""Edad: 31-40 años rel. a 18-30"","
+"0","                 ""Edad: >40 años rel. a 18-30"","
+"0","                 ""Etnia: Árabe rel. a blanca"","
+"0","                 ""Etnia: Asiática rel. a blanca"","
+"0","                 ""Etnia: Latinoamericana rel. a blanca"","
+"0","                 ""Etnia: Negra rel. a blanca"","
+"0","                 ""Tabaquismo"","
+"0","                 ""Obesidad"","
+"0","                 ""HTA"","
+"0","                 ""DM"","
+"0","                 ""EPC"","
+"0","                 ""ECC"","
+"0","                 ""Nulípara"","
+"0","                 ""Gestación múltiple"""
+"0","                  )"
+"0",""
+"0","colnames(Resultado)=c(""COVID"",""Variable"",""ORa"",""IC 95%: extremo inf."", ""IC 95%: extremo sup."", ""p-valor"")"
+"0",""
+"0","Resultado %>%"
+"0","  kbl(col.names = NULL) %>%"
+"0","  kable_styling()"

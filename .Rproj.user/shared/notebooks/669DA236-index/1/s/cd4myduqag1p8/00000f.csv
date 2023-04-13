@@ -188,8 +188,6 @@
 "0","# Tabla de comparación entre olas: Global"
 "0",""
 "0","ComparOlasGl=function(Tot1w,Tot2w,L1,L2){"
-"0","Tot1w=c(I1,NI1)"
-"0","Tot2w=c(I2,NI2)"
 "0","n_1=length(Tot1w)"
 "0","n_2=length(Tot2w)"
 "0",""

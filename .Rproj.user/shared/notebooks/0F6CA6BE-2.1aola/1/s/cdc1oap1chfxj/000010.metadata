@@ -1,1 +1,0 @@
-{"height":367.7379480840544,"width":595.0,"size_behavior":0,"conditions":[[1,"Warning: \u001B[38;5;232mRemoved 15 rows containing non-finite values (`stat_ydensity()`).\u001B[39m"],[1,"Warning: \u001B[38;5;232mRemoved 15 rows containing non-finite values (`stat_boxplot()`).\u001B[39m"]]}

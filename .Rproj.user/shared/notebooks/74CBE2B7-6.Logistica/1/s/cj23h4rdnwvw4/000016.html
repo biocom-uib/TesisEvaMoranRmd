@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> ORa </th>
+   <th style="text-align:right;"> IC 95%: extremo inf. </th>
+   <th style="text-align:right;"> IC 95%: extremo sup. </th>
+   <th style="text-align:left;"> p-valor </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> COVID anteparto asintomática </td>
+   <td style="text-align:right;"> 0.417 </td>
+   <td style="text-align:right;"> 0.045 </td>
+   <td style="text-align:right;"> 3.872 </td>
+   <td style="text-align:left;"> 0.44149135 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> COVID anteparto leve </td>
+   <td style="text-align:right;"> 1.982 </td>
+   <td style="text-align:right;"> 0.617 </td>
+   <td style="text-align:right;"> 6.371 </td>
+   <td style="text-align:left;"> 0.25075298 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> COVID anteparto grave </td>
+   <td style="text-align:right;"> 1.543 </td>
+   <td style="text-align:right;"> 0.215 </td>
+   <td style="text-align:right;"> 11.068 </td>
+   <td style="text-align:left;"> 0.6662279 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Edad: 31-40 años rel. a 18-30 </td>
+   <td style="text-align:right;"> 2.295 </td>
+   <td style="text-align:right;"> 0.658 </td>
+   <td style="text-align:right;"> 8.002 </td>
+   <td style="text-align:left;"> 0.19252163 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Edad: &gt;40 años rel. a 18-30 </td>
+   <td style="text-align:right;"> 2.137 </td>
+   <td style="text-align:right;"> 0.260 </td>
+   <td style="text-align:right;"> 17.582 </td>
+   <td style="text-align:left;"> 0.47992453 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Árabe rel. a blanca </td>
+   <td style="text-align:right;"> 1.676 </td>
+   <td style="text-align:right;"> 0.269 </td>
+   <td style="text-align:right;"> 10.453 </td>
+   <td style="text-align:left;"> 0.58048874 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Asiática rel. a blanca </td>
+   <td style="text-align:right;"> 1.921 </td>
+   <td style="text-align:right;"> 0.165 </td>
+   <td style="text-align:right;"> 22.349 </td>
+   <td style="text-align:left;"> 0.60220862 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Latinoamericana rel. a blanca </td>
+   <td style="text-align:right;"> 3.086 </td>
+   <td style="text-align:right;"> 0.814 </td>
+   <td style="text-align:right;"> 11.699 </td>
+   <td style="text-align:left;"> 0.0974574 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Negra rel. a blanca </td>
+   <td style="text-align:right;"> 20.391 </td>
+   <td style="text-align:right;"> 0.784 </td>
+   <td style="text-align:right;"> 530.529 </td>
+   <td style="text-align:left;"> 0.0697655 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HTA </td>
+   <td style="text-align:right;"> 0.817 </td>
+   <td style="text-align:right;"> 0.097 </td>
+   <td style="text-align:right;"> 6.858 </td>
+   <td style="text-align:left;"> 0.85259005 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DM </td>
+   <td style="text-align:right;"> 9425752.878 </td>
+   <td style="text-align:right;"> 0.000 </td>
+   <td style="text-align:right;"> Inf </td>
+   <td style="text-align:left;"> 0.99119627 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Gestación múltiple </td>
+   <td style="text-align:right;"> 3.752 </td>
+   <td style="text-align:right;"> 0.690 </td>
+   <td style="text-align:right;"> 20.408 </td>
+   <td style="text-align:left;"> 0.12591965 </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

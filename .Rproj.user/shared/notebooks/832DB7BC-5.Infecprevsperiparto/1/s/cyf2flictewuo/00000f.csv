@@ -1,0 +1,3 @@
+"0","I=Casos$PREECLAMPSIA_ECLAMPSIA_TOTAL"
+"0","NI=Controls$PREECLAMPSIA"
+"0","TablaAntePeri(I,NI,""PE"", ""No PE"")"

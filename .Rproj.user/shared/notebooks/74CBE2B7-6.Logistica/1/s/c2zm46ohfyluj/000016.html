@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> ORa </th>
+   <th style="text-align:right;"> IC 95%: extremo inf. </th>
+   <th style="text-align:right;"> IC 95%: extremo sup. </th>
+   <th style="text-align:left;"> p-valor </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> COVID periparto asintomática </td>
+   <td style="text-align:right;"> 0.895 </td>
+   <td style="text-align:right;"> 0.566 </td>
+   <td style="text-align:right;"> 1.416 </td>
+   <td style="text-align:left;"> 0.63659541 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> COVID periparto leve </td>
+   <td style="text-align:right;"> 3.800 </td>
+   <td style="text-align:right;"> 2.303 </td>
+   <td style="text-align:right;"> 6.271 </td>
+   <td style="text-align:left;"> 1.7e-07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> COVID periparto grave </td>
+   <td style="text-align:right;"> 5.398 </td>
+   <td style="text-align:right;"> 2.774 </td>
+   <td style="text-align:right;"> 10.502 </td>
+   <td style="text-align:left;"> 6.9e-07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Edad: 31-40 años rel. a 18-30 </td>
+   <td style="text-align:right;"> 0.917 </td>
+   <td style="text-align:right;"> 0.637 </td>
+   <td style="text-align:right;"> 1.319 </td>
+   <td style="text-align:left;"> 0.64052377 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Edad: &gt;40 años rel. a 18-30 </td>
+   <td style="text-align:right;"> 0.996 </td>
+   <td style="text-align:right;"> 0.479 </td>
+   <td style="text-align:right;"> 2.072 </td>
+   <td style="text-align:left;"> 0.99184762 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tabaquismo </td>
+   <td style="text-align:right;"> 1.688 </td>
+   <td style="text-align:right;"> 1.063 </td>
+   <td style="text-align:right;"> 2.682 </td>
+   <td style="text-align:left;"> 0.02663427 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PE con CG </td>
+   <td style="text-align:right;"> 15.390 </td>
+   <td style="text-align:right;"> 6.555 </td>
+   <td style="text-align:right;"> 36.131 </td>
+   <td style="text-align:left;"> &lt;1e-08 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RCIU </td>
+   <td style="text-align:right;"> 2.100 </td>
+   <td style="text-align:right;"> 0.929 </td>
+   <td style="text-align:right;"> 4.750 </td>
+   <td style="text-align:left;"> 0.0747369 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RPM </td>
+   <td style="text-align:right;"> 2.476 </td>
+   <td style="text-align:right;"> 1.742 </td>
+   <td style="text-align:right;"> 3.519 </td>
+   <td style="text-align:left;"> 4.3e-07 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Feto muerto anteparto </td>
+   <td style="text-align:right;"> 3.974 </td>
+   <td style="text-align:right;"> 1.125 </td>
+   <td style="text-align:right;"> 14.034 </td>
+   <td style="text-align:left;"> 0.03207617 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DM </td>
+   <td style="text-align:right;"> 1.210 </td>
+   <td style="text-align:right;"> 0.346 </td>
+   <td style="text-align:right;"> 4.234 </td>
+   <td style="text-align:left;"> 0.76502425 </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

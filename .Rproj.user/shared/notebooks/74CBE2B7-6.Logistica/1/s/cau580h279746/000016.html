@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> ORa </th>
+   <th style="text-align:right;"> IC 95%: extremo inf. </th>
+   <th style="text-align:right;"> IC 95%: extremo sup. </th>
+   <th style="text-align:left;"> p-valor </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> COVID anteparto </td>
+   <td style="text-align:right;"> 1.657 </td>
+   <td style="text-align:right;"> 1.034 </td>
+   <td style="text-align:right;"> 2.656 </td>
+   <td style="text-align:left;"> 0.03576678 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> COVID periparto </td>
+   <td style="text-align:right;"> 0.967 </td>
+   <td style="text-align:right;"> 0.547 </td>
+   <td style="text-align:right;"> 1.710 </td>
+   <td style="text-align:left;"> 0.90792972 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Árabe rel. a blanca </td>
+   <td style="text-align:right;"> 0.910 </td>
+   <td style="text-align:right;"> 0.425 </td>
+   <td style="text-align:right;"> 1.946 </td>
+   <td style="text-align:left;"> 0.80754908 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Asiática rel. a blanca </td>
+   <td style="text-align:right;"> 0.352 </td>
+   <td style="text-align:right;"> 0.048 </td>
+   <td style="text-align:right;"> 2.598 </td>
+   <td style="text-align:left;"> 0.30604986 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Latinoamericana rel. a blanca </td>
+   <td style="text-align:right;"> 0.668 </td>
+   <td style="text-align:right;"> 0.374 </td>
+   <td style="text-align:right;"> 1.194 </td>
+   <td style="text-align:left;"> 0.17340423 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Etnia: Negra rel. a blanca </td>
+   <td style="text-align:right;"> 0.431 </td>
+   <td style="text-align:right;"> 0.058 </td>
+   <td style="text-align:right;"> 3.223 </td>
+   <td style="text-align:left;"> 0.4122197 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Tabaquismo </td>
+   <td style="text-align:right;"> 2.058 </td>
+   <td style="text-align:right;"> 1.210 </td>
+   <td style="text-align:right;"> 3.500 </td>
+   <td style="text-align:left;"> 0.0077302 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Obesidad </td>
+   <td style="text-align:right;"> 0.660 </td>
+   <td style="text-align:right;"> 0.357 </td>
+   <td style="text-align:right;"> 1.221 </td>
+   <td style="text-align:left;"> 0.1853894 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> DM </td>
+   <td style="text-align:right;"> 1.761 </td>
+   <td style="text-align:right;"> 0.524 </td>
+   <td style="text-align:right;"> 5.921 </td>
+   <td style="text-align:left;"> 0.36042301 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Gestación múltiple </td>
+   <td style="text-align:right;"> 3.405 </td>
+   <td style="text-align:right;"> 1.452 </td>
+   <td style="text-align:right;"> 7.986 </td>
+   <td style="text-align:left;"> 0.00483646 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Anomalías congénitas </td>
+   <td style="text-align:right;"> 2.403 </td>
+   <td style="text-align:right;"> 0.713 </td>
+   <td style="text-align:right;"> 8.100 </td>
+   <td style="text-align:left;"> 0.1574483 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PE con CG </td>
+   <td style="text-align:right;"> 4.909 </td>
+   <td style="text-align:right;"> 1.768 </td>
+   <td style="text-align:right;"> 13.632 </td>
+   <td style="text-align:left;"> 0.00226132 </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
