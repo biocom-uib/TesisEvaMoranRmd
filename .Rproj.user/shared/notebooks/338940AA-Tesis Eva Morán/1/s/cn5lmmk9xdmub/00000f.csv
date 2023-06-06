@@ -1,0 +1,6 @@
+"0","I1=Casos1w$PREMATURO"
+"0","I2=Casos2w$PREMATURO"
+"0","NI1=Controls1w$Preterm.deliveries"
+"0","NI2=Controls2w$Preterm.deliveries"
+"0","#"
+"0","ComparOlasRR(I1,I2,NI1,NI2,""Prematuro"", ""A término"")"

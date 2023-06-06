@@ -1,0 +1,17 @@
+"0","title: ""Tesis de Eva Morán. Análisis estadístico.""
+date: ""`r Sys.Date()`""
+site: bookdown::bookdown_site
+output: 
+   bookdown::html_book:
+    includes:
+      in_header: style.css
+documentclass: book
+#bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: AprendeR-UIB/TesisEva
+---
+
+"
+"2","/bin/sh: ---: command not found
+"

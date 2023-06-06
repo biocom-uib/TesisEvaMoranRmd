@@ -1,0 +1,110 @@
+h1:descripción-de-la-muestra-de-la-primera-ola Descripción de la muestra de la primera ola
+h2:descripción-global Descripción global
+h3:edades Edades
+fig:101 \\s
+fig:102 \\s
+h3:etnias Etnias
+fig:103 \\s
+h3:hábito-tabáquico Hábito tabáquico
+h3:obesidad Obesidad
+h3:hipertensión-pregestacional Hipertensión pregestacional
+h3:diabetes-mellitus Diabetes Mellitus
+h3:enfermedades-cardiacas-crónicas Enfermedades cardiacas crónicas
+h3:enfermedades-pulmonares-crónicas-incluyendo-asma Enfermedades pulmonares crónicas (incluyendo asma)
+h3:paridad Paridad
+h2:embarazos Embarazos
+h3:gestación-múltiple Gestación múltiple
+h3:anomalías-congénitas Anomalías congénitas
+h3:retraso-del-crecimiento-intrauterino Retraso del crecimiento intrauterino
+h3:diabetes-gestacional Diabetes gestacional
+h3:hipertensión-gestacional Hipertensión gestacional
+h3:preeclampsia Preeclampsia
+h3:preeclampsia-con-criterios-de-gravedad Preeclampsia con criterios de gravedad
+h3:rotura-prematura-de-membranas Rotura prematura de membranas
+h3:edad-gestacional-en-el-momento-del-parto Edad gestacional en el momento del parto
+fig:104 \\s
+h3:ingreso-materno-en-uci Ingreso materno en UCI
+h3:ingreso-materno-en-uci-según-el-momento-del-parto-o-cesárea Ingreso materno en UCI según el momento del parto o cesárea
+h3:embarazos-con-algún-feto-muerto-anteparto Embarazos con algún feto muerto anteparto
+h3:inicio-del-parto Inicio del parto
+fig:105 \\s
+h3:tipo-de-parto Tipo de parto
+fig:106 \\s
+h3:prematurez Prematurez
+h3:eventos-trombóticos Eventos trombóticos
+h3:eventos-hemorrágicos Eventos hemorrágicos
+h3:hemorragias-potsparto Hemorragias potsparto
+fig:107 \\s
+h2:neonatos Neonatos
+h3:fetos-muertos-anteparto Fetos muertos anteparto
+h3:peso-de-neonatos-al-nacimiento Peso de neonatos al nacimiento
+fig:108 \\s
+h3:tests-de-apgar Tests de Apgar
+h3:ingreso-de-los-neonatos-en-ucin Ingreso de los neonatos en UCIN
+h2:descripción-de-casos-por-sintomatología Descripción de casos por sintomatología
+fig:sint1w \\s
+h3:trimestre-de-infección Trimestre de infección
+fig:109 \\s
+h3:sintomatología-vs-edad Sintomatología vs edad
+fig:110 \\s
+h3:sintomatología-vs-etnia Sintomatología vs etnia
+fig:111 \\s
+h3:sintomatología-vs-estatus-de-fumadora Sintomatología vs estatus de fumadora
+fig:112 \\s
+h3:sintomatología-vs-obesidad Sintomatología vs obesidad
+fig:113 \\s
+h3:sintomatología-vs-hipertensión Sintomatología vs hipertensión
+fig:114 \\s
+h3:sintomatología-vs-diabetes Sintomatología vs diabetes
+fig:115 \\s
+h3:sintomatología-vs-cardiopatía Sintomatología vs cardiopatía
+fig:116 \\s
+h3:sintomatología-vs-enfermedad-pulmonar-crónica Sintomatología vs enfermedad pulmonar crónica
+fig:117 \\s
+h3:sintomatología-vs-gestación-múltiple Sintomatología vs gestación múltiple
+fig:167 \\s
+h3:sintomatología-vs-paridad Sintomatología vs paridad
+fig:168 \\s
+h3:sintomatología-vs-anomalía-congénita Sintomatología vs anomalía congénita
+fig:118 \\s
+h3:sintomatología-vs-retraso-del-crecimiento-intrauterino Sintomatología vs retraso del crecimiento intrauterino
+fig:119 \\s
+h3:sintomatología-vs-diabetes-gestacional Sintomatología vs diabetes gestacional
+fig:120 \\s
+h3:sintomatología-vs-hipertensión-gestacional Sintomatología vs hipertensión gestacional
+fig:121 \\s
+h3:sintomatología-vs-rotura-prematura-de-membranas Sintomatología vs rotura prematura de membranas
+fig:122 \\s
+h3:sintomatología-vs-preeclamspia Sintomatología vs preeclamspia
+fig:123 \\s
+h3:sintomatología-vs-preeclampsia-con-cg Sintomatología vs preeclampsia con CG
+fig:124 \\s
+h3:sintomatología-vs-eventos-hemorrágicos Sintomatología vs eventos hemorrágicos
+fig:125 \\s
+h3:sintomatología-vs-hemorragia-postparto Sintomatología vs hemorragia postparto
+fig:146 \\s
+fig:126 \\s
+h3:sintomatología-vs-eventos-trombóticos Sintomatología vs eventos trombóticos
+fig:127 \\s
+h3:sintomatología-vs-uci-madre-sí-no Sintomatología vs UCi madre (Sí-No)
+fig:128 \\s
+h3:sintomatología-vs-uci-madre-antes-después Sintomatología vs UCi madre (antes-después)
+fig:129 \\s
+h3:sintomatología-vs-prematurez Sintomatología vs prematurez
+fig:130 \\s
+h3:sintomatología-vs-apgar Sintomatología vs APGAR
+fig:131 \\s
+h3:sintomatología-vs-uci-neonato Sintomatología vs UCI neonato
+fig:132 \\s
+h3:sintomatología-vs-fetos-muertos-anteparto Sintomatología vs Fetos muertos anteparto
+fig:145 \\s
+h3:sintomatología-vs-inicio-de-parto Sintomatología vs inicio de parto
+fig:133 \\s
+h3:sintomatología-vs-tipo-de-parto Sintomatología vs tipo de parto
+fig:134 \\s
+h3:edades-gestacionales-infectadas-1a-ola Edades gestacionales infectadas 1a ola
+fig:135 \\s
+h3:pesos-hijos-infectadas-1a-ola Pesos hijos infectadas 1a ola
+fig:136 \\s
+fig:186 \\s
+

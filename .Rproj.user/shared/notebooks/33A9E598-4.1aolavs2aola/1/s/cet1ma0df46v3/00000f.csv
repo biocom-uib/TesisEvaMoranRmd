@@ -1,4 +1,0 @@
-"0","EETot=cbind(as.vector(table(Tot1w)),as.vector(table(Tot2w)))"
-"0","EEI=cbind(as.vector(table(I1)),as.vector(table(I2)))"
-"0","EENI=cbind(as.vector(table(NI1)),as.vector(table(NI2)))"
-"0","FT=c(fisher.test(EETot)$p.value,fisher.test(EEI)$p.value,fisher.test(EENI)$p.value)"

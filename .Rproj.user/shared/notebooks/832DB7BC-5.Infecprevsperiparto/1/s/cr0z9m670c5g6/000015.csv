@@ -1,7 +1,0 @@
-"0",""
-"0","ggplot(data2, aes(fill=Grupo, y=valor2, x=Síntomas)) + "
-"0","  geom_bar(position=""dodge"", stat=""identity"")+"
-"0","  xlab(""Síntomas"")+"
-"0","  ylab("""")+"
-"0","  labs(fill = ""Momento diag."")"
-"0",""

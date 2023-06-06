@@ -1,0 +1,6 @@
+"0","I1=cut(Casos1w$Edad._años_,breaks=c(0,30,40,100),labels=c(""18-30"",""31-40"","">40""))"
+"0","NI1=cut(Controls1w$Edad._años_,breaks=c(0,30,40,100),labels=c(""18-30"",""31-40"","">40""))"
+"0","I2=cut(Casos2w$Edad._años_,breaks=c(0,30,40,100),labels=c(""18-30"",""31-40"","">40""))"
+"0","NI2=cut(Controls2w$Edad._años_,breaks=c(0,30,40,100),labels=c(""18-30"",""31-40"","">40""))"
+"0","#"
+"0","ComparOlasCCm(I1,I2,NI1,NI2,c(""18-30"",""31-40"","">40""))"

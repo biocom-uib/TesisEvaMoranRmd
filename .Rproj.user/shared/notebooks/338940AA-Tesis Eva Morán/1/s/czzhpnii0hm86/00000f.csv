@@ -1,0 +1,6 @@
+"0","I1=c(Casos1w[Casos1w$Feto.muerto.intraútero==""No"",]$Ingreso.en.UCIN,Casos1wGM[Casos1wGM$Feto.vivo==""Sí"",]$Ingreso.en.UCI)"
+"0","I2=c(Casos2w[Casos2w$Feto.muerto.intraútero==""No"",]$Ingreso.en.UCIN,Casos2wGM[Casos2wGM$Feto.vivo==""Sí"",]$Ingreso.en.UCI)"
+"0","NI1=c(Controls1w[Controls1w$Feto.vivo...194==""Sí"",]$Ingreso.en.UCI...213,Controls1wGM[Controls1wGM$Feto.vivo...245==""Sí"",]$Ingreso.en.UCI...260)"
+"0","NI2=c(Controls2w[Controls2w$Feto.vivo...194==""Sí"",]$Ingreso.en.UCI...213,Controls2wGM[Controls2wGM$Feto.vivo...245==""Sí"",]$Ingreso.en.UCI...260)"
+"0",""
+"0","ComparOlasRR(I1,I2,NI1,NI2,""UCIN"", ""No UCIN"")"

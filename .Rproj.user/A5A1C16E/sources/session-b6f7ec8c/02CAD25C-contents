@@ -1,0 +1,1105 @@
+# Comparación de las dos olas
+
+
+## Gravedad en la infeccion
+
+```{r}
+Sint1w=Casos1w$SINTOMAS_DIAGNOSTICO
+Sint2w=Casos2w$SINTOMAS_DIAGNOSTICO
+Sint=c(Sint1w,Sint2w)
+EEExt=rbind(c(table(Sint1w)[1],round(100*prop.table(table(Sint1w)),2)[1],
+              table(Sint1w)[2],round(100*prop.table(table(Sint1w)),2)[2],
+              table(Sint1w)[3],round(100*prop.table(table(Sint1w)),2)[3],
+              length(Sint1w)),
+            c(table(Sint2w)[1],round(100*prop.table(table(Sint2w)),2)[1],
+              table(Sint2w)[2],round(100*prop.table(table(Sint2w)),2)[2],
+              table(Sint2w)[3],round(100*prop.table(table(Sint2w)),2)[3],
+              length(Sint2w))
+            )
+EEE=EEExt[,c(1,3,5)]
+
+rownames(EEExt)=c("Infectadas 1a ola", "Infectadas 2a ola")
+colnames(EEExt)=c("Asintomáticas (N)", "Asintomáticas (%)","Síntomas leves (N)", "Síntomas leves (%)", "Neumonía (N)", "Neumonía (%)","Total")
+
+EEExt %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+
+```
+
+```{r 401,fig.cap="\\s"}
+df =data.frame(
+  Ola=c(rep("1a ola",length(Sint1w)), rep("2a ola",length(Sint2w))),
+  Sintomas=c(Sint1w,Sint2w)
+)
+
+Gravedad=ordered(rep(c("Asintomáticas", "Síntomas leves", "Neumonía"), each=2),levels=c("Asintomáticas", "Síntomas leves", "Neumonía"))
+Grupo=rep(c("1a ola","2a ola") , 3)
+valor=as.vector(prop.table(table(df), margin=1))
+data <- data.frame(Gravedad,Grupo,valor)
+
+
+ggplot(data, aes(fill=Gravedad, y=valor, x=Grupo)) + 
+  geom_bar(position="dodge", stat="identity")+
+  xlab("Olas")+
+  ylab("")+
+    scale_fill_brewer(palette="Dark2")+labs(fill="")
+
+
+```
+
+
+* Asociación entre los grupos de sintomatología y las olas: test $\chi^2$, p-valor $`r signif(chisq.test(EEE)$p.value,1)`$
+
+
+## Comparación de antecedentes
+
+### Franja de edad
+
+
+En tablas como la que sigue, para cada fila considerada como antecedente:
+
+* Cociente de OR: cociente de la OR de infección relativa al antecedente en la 1a ola entre la correspondiente OR en la 2a ola
+* p-valor igualdad OR: p-valor del contraste de igualdad entre las OR de infección relativas al antecedente en las dos olas, ajustados por Bonferroni 
+* IC: IC-95% para el cociente de las OR
+* p-valor global olas: p-valor del test de Fisher de la igualdad de proporciones del antecendente en las dos olas, ajustados por Bonferroni
+* p-valor casos: p-valor del test de Fisher de la igualdad de proporciones del antecendente entre las infectadas de las dos olas, ajustados por Bonferroni
+* p-valor controles: p-valor del test de Fisher de la igualdad de proporciones del antecendente entre las no infectadas de las dos olas, ajustados por Bonferroni
+
+
+
+```{r}
+I1=cut(Casos1w$Edad._años_,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+NI1=cut(Controls1w$Edad._años_,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+I2=cut(Casos2w$Edad._años_,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+NI2=cut(Controls2w$Edad._años_,breaks=c(0,30,40,100),labels=c("18-30","31-40",">40"))
+#
+ComparOlasCCm(I1,I2,NI1,NI2,c("18-30","31-40",">40"))
+```
+
+
+```{r}
+Tipo= c(I1,I2,NI1,NI2)
+dtbp=data.frame(Grupo=c(rep("Inf.",length(I1)+length(I2)),rep("No inf.",length(NI1)+length(NI2))),
+Ola= c(rep("1a ola",length(I1)),rep("2a ola",length(I2)),rep("1a ola",length(NI1)),rep("2a ola",length(NI2))),  
+Tipo
+ )
+SRH=scheirerRayHare(Tipo ~ Grupo + Ola,data=dtbp,verbose=FALSE)$p.value[3]
+```
+
+* Test de interacción de Scheirer-Ray-Hare: p-valor, `r round(SRH,3)`. Un p-valor pequeño da evidencia estadística de que las diferencia de la "franja mediana de edad" en infectadas y no infectadas en las dos olas han sido diferentes. 
+
+
+
+### Etnia
+
+```{r}
+I1=Casos1w$Etnia
+NI1=Controls1w$Etnia
+I2=Casos2w$Etnia
+NI2=Controls2w$Etnia
+I1[I1=="Asia"]="Asiática"
+I1=factor(I1)
+I2[I2=="Asia"]="Asiática"
+I2=factor(I2)
+#
+ComparOlasCCm(I1,I2,NI1,NI2,c("Árabe", "Asiática", "Blanca", "Latinoamericana","Negra"))
+```
+
+Como las etnias no son ordinales, no hay ningún test sensato para comparar si la diferencia entre casos y controles en la primera ola és "diferente" de la diferencia entre casos y controles en segunda ola.
+
+
+
+
+### Hábito tabáquico
+
+En tablas como la que sigue:
+
+* Cociente de OR: cociente de la OR de infección relativa al antecedente en la 1a ola entre la correspondiente OR en la 2a ola
+* p-valor igualdad OR: p-valor del contraste de igualdad entre las OR de infección relativas al antecedente en las dos olas; 
+* IC: IC-95% para el cociente de las OR
+* p-valor global olas: p-valor del test de Fisher de la igualdad de proporciones del antecendente en las dos olas
+* p-valor casos: p-valor del test de Fisher de la igualdad de proporciones del antecendente entre las infectadas de las dos olas
+* p-valor controles: p-valor del test de Fisher de la igualdad de proporciones del antecendente entre las no infectadas de las dos olas
+
+
+```{r 452,fig.cap="\\s"}
+I1=Casos1w$FUMADORA_CAT
+I2=Casos2w$FUMADORA_CAT
+NI1=Controls1w$Fumadora_cat
+NI2=Controls2w$Fumadora_cat
+#
+ComparOlasCC(I1,I2,NI1,NI2,"Fumadoras","No fumadoras")
+GrComparOlasCC(I1,I2,NI1,NI2,"Fumadoras")
+```
+
+
+
+### Obesidad
+
+
+```{r 453,fig.cap="\\s"}
+I1=Casos1w$Obesidad
+I2=Casos2w$Obesidad
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Obesidad
+NI2=Controls2w$Obesidad
+#
+ComparOlasCC(I1,I2,NI1,NI2,"Obesas","No obesas")
+GrComparOlasCC(I1,I2,NI1,NI2,"Obesas")
+```
+
+
+
+
+### Hipertensión pregestacional
+
+
+```{r 454,fig.cap="\\s"}
+I1=Casos1w$Hipertensión.pregestacional
+I2=Casos2w$Hipertensión.pregestacional
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Hipertensión.pregestacional
+NI2=Controls2w$Hipertensión.pregestacional
+#
+ComparOlasCC(I1,I2,NI1,NI2,"HTA","No HTA")
+GrComparOlasCC(I1,I2,NI1,NI2,"HTA")
+```
+
+
+
+### Diabetes Mellitus 
+
+```{r 455,fig.cap="\\s"}
+I1=Casos1w$DIABETES
+I2=Casos2w$DIABETES
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Diabetes
+NI2=Controls2w$Diabetes
+#
+ComparOlasCC(I1,I2,NI1,NI2,"DM","No DM")
+GrComparOlasCC(I1,I2,NI1,NI2,"DM")
+```
+
+
+
+
+### Enfermedades cardiacas crónicas 
+
+
+```{r 456,fig.cap="\\s"}
+I1=Casos1w$Enfermedad.cardiaca.crónica
+I2=Casos2w$Enfermedad.cardiaca.crónica
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$ENF.CARDIACA.TODO
+NI2=Controls2w$ENF.CARDIACA.TODO
+#
+ComparOlasCC(I1,I2,NI1,NI2,"ECC","No ECC")
+GrComparOlasCC(I1,I2,NI1,NI2,"ECC")
+```
+
+
+
+
+### Enfermedades pulmonares crónicas (incluyendo asma)
+
+```{r 457,fig.cap="\\s"}
+INA1w=Casos1w$Enfermedad.pulmonar.crónica.no.asma
+NINA1w=Controls1w$Enfermedad.pulmonar.crónica.no.asma
+NINA1w[NINA1w==0]="No"
+NINA1w[NINA1w==1]="Sí"
+IA1w=Casos1w$Diagnóstico.clínico.de.Asma
+NIA1w=Controls1w$Diagnóstico.clínico.de.Asma
+NIA1w[NIA1w==0]="No"
+NIA1w[NIA1w==1]="Sí"
+I1=rep(NA,n_I1)
+for (i in 1:n_I1){I1[i]=max(INA1w[i],IA1w[i],na.rm=TRUE)}
+NI1=rep(NA,n_NI1)
+for (i in 1:n_NI1){NI1[i]=max(NINA1w[i],NIA1w[i],na.rm=TRUE)}
+NI1[NI1==-Inf]=NA
+
+
+INA2w=Casos2w$Enfermedad.pulmonar.crónica.no.asma
+NINA2w=Controls2w$Enfermedad.pulmonar.crónica.no.asma
+NINA2w[NINA2w==0]="No"
+NINA2w[NINA2w==1]="Sí"
+IA2w=Casos2w$Diagnóstico.clínico.de.Asma
+NIA2w=Controls2w$Diagnóstico.clínico.de.Asma
+NIA2w[NIA2w==0]="No"
+NIA2w[NIA2w==1]="Sí"
+I2=rep(NA,n_I2)
+for (i in 1:n_I2){I2[i]=max(INA2w[i],IA2w[i],na.rm=TRUE)}
+NI2=rep(NA,n_NI2)
+for (i in 1:n_NI2){NI2[i]=max(NINA2w[i],NIA2w[i],na.rm=TRUE)}
+NI2[NI2==-Inf]=NA
+#
+ComparOlasCC(I1,I2,NI1,NI2,"EPC","No EPC")
+GrComparOlasCC(I1,I2,NI1,NI2,"EPC")
+```
+
+
+
+
+
+
+
+### Paridad
+
+```{r 458,fig.cap="\\s"}
+I1=Casos1w$NULIPARA
+I2=Casos2w$NULIPARA
+NI1=Controls1w$Nuliparous
+NI2=Controls2w$Nuliparous
+EE=cbind(as.vector(table(I1))[2:1],
+         as.vector(table(NI1))[2:1],
+         as.vector(table(I2))[2:1],
+         as.vector(table(NI2))[2:1])
+#
+ComparOlasCC(I1,I2,NI1,NI2,"Nulípara","Multípara")
+GrComparOlasCC(I1,I2,NI1,NI2,"Nulípara")
+```
+
+
+
+### Gestación múltip
+
+```{r 459,fig.cap="\\s"}
+I1=Casos1w$Gestación.Múltiple
+I2=Casos2w$Gestación.Múltiple
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Gestación.Múltiple
+NI2=Controls2w$Gestación.Múltiple
+#
+ComparOlasCC(I1,I2,NI1,NI2,"Gestación múltiple", "Gestación única")
+GrComparOlasCC(I1,I2,NI1,NI2,"Gestación múltiple")
+```
+
+
+
+
+## Comparación de riesgos de desenlaces
+
+
+
+
+### Hipertensión gestacional 
+
+
+En tablas como la que sigue:
+
+* Diferencia RA: Diferencia entre los RA del desenlace en la 1a menos la 2a ola
+* IC RA: IC 95% para esta diferencia
+* p-valor igualdad RA: p-valor del contraste de igualdad entre los RA del desenlace en las dos olas
+* Cociente RR: Cociente de los RR del desenlace en la 1a dividido por la 2a ola
+* IC RR: IC 95% para este cociente
+* p-valor igualdad RR: p-valor del contraste de igualdad entre los RR del desenlace en las dos olas
+* p-valor global olas, p-valor casos, p-valor controles: como antes
+
+
+
+```{r 462,fig.cap="\\s"}
+I1=Casos1w$Hipertensión.gestacional
+I2=Casos2w$Hipertensión.gestacional
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Hipertensión.gestacional
+NI2=Controls2w$Hipertensión.gestacional
+#
+ComparOlasRR(I1,I2,NI1,NI2,"HG", "No HG")
+GrComparOlasCC(I1,I2,NI1,NI2,"HG")
+```
+
+
+
+### Diabetes gestacional 
+
+
+
+
+```{r 463,fig.cap="\\s"}
+I1=Casos1w$Diabetes.gestacional
+I2=Casos2w$Diabetes.gestacional
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+#
+NI1=Controls1w$Diabetes.gestacional
+NI2=Controls2w$Diabetes.gestacional
+#
+ComparOlasRR(I1,I2,NI1,NI2,"DG", "No DG")
+GrComparOlasCC(I1,I2,NI1,NI2,"DG")
+```
+
+
+
+
+
+
+### Preeclampsia
+
+
+
+
+```{r 402,fig.cap="\\s"}
+I1=Casos1w$PREECLAMPSIA_ECLAMPSIA_TOTAL
+I2=Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL
+NI1=Controls1w$PREECLAMPSIA
+NI2=Controls2w$PREECLAMPSIA
+#
+ComparOlasRR(I1,I2,NI1,NI2,"PE", "No PE")
+GrComparOlasCC(I1,I2,NI1,NI2,"PE")
+```
+
+
+
+### Preeclampsia con CG entre las preeclámpsicas
+
+
+```{r}
+I1=Casos1w[Casos1w$PREECLAMPSIA_ECLAMPSIA_TOTAL==1,]$Preeclampsia.grave_HELLP_ECLAMPSIA
+I1[I1=="Sí"]=1
+I1[I1=="No"]=0
+I2=Casos2w[Casos2w$PREECLAMPSIA_ECLAMPSIA_TOTAL==1,]$Preeclampsia.grave_HELLP_ECLAMPSIA
+I2[I2=="Sí"]=1
+I2[I2=="No"]=0
+
+NI1.1=Controls1w[Controls1w$PREECLAMPSIA==1,]$preeclampsia_severa
+NI1.2=Controls1w[Controls1w$PREECLAMPSIA==1,]$Preeclampsia.grave.No.HELLP 
+NI1=rep(NA,length(NI1.1))
+for (i in 1:length(NI1.1)){NI1[i]=max(NI1.1[i],NI1.2[i],na.rm=TRUE)}
+
+NI2.1=Controls2w[Controls2w$PREECLAMPSIA==1,]$preeclampsia_severa
+NI2.2=Controls2w[Controls2w$PREECLAMPSIA==1,]$Preeclampsia.grave.No.HELLP 
+NI2=rep(NA,length(NI2.1))
+for (i in 1:length(NI2.1)){NI2[i]=max(NI2.1[i],NI2.2[i],na.rm=TRUE)}
+#
+
+ComparOlasRR(I1,I2,NI1,NI2,"PE con CG", "PE sin CG")
+```
+
+
+
+
+
+```{r 403,fig.cap="\\s"}
+base=c("1a ola","2a ola")
+
+df =data.frame(
+  Factor=c(rep("Infectadas 1a ola",length(I1)), rep("No infectadas 1a ola",length(NI1)),rep("Infectadas 2a ola",length(I2)), rep("No infectadas 2a ola",length(NI2))),
+  Grupo=c(I1,NI1,I2,NI2)
+)
+
+Grupo=ordered(rep(c("Infectadas","No infectadas"), 2),levels=c("Infectadas","No infectadas"))
+Ola=ordered(rep(base , each=2),levels=base)
+valor=as.vector(100*prop.table(table(df)[c(1,3,2,4),2:1], margin=1))[1:4]
+data=data.frame(Grupo,Ola,valor)
+
+
+data %>%
+ggplot(aes(fill=Grupo, y=valor, x=Ola)) + 
+  geom_bar(position="dodge", stat="identity")+
+xlab("")+
+  ylab("Preeclampsias con CG (% de preeclampsias)")+
+scale_fill_hue(c=100)+labs(fill="")
+```
+
+
+
+
+
+### Prematurez
+
+
+```{r 404,fig.cap="\\s"}
+I1=Casos1w$PREMATURO
+I2=Casos2w$PREMATURO
+NI1=Controls1w$Preterm.deliveries
+NI2=Controls2w$Preterm.deliveries
+#
+ComparOlasRR(I1,I2,NI1,NI2,"Prematuro", "A término")
+GrComparOlasCC(I1,I2,NI1,NI2,"Prematuro")
+```
+
+
+
+
+### Eventos hemorrágicos
+
+
+```{r 405,fig.cap="\\s"}
+I1=Casos1w$EVENTOS_HEMORRAGICOS_TOTAL
+I2=Casos2w$EVENTOS_HEMORRAGICOS_TOTAL
+NI1=Controls1w$eventos_hemorragicos
+NI2=Controls2w$eventos_hemorragicos
+#
+ComparOlasRR(I1,I2,NI1,NI2,"Eventos hemorrágicos", "No eventos hemorrágicos")
+GrComparOlasCC(I1,I2,NI1,NI2,"Eventos hemorrágicos")
+```
+
+
+
+### Eventos trombóticos
+
+
+```{r 406,fig.cap="\\s"}
+I1=factor(Casos1w$EVENTOS_TROMBO_TOTALES,levels=0:1)
+I2=factor(Casos2w$EVENTOS_TROMBO_TOTALES,levels=0:1)
+NI1a=Controls1w$DVT
+NI1b=Controls1w$PE
+NI1=rep(NA,length(NI1a))
+for (i in 1:length(NI1a)){NI1[i]=max(NI1a[i],NI1b[i],na.rm=TRUE)}
+NI1=factor(NI1,levels=0:1)
+NI2a=Controls2w$DVT
+NI2b=Controls2w$PE
+NI2=rep(NA,length(NI2a))
+for (i in 1:length(NI2a)){NI2[i]=max(NI2a[i],NI2b[i],na.rm=TRUE)}
+NI2=factor(NI2,levels=0:1)
+#
+ComparOlasRR(I1,I2,NI1,NI2,"Eventos trombóticos", "No eventos trombóticos")
+GrComparOlasCC(I1,I2,NI1,NI2,"Eventos trombóticos")
+```
+
+
+
+
+
+### Anomalías congénitas
+
+
+
+
+
+```{r 407,fig.cap="\\s"}
+I1=Casos1w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+I1[I1=="No"]=0
+I1[I1=="Sí"]=1
+I2=Casos2w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+I2[I2=="No"]=0
+I2[I2=="Sí"]=1
+NI1=Controls1w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+NI2=Controls2w$Diagnóstico.de.malformación.ecográfica._.semana.20._
+#
+ComparOlasRR(I1,I2,NI1,NI2,"Anomalías congénitas", "No anomalías congénitas")
+GrComparOlasCC(I1,I2,NI1,NI2,"Anomalías congénitas")
+```
+
+
+
+
+
+
+
+
+### Embarazos con feto muerto anteparto
+
+
+
+```{r 408,fig.cap="\\s"}
+I1=Casos1w$Feto.muerto.intraútero
+I1[I1=="Sí"]=1
+I1[I1=="No"]=0
+I2=Casos2w$Feto.muerto.intraútero
+I2[I2=="Sí"]=1
+I2[I2=="No"]=0
+
+
+NI1a=Controls1w$Feto.vivo...194
+NI1a[NI1a=="Sí"]=0
+NI1a[NI1a=="No"]=1
+NI1b=Controls1w$Feto.vivo...245
+NI1b[NI1b=="Sí"]=0
+NI1b[NI1b=="No"]=1
+NI1=NI1a
+for (i in 1:length(NI1a)){NI1[i]=max(NI1a[i],NI1b[i],na.rm=TRUE)}
+
+NI2a=Controls2w$Feto.vivo...194
+NI2a[NI2a=="Sí"]=0
+NI2a[NI2a=="No"]=1
+NI2b=Controls2w$Feto.vivo...245
+NI2b[NI2b=="Sí"]=0
+NI2b[NI2b=="No"]=1
+NI2=NI2a
+for (i in 1:length(NI2a)){NI2[i]=max(NI2a[i],NI2b[i],na.rm=TRUE)}
+NI2=factor(NI2,levels=0:1)
+#
+ComparOlasRR(I1,I2,NI1,NI2,"Algún feto muerto anteparto", "Ningún feto muerto anteparto")
+GrComparOlasCC(I1,I2,NI1,NI2,"Algún feto muerto anteparto")
+```
+
+
+
+
+
+
+### Inicios de parto
+
+En tablas como la que sigue:
+
+* Lo mismo que en las anteriores, pero por filas: cada fila considerada com un desenlace contra el resto
+* Los p-valores han sido ajustados por Bonferroni
+
+
+
+```{r}
+I1=Casos1w$Inicio.de.parto
+I1=factor(I1,levels=c("Espontáneo", "Inducido", "Cesárea"),ordered=TRUE)
+I2=Casos2w$Inicio.de.parto
+I2=factor(I2,levels=c("Espontáneo", "Inducido", "Cesárea"),ordered=TRUE)
+NI1=Controls1w$Inicio.de.parto
+NI1[NI1=="Cesárea programada"]="Cesárea"
+NI1=factor(NI1,levels=c("Espontáneo", "Inducido", "Cesárea"),ordered=TRUE)
+NI2=Controls2w$Inicio.de.parto
+NI2[NI2=="Cesárea programada"]="Cesárea"
+NI2=factor(NI2,levels=c("Espontáneo", "Inducido", "Cesárea"),ordered=TRUE)
+
+ComparOlasRR.m(I1,I2,NI1,NI2,c("Espontáneo", "Inducido", "Cesárea programada"))
+```
+
+
+
+```{r 409,fig.cap="\\s"}
+Tipo= c(I1,I2,NI1,NI2)
+Tipo[Tipo=="Cesárea"]="Cesárea programada"
+Tipo=ordered(Tipo, levels=c("Espontáneo", "Inducido", "Cesárea programada"))
+dtbp=data.frame(Grupo=c(rep("Inf.",length(I1)+length(I2)),rep("No inf.",length(NI1)+length(NI2))),
+Ola= c(rep("1a ola",length(I1)),rep("2a ola",length(I2)),rep("1a ola",length(NI1)),rep("2a ola",length(NI2))),  
+Tipo
+ )
+
+ggplot(data=na.omit(dtbp))+
+   geom_mosaic(aes(x=product(Tipo,Ola), fill=Grupo)) +
+  theme_mosaic()+
+  ylab("Inicio de parto")+
+  xlab("")+
+  scale_fill_discrete(name ="", labels=c("Infectadas", "No infectadas"))+
+  scale_x_productlist(labels=c("Infectadas\n 1a ola",  "No infectadas\n 1a ola", "Infectadas\n 2a ola", "No infectadas\n 2a ola"))
+```
+
+```{r}
+SRH=scheirerRayHare(Tipo ~ Grupo + Ola,data=dtbp,verbose=FALSE)$p.value[3]
+```
+
+* Test de interacción de Scheirer-Ray-Hare: p-valor, `r round(SRH,3)`. Un p-valor pequeño hubiera sido evidencia estadística de que la diferencia de la "gravedad mediana" de los inicios de parto en infectadas y no infectadas en las dos olas han sido diferentes.  No ha sido el caso.
+
+
+
+
+
+### Tipos de parto
+
+
+```{r}
+I1.In=Casos1w$Inicio.de.parto
+I1=Casos1w$Tipo.de.parto
+I1[I1.In=="Cesárea"]="Cesárea programada"
+I1[I1=="Cesárea"]="Cesárea urgente"
+I1[I1=="Eutocico"]="Eutócico"
+I1=factor(I1,levels=c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ordered=TRUE)
+
+I2.In=Casos2w$Inicio.de.parto
+I2=Casos2w$Tipo.de.parto
+I2[I2.In=="Cesárea"]="Cesárea programada"
+I2[I2=="Cesárea"]="Cesárea urgente"
+I2[I2=="Eutocico"]="Eutócico"
+I2=factor(I2,levels=c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ordered=TRUE)
+
+NI1.In=Controls1w$Inicio.de.parto
+NI1=Controls1w$Tipo.de.parto
+NI1[NI1.In=="Cesárea programada"]="Cesárea programada"
+NI1[NI1=="Cesárea"]="Cesárea urgente"
+NI1[NI1=="Eutocico"]="Eutócico"
+NI1=factor(NI1,levels=c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ordered=TRUE)
+
+
+NI2.In=Controls2w$Inicio.de.parto
+NI2=Controls2w$Tipo.de.parto
+NI2[NI2.In=="Cesárea programada"]="Cesárea programada"
+NI2[NI2=="Cesárea"]="Cesárea urgente"
+NI2[NI2=="Eutocico"]="Eutócico"
+NI2=factor(NI2,levels=c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"),ordered=TRUE)
+
+
+ComparOlasRR.m(I1,I2,NI1,NI2,c("Eutócico", "Instrumental", "Cesárea programada", "Cesárea urgente"))
+
+```
+
+
+
+### Retraso del crecimiento
+
+
+```{r 417,fig.cap="\\s"}
+I1=factor(Casos1w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.,labels=0:1)
+I2=factor(Casos2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.,labels=0:1)
+NI1=factor(Controls1w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.)
+NI2=factor(Controls2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.)
+
+ComparOlasRR(I1,I2,NI1,NI2,"RCIU", "No RCIU")
+GrComparOlasCC(I1,I2,NI1,NI2,"RCIU")
+```
+
+
+
+
+
+### Hemorragia postparto
+
+
+```{r 477,fig.cap="\\s"}
+I1=Casos1w$Hemorragia.postparto
+I1.sino=I1
+I1.sino[!is.na(I1.sino)& I1.sino!="No"]="Sí"
+I1=ordered(I1,levels=names(table(I1))[c(2,3,1,4)])
+I2=Casos2w$Hemorragia.postparto
+I2.sino=I2
+I2.sino[!is.na(I2.sino)& I2.sino!="No"]="Sí"
+I2=ordered(I2,levels=names(table(I2))[c(2,3,1,4)])
+
+
+NI1=Controls1w$Hemorragia.postparto
+NI1.sino=NI1
+NI1.sino[!is.na(NI1.sino)& NI1.sino!="No"]="Sí"
+NI1=ordered(NI1,levels=names(table(NI1))[c(2,3,1,4)])
+NI2=Controls2w$Hemorragia.postparto
+NI2.sino=NI2
+NI2.sino[!is.na(NI2.sino)& NI2.sino!="No"]="Sí"
+NI2=ordered(NI2,levels=names(table(NI2))[c(2,3,1,4)])
+
+
+ComparOlasRR(I1.sino,I2.sino,NI1.sino,NI2.sino,"HPP", "No HPP")
+GrComparOlasCC(I1.sino,I2.sino,NI1.sino,NI2.sino,"HPP")
+```
+
+```{r}
+ComparOlasRR.m(I1,I2,NI1,NI2,c( "HPP Tto médico", "HPP Tto Qx conservador", "Histerectomía", "No HPP"),r=6)
+
+```
+
+
+
+
+
+```{r 473,fig.cap="\\s"}
+Tipo= c(I1,I2,NI1,NI2)
+dtbp=data.frame(Grupo=c(rep("Inf.",length(I1)+length(I2)),rep("No inf.",length(NI1)+length(NI2))),
+Ola= c(rep("1a ola",length(I1)),rep("2a ola",length(I2)),rep("1a ola",length(NI1)),rep("2a ola",length(NI2))),  
+Tipo
+ )
+
+ggplot(data=na.omit(dtbp))+
+   geom_mosaic(aes(x=product(Tipo,Ola), fill=Grupo)) +
+  theme_mosaic()+
+  ylab("Tipo de HPP")+
+  xlab("")+
+  scale_fill_discrete(name ="", labels=c("Infectadas", "No infectadas"))+
+  scale_x_productlist(labels=c("Infectadas\n 1a ola",  "No infectadas\n 1a ola", "Infectadas\n 2a ola", "No infectadas\n 2a ola"))
+```
+
+```{r}
+SRH=scheirerRayHare(Tipo ~ Grupo + Ola,data=dtbp)$p.value[3]
+```
+
+* Test de interacción de Scheirer-Ray-Hare: p-valor, `r round(SRH,3)`. 
+
+
+
+
+### Ingreso materno en UCI
+
+
+```{r}
+I1=Casos1w$UCI
+I2=Casos2w$UCI
+
+NI1=factor(Controls1w$UCI...9)
+NI2=factor(Controls2w$UCI...9,levels=0:1)
+
+ComparOlasRR(I1,I2,NI1,NI2,"UCI", "No UCI")
+GrComparOlasCC(I1,I2,NI1,NI2,"UCI")
+```
+
+
+
+
+### Rotura prematura de membranas
+
+
+```{r 421,fig.cap="\\s"}
+I1=Casos1w$Bolsa.rota.anteparto
+I2=Casos2w$Bolsa.rota.anteparto
+
+NI1=Controls1w$Bolsa.rota.anteparto
+NI2=Controls2w$Bolsa.rota.anteparto
+
+ComparOlasRR(I1,I2,NI1,NI2,"RPM", "No RPM")
+GrComparOlasCC(I1,I2,NI1,NI2,"RPM")
+```
+
+
+
+
+
+
+
+### Ingreso neonatal en UCIN 
+
+```{r}
+I1=c(Casos1w[Casos1w$Feto.muerto.intraútero=="No",]$Ingreso.en.UCIN,Casos1wGM[Casos1wGM$Feto.vivo=="Sí",]$Ingreso.en.UCI)
+I2=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Ingreso.en.UCIN,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Ingreso.en.UCI)
+NI1=c(Controls1w[Controls1w$Feto.vivo...194=="Sí",]$Ingreso.en.UCI...213,Controls1wGM[Controls1wGM$Feto.vivo...245=="Sí",]$Ingreso.en.UCI...260)
+NI2=c(Controls2w[Controls2w$Feto.vivo...194=="Sí",]$Ingreso.en.UCI...213,Controls2wGM[Controls2wGM$Feto.vivo...245=="Sí",]$Ingreso.en.UCI...260)
+
+ComparOlasRR(I1,I2,NI1,NI2,"UCIN", "No UCIN")
+
+```
+
+
+
+```{r 419,fig.cap="\\s"}
+df =data.frame(
+  Factor=c(rep("Infectadas 1a ola",length(I1)), rep("No infectadas 1a ola",length(NI1)),rep("Infectadas 2a ola",length(I2)), rep("No infectadas 2a ola",length(NI2))),
+  Grupo=c(I1,NI1,I2,NI2 )
+)
+
+Grupo=ordered(rep(c("Infectadas","No infectadas"), 2),levels=c("Infectadas","No infectadas"))
+Ola=ordered(rep(base , each=2),levels=base)
+valor=as.vector(100*prop.table(table(df)[c(1,3,2,4),2:1], margin=1))[1:4]
+data=data.frame(Grupo,Ola,valor)
+
+
+data %>%
+ggplot(aes(fill=Grupo, y=valor, x=Ola)) + 
+  geom_bar(position="dodge", stat="identity")+
+xlab("")+
+  ylab("UCI neonatal (%)")+
+scale_fill_hue(c=100)+labs(fill="")
+```
+
+
+
+### Apgar
+
+
+```{r}
+I1=c(Casos1w$APGAR.5...126,Casos1wGM$APGAR.5...150)
+I2=c(Casos2w$APGAR.5...126,Casos2wGM$APGAR.5...150)
+I2[I2==19]=NA
+NI1=c(Controls1w$APGAR.5...200,Controls1wGM$APGAR.5...249)
+NI2=c(Controls2w$APGAR.5...200,Controls2wGM$APGAR.5...249)
+
+I1=cut(I1,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+I2=cut(I2,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+NI1=cut(NI1,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+NI2=cut(NI2,breaks=c(-1,7,20),labels=c("0-7","8-10"))
+
+I1=ordered(I1,levels=c("8-10","0-7"))
+I2=ordered(I2,levels=c("8-10","0-7"))
+NI1=ordered(NI1,levels=c("8-10","0-7"))
+NI2=ordered(NI2,levels=c("8-10","0-7"))
+
+
+ComparOlasRR(I1,I2,NI1,NI2,"Apgar.5≤7", "Apgar.5≥8")
+
+```
+
+
+
+
+```{r 420,fig.cap="\\s"}
+df =data.frame(
+  Factor=c(rep("Infectadas 1a ola",length(I1)), rep("No infectadas 1a ola",length(NI1)),rep("Infectadas 2a ola",length(I2)), rep("No infectadas 2a ola",length(NI2))),
+  Grupo=c(I1,NI1,I2,NI2 )
+)
+
+Grupo=ordered(rep(c("Infectadas","No infectadas"), 2),levels=c("Infectadas","No infectadas"))
+Ola=ordered(rep(base , each=2),levels=base)
+valor=as.vector(100*prop.table(table(df)[c(1,3,2,4),], margin=1))[1:4]
+data=data.frame(Grupo,Ola,valor)
+
+
+data %>%
+ggplot(aes(fill=Grupo, y=valor, x=Ola)) + 
+  geom_bar(position="dodge", stat="identity")+
+xlab("")+
+  ylab("UCI materna (%)")+
+scale_fill_hue(c=100)+labs(fill="")
+```
+
+
+
+
+
+### Edad gestacional al parto
+
+```{r}
+I1=Casos1w$EG_TOTAL_PARTO
+I2=Casos2w$EG_TOTAL_PARTO
+NI1=Controls1w$EDAD_GEST 
+NI2=Controls2w$EDAD_GEST 
+```
+
+
+```{r}
+Dades=rbind(c(round(min(I1,na.rm=TRUE),1),round(max(I1,na.rm=TRUE),1), round(mean(I1,na.rm=TRUE),1),round(median(I1,na.rm=TRUE),1),round(quantile(I1,c(0.25,0.75),na.rm=TRUE),1), round(sd(I1,na.rm=TRUE),1)),
+            c(round(min(NI1,na.rm=TRUE),1),round(max(NI1,na.rm=TRUE),1), round(mean(NI1,na.rm=TRUE),1),round(median(NI1,na.rm=TRUE),1),round(quantile(NI1,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI1,na.rm=TRUE),1)),
+            c(round(min(I2,na.rm=TRUE),1),round(max(I2,na.rm=TRUE),1), round(mean(I2,na.rm=TRUE),1),round(median(I2,na.rm=TRUE),1),round(quantile(I2,c(0.25,0.75),na.rm=TRUE),1), round(sd(I2,na.rm=TRUE),1)),
+            c(round(min(NI2,na.rm=TRUE),1),round(max(NI2,na.rm=TRUE),1), round(mean(NI2,na.rm=TRUE),1),round(median(NI2,na.rm=TRUE),1),round(quantile(NI2,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI2,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Edad gest. mínima","Edad gest. máxima","Edad gest. media", "Edad gest. mediana", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Infectadas 1a ola", "No infectadas 1a ola","Infectadas 2a ola", "No infectadas 2a ola")
+
+Dades %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+```
+
+
+
+```{r 422,fig.cap="\\s"}
+data =data.frame(
+  name=ordered(c( rep("Infectadas 1a ola",length(I1)), rep("No infectadas 1a ola",length(NI1)),rep("Infectadas 2a ola",length(I2)), rep("No infectadas 2a ola",length(NI2))),levels=c("Infectadas 1a ola","No infectadas 1a ola","Infectadas 2a ola","No infectadas 2a ola")),
+  Edades=c( I1,NI1,I2,NI2 ),
+  Color=c( rep("Infectadas",length(I1)), rep("No infectadas",length(NI1)),rep("Infectadas",length(I2)), rep("No infectadas",length(NI2)))
+)
+
+
+data %>%
+  ggplot( aes(x=name, y=Edades, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    theme(
+      legend.position="none",
+      plot.title=element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Edades gestacionales (semanas)")+
+  scale_fill_manual(values=c("#F8766D" ,"#00BFC4" ,"#F8766D", "#00BFC4"))
+
+```
+
+
+* Ninguno de los cuatro grupos de edades gestacionales se ajusta a distribución normal: test de Shapiro-Wilkis, p-valor máximo $`r signif(max(shapiro.test(I1)$p.value,shapiro.test(I2)$p.value,shapiro.test(NI1)$p.value,shapiro.test(NI2)$p.value),1)`$
+
+
+```{r}
+Tipo= c(I1,I2,NI1,NI2)
+dtbp=data.frame(Grupo=c(rep("Inf.",length(I1)+length(I2)),rep("No inf.",length(NI1)+length(NI2))),
+Ola= c(rep("1a ola",length(I1)),rep("2a ola",length(I2)),rep("1a ola",length(NI1)),rep("2a ola",length(NI2))),  
+Tipo
+ )
+SRH=scheirerRayHare(Tipo ~ Grupo + Ola,
+                data=dtbp,verbose=FALSE)$p.value[3]
+
+```
+
+
+
+* Test de interacción de Scheirer-Ray-Hare: p-valor `r round(SRH,3)`: no hay evidencia de que la diferencia de edades medias gestacionales de infectadas y no infectadas sea diferente según la ola.
+
+
+
+
+
+### Peso de neonatos al nacimiento
+
+
+```{r}
+I1=c(Casos1w[Casos1w$Feto.muerto.intraútero=="No",]$Peso._gramos_...125,Casos1wGM[Casos1wGM$Feto.vivo=="Sí",]$Peso._gramos_...148)
+NI1=c(Controls1w[Controls1w$Feto.vivo...194=="Sí",]$Peso._gramos_...198,Controls1wGM[Controls1wGM$Feto.vivo...245=="Sí",]$Peso._gramos_...247)
+I2=c(Casos2w[Casos2w$Feto.muerto.intraútero=="No",]$Peso._gramos_...125,Casos2wGM[Casos2wGM$Feto.vivo=="Sí",]$Peso._gramos_...148)
+NI2=c(Controls2w[Controls2w$Feto.vivo...194=="Sí",]$Peso._gramos_...198,Controls2wGM[Controls2wGM$Feto.vivo...245=="Sí",]$Peso._gramos_...247)
+```
+
+
+```{r}
+Dades=rbind(c(round(min(I1,na.rm=TRUE),1),round(max(I1,na.rm=TRUE),1), round(mean(I1,na.rm=TRUE),1),round(median(I1,na.rm=TRUE),1),round(quantile(I1,c(0.25,0.75),na.rm=TRUE),1), round(sd(I1,na.rm=TRUE),1)),
+            c(round(min(NI1,na.rm=TRUE),1),round(max(NI1,na.rm=TRUE),1), round(mean(NI1,na.rm=TRUE),1),round(median(NI1,na.rm=TRUE),1),round(quantile(NI1,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI1,na.rm=TRUE),1)),
+            c(round(min(I2,na.rm=TRUE),1),round(max(I2,na.rm=TRUE),1), round(mean(I2,na.rm=TRUE),1),round(median(I2,na.rm=TRUE),1),round(quantile(I2,c(0.25,0.75),na.rm=TRUE),1), round(sd(I2,na.rm=TRUE),1)),
+            c(round(min(NI2,na.rm=TRUE),1),round(max(NI2,na.rm=TRUE),1), round(mean(NI2,na.rm=TRUE),1),round(median(NI2,na.rm=TRUE),1),round(quantile(NI2,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI2,na.rm=TRUE),1)))
+
+colnames(Dades)=c("Peso mínimo","Peso máximo","Peso  medio", "Peso  mediano", "1er cuartil", "3er cuartil", "Desv. típica")
+rownames(Dades)=c("Infectadas 1a ola", "No infectadas 1a ola","Infectadas 2a ola", "No infectadas 2a ola")
+
+Dades %>%
+  kbl() %>%
+  kable_styling() %>%     
+  scroll_box(width="100%", box_css="border: 0px;")
+
+
+```
+
+
+
+```{r 423,fig.cap="\\s"}
+data =data.frame(
+  name=ordered(c( rep("Infectadas 1a ola",length(I1)), rep("No infectadas 1a ola",length(NI1)),rep("Infectadas 2a ola",length(I2)), rep("No infectadas 2a ola",length(NI2))),levels=c("Infectadas 1a ola","No infectadas 1a ola","Infectadas 2a ola","No infectadas 2a ola")),
+  Edades=c( I1,NI1,I2,NI2 ),
+  Color=c( rep("Infectadas",length(I1)), rep("No infectadas",length(NI1)),rep("Infectadas",length(I2)), rep("No infectadas",length(NI2)))
+)
+
+
+data %>%
+  ggplot( aes(x=name, y=Edades, fill=name)) +
+    geom_violin(width=1) +
+    geom_boxplot(width=0.1, color="black", alpha=0.2,outlier.fill="black",
+               outlier.size=1) +
+    theme(
+      legend.position="none",
+      plot.title=element_text(size=11)
+    ) +
+    xlab("")+
+  ylab("Pesos (gramos)")+
+  scale_fill_manual(values=c("#F8766D" ,"#00BFC4" ,"#F8766D", "#00BFC4"))
+
+```
+
+
+* Ninguno de los cuatro grupos de edades gestacionales se ajusta a distribución normal: test de Shapiro-Wilkis, p-valor máximo $`r signif(max(shapiro.test(I1)$p.value,shapiro.test(I2)$p.value,shapiro.test(NI1)$p.value,shapiro.test(NI2)$p.value),1)`$
+
+
+```{r}
+Tipo= c(I1,I2,NI1,NI2)
+dtbp=data.frame(Grupo=c(rep("Inf.",length(I1)+length(I2)),rep("No inf.",length(NI1)+length(NI2))),
+Ola= c(rep("1a ola",length(I1)),rep("2a ola",length(I2)),rep("1a ola",length(NI1)),rep("2a ola",length(NI2))),  
+Tipo
+ )
+SRH=scheirerRayHare(Tipo ~ Grupo + Ola,
+                data=dtbp,verbose=FALSE)$p.value[3]
+
+```
+
+
+
+* Test de interacción de Scheirer-Ray-Hare: p-valor `r round(SRH,3)`: no hay evidencia de que la diferencia de pesos medios de hijos de infectadas y no infectadas sea diferente según la ola.
+
+
+
+
+
+```{r}
+I1w=cut(I1,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+NI1w=cut(NI1,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+I2w=cut(I2,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+NI2w=cut(NI2,breaks=c(0,2500,10000),labels=c(1,0),right=FALSE)
+
+
+I1w=ordered(I1w,levels=c(0,1))
+I2w=ordered(I2w,levels=c(0,1))
+NI1w=ordered(NI1w,levels=c(0,1))
+NI2w=ordered(NI2w,levels=c(0,1))
+
+
+
+ComparOlasRR(I1w,I2w,NI1w,NI2w,"Bajo peso", "No bajo peso")
+
+```
+
+```{r}
+df =data.frame(
+  Factor=c(rep("Infectadas 1a ola",length(I1w)), rep("No infectadas 1a ola",length(NI1w)),rep("Infectadas 2a ola",length(I2w)), rep("No infectadas 2a ola",length(NI2w))),
+  Grupo=c(I1w,NI1w,I2w,NI2w )
+)
+
+Grupo=ordered(rep(c("Infectadas","No infectadas"), 2),levels=c("Infectadas","No infectadas"))
+Ola=ordered(rep(base , each=2),levels=base)
+valor=as.vector(100*prop.table(table(df)[c(1,3,2,4),2:1], margin=1))[1:4]
+data=data.frame(Grupo,Ola,valor)
+
+
+data %>%
+ggplot(aes(fill=Grupo, y=valor, x=Ola)) + 
+  geom_bar(position="dodge", stat="identity")+
+xlab("")+
+  ylab("RPM (%)")+
+scale_fill_hue(c=100)+labs(fill="")
+```
+
+
+
+
+
+
+### Fetos muertos anteparto 
+
+```{r}
+I1w1=Casos1w$Feto.muerto.intraútero
+I1w1[I1w1=="Sí"]="Muerto"
+I1w1[I1w1=="No"]="Vivo"
+I1w2=Casos1wGM$Feto.vivo
+I1w2[I1w2=="Sí"]="Vivo"
+I1w2[I1w2=="No"]="Muerto"
+I1w=c(I1w1,I1w2)
+n_I1wFT=length(I1w)
+n_VI1w=as.vector(table(I1w))[2]
+I1w=ordered(I1w,levels=c("Vivo","Muerto"))
+
+NI1w1=Controls1w$Feto.vivo...194
+NI1w2=Controls1wGM$Feto.vivo...245
+NI1w=c(NI1w1,NI1w2)
+NI1w[NI1w=="Sí"]="Vivo"
+NI1w[NI1w=="No"]="Muerto"
+NI1w=factor(NI1w,levels=c("Muerto","Vivo"))
+n_NI1wFT=length(NI1w)
+n_VNI1w=as.vector(table(NI1w))[2]
+I2w=ordered(I2w,levels=c("Vivo","Muerto"))
+#
+#
+I2w1=Casos2w$Feto.muerto.intraútero
+I2w1[I2w1=="Sí"]="Muerto"
+I2w1[I2w1=="No"]="Vivo"
+I2w2=Casos2wGM$Feto.vivo
+I2w2[I2w2=="Sí"]="Vivo"
+I2w2[I2w2=="No"]="Muerto"
+I2w=c(I2w1,I2w2)
+n_I2wFT=length(I2w)
+n_VI2w=as.vector(table(I2w))[2]
+NI1w=ordered(NI1w,levels=c("Vivo","Muerto"))
+
+NI2w1=Controls2w$Feto.vivo...194
+NI2w2=Controls2wGM$Feto.vivo...245
+NI2w=c(NI2w1,NI2w2)
+NI2w[NI2w=="Sí"]="Vivo"
+NI2w[NI2w=="No"]="Muerto"
+NI2w=factor(NI2w,levels=c("Muerto","Vivo"))
+n_NI2wFT=length(NI2w)
+n_VNI2w=as.vector(table(NI2w))[2]
+NI1w=ordered(NI1w,levels=c("Vivo","Muerto"))
+
+ComparOlasRRwe(I1w,I2w,NI1w,NI2w,"Feto muerto anteparto", "Feto vivo")
+
+```
+
+
+
+

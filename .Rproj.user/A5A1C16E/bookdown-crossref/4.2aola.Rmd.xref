@@ -1,0 +1,109 @@
+h1:descripción-global-de-la-muestra-de-la-segunda-ola Descripción global de la muestra de la segunda ola
+h2:antecedentes Antecedentes
+h3:edades Edades
+fig:1-2w \\s
+fig:2-2w \\s
+fig:3-2w \\s
+h3:etnias Etnias
+fig:4-2w \\s
+fig:5-2w \\s
+h3:hábito-tabáquico-juntando-fumadoras-y-ex-fumadoras-en-una-sola-categoría Hábito tabáquico (juntando fumadoras y ex-fumadoras en una sola categoría)
+h3:obesidad Obesidad
+h3:hipertensión-pregestacional Hipertensión pregestacional
+h3:diabetes-mellitus Diabetes Mellitus
+h3:enfermedades-cardíacas-crónicas Enfermedades cardíacas crónicas
+h3:enfermedades-pulmonares-crónicas-incluyendo-asma Enfermedades pulmonares crónicas (incluyendo asma)
+h3:paridad Paridad
+h3:gestación-múltiple Gestación múltiple
+h2:desenlaces Desenlaces
+h3:anomalías-congénitas Anomalías congénitas
+h3:retraso-del-crecimiento-intrauterino Retraso del crecimiento intrauterino
+h3:diabetes-gestacional Diabetes gestacional
+h3:hipertensión-gestacional Hipertensión gestacional
+h3:preeclampsia Preeclampsia
+h3:preeclampsia-con-criterios-de-gravedad Preeclampsia con criterios de gravedad
+h3:rotura-prematura-de-membranas Rotura prematura de membranas
+h3:edad-gestacional-en-el-momento-del-parto Edad gestacional en el momento del parto
+fig:6-2w \\s
+h3:prematuridad Prematuridad
+h3:eventos-trombóticos Eventos trombóticos
+h3:eventos-hemorrágicos Eventos hemorrágicos
+h3:ingreso-materno-en-uci Ingreso materno en UCI
+h3:ingreso-materno-en-uci-según-el-momento-del-parto-o-cesárea Ingreso materno en UCI según el momento del parto o cesárea
+h3:embarazos-con-algún-feto-muerto-anteparto Embarazos con algún feto muerto anteparto
+h3:inicio-del-parto Inicio del parto
+fig:7-2w \\s
+fig:8-2w \\s
+h3:tipo-de-parto Tipo de parto
+fig:9-2w \\s
+fig:10-2w \\s
+h3:hemorragias-postparto Hemorragias postparto
+fig:11-2w \\s
+h3:fetos-muertos-anteparto Fetos muertos anteparto
+h3:peso-de-neonatos-al-nacimiento Peso de neonatos al nacimiento
+fig:12-2w \\s
+h3:apgar Apgar
+h3:ingreso-de-neonatos-vivos-en-ucin Ingreso de neonatos vivos en UCIN
+h1:descripción-de-la-muestra-de-casos-según-sintomatología Descripción de la muestra de casos según sintomatología
+fig:sint-2w \\s
+fig:13-2w \\s
+h2:antecedentes-maternos Antecedentes maternos
+h3:edades-1 Edades
+fig:14-2w \\s
+h3:etnia Etnia
+fig:15-2w \\s
+h3:hábito-tabáquico Hábito tabáquico
+fig:16-2w \\s
+h3:obesidad-1 Obesidad
+fig:17-2w \\s
+h3:hipertensión-pregestacional-1 Hipertensión pregestacional
+fig:18-2w \\s
+h3:diabetes Diabetes
+fig:19-2w \\s
+h3:cardiopatía Cardiopatía
+fig:20-2w \\s
+h3:enfermedad-pulmonar-crónica Enfermedad pulmonar crónica
+fig:21-2w \\s
+h3:gestación-múltiple-1 Gestación múltiple
+fig:22-2w \\s
+h3:paridad-1 Paridad
+fig:23-2w \\s
+h2:desenlaces-1 Desenlaces
+h3:anomalía-congénita Anomalía congénita
+fig:24-2w \\s
+h3:retraso-del-crecimiento-intrauterino-1 Retraso del crecimiento intrauterino
+fig:25-2w \\s
+h3:diabetes-gestacional-1 Diabetes gestacional
+fig:26-2w \\s
+h3:hipertensión-gestacional-1 Hipertensión gestacional
+fig:27-2w \\s
+h3:rotura-prematura-de-membranas-1 Rotura prematura de membranas
+fig:28-2w \\s
+h3:preeclampsia-1 Preeclampsia
+fig:29-2w \\s
+h3:preeclampsia-con-criterios-de-gravedad-1 Preeclampsia con criterios de gravedad
+h3:eventos-hemorrágicos-1 Eventos hemorrágicos
+fig:31-2w \\s
+h3:hemorragia-postparto Hemorragia postparto
+fig:59-2w \\s
+fig:32-2w \\s
+h3:eventos-trombóticos-1 Eventos trombóticos
+fig:33-2w \\s
+h3:uci-materna-sí-no UCI materna (Sí-No)
+fig:34-2w \\s
+h3:uci-materna-antes-después UCI materna (antes-después)
+h3:prematuridad-1 Prematuridad
+fig:36-2w \\s
+h3:inicio-de-parto Inicio de parto
+fig:39-2w \\s
+h3:tipo-de-parto-1 Tipo de parto
+fig:40-2w \\s
+h3:apgar-1 APGAR
+h3:sintomatología-vs-uci-neonato Sintomatología vs UCI neonato
+h3:sintomatología-vs-fetos-muertos-anteparto Sintomatología vs Fetos muertos anteparto
+h3:edades-gestacionales Edades gestacionales
+fig:41-2w \\s
+h3:pesos-hijos-infectadas Pesos hijos infectadas
+fig:42-2w \\s
+h3:bajo-peso Bajo peso
+

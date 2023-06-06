@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<div style="border: 0px;overflow-x: scroll; width:100%; "><table class="table" style="margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Infectadas 1a ola (N) </th>
+   <th style="text-align:right;"> Infectadas 1a ola (%) </th>
+   <th style="text-align:right;"> No infectadas 1a ola (N) </th>
+   <th style="text-align:right;"> No infectadas 1 ola (%) </th>
+   <th style="text-align:right;"> Infectadas 2 ola (N) </th>
+   <th style="text-align:right;"> Infectadas 2 ola (%) </th>
+   <th style="text-align:right;"> No infectadas 2 ola (N) </th>
+   <th style="text-align:right;"> No infectadas 2 ola (%) </th>
+   <th style="text-align:right;"> Cociente de OR </th>
+   <th style="text-align:right;"> Extr. inf. IC </th>
+   <th style="text-align:right;"> Extr. sup. IC </th>
+   <th style="text-align:right;"> p-valor igualdad OR </th>
+   <th style="text-align:right;"> p-valor global olas </th>
+   <th style="text-align:right;"> p-valor casos </th>
+   <th style="text-align:right;"> p-valor controles </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 18-30 </td>
+   <td style="text-align:right;"> 286 </td>
+   <td style="text-align:right;"> 32.8 </td>
+   <td style="text-align:right;"> 416 </td>
+   <td style="text-align:right;"> 35.3 </td>
+   <td style="text-align:right;"> 361 </td>
+   <td style="text-align:right;"> 45.7 </td>
+   <td style="text-align:right;"> 151 </td>
+   <td style="text-align:right;"> 37.2 </td>
+   <td style="text-align:right;"> 0.63 </td>
+   <td style="text-align:right;"> 0.46 </td>
+   <td style="text-align:right;"> 0.86 </td>
+   <td style="text-align:right;"> 0.009300 </td>
+   <td style="text-align:right;"> 0.000004 </td>
+   <td style="text-align:right;"> 0.000000 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 31-40 </td>
+   <td style="text-align:right;"> 516 </td>
+   <td style="text-align:right;"> 59.1 </td>
+   <td style="text-align:right;"> 695 </td>
+   <td style="text-align:right;"> 58.9 </td>
+   <td style="text-align:right;"> 385 </td>
+   <td style="text-align:right;"> 48.7 </td>
+   <td style="text-align:right;"> 236 </td>
+   <td style="text-align:right;"> 58.1 </td>
+   <td style="text-align:right;"> 1.47 </td>
+   <td style="text-align:right;"> 1.09 </td>
+   <td style="text-align:right;"> 1.98 </td>
+   <td style="text-align:right;"> 0.035766 </td>
+   <td style="text-align:right;"> 0.000261 </td>
+   <td style="text-align:right;"> 0.000068 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> &gt;40 </td>
+   <td style="text-align:right;"> 71 </td>
+   <td style="text-align:right;"> 8.1 </td>
+   <td style="text-align:right;"> 68 </td>
+   <td style="text-align:right;"> 5.8 </td>
+   <td style="text-align:right;"> 44 </td>
+   <td style="text-align:right;"> 5.6 </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 4.7 </td>
+   <td style="text-align:right;"> 1.20 </td>
+   <td style="text-align:right;"> 0.63 </td>
+   <td style="text-align:right;"> 2.31 </td>
+   <td style="text-align:right;"> 1.000000 </td>
+   <td style="text-align:right;"> 0.291949 </td>
+   <td style="text-align:right;"> 0.126685 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Datos perdidos </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;">  </td>
+  </tr>
+</tbody>
+</table></div> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

@@ -1,7 +1,22 @@
 h1:comparación-de-infectadas-anteparto-y-periparto Comparación de infectadas anteparto y periparto
 h2:diferencias-entre-edades-gestacionales-en-el-momento-del-parto-y-edades-gestacionales-en-el-momento-del-diagnóstico Diferencias entre edades gestacionales en el momento del parto y edades gestacionales en el momento del diagnóstico
-h2:comparación-de-la-sintomatología Comparación de la sintomatología
-h2:comparaciones Comparaciones
+h2:comparación-de-antecedentes-según-momento-de-infección Comparación de antecedentes según momento de infección
+h3:edades Edades
+fig:1-appp \\s
+fig:2-appp \\s
+fig:3-appp \\s
+h3:etnias Etnias
+fig:4-appp \\s
+fig:5-appp \\s
+h3:hábito-tabáquico Hábito tabáquico
+h3:obesidad Obesidad
+h3:hipertensión-pregestacional Hipertensión pregestacional
+h3:diabetes-mellitus Diabetes Mellitus
+h3:enfermedades-cardíacas-crónicas Enfermedades cardíacas crónicas
+h3:enfermedades-pulmonares-crónicas-incluyendo-asma Enfermedades pulmonares crónicas (incluyendo asma)
+h3:paridad Paridad
+h3:gestación-múltiple Gestación múltiple
+h2:comparación-de-desenlaces-según-momento-de-infección Comparación de desenlaces según momento de infección
 h3:preeclampsia Preeclampsia
 h3:preeclampsia-con-cg Preeclampsia con CG
 h3:anomalías-congénitas Anomalías congénitas
@@ -22,4 +37,24 @@ h3:test-de-apgar Test de Apgar
 h3:ingreso-del-neonato-en-uci Ingreso del neonato en UCI
 h3:peso-de-neonatos Peso de neonatos
 fig:426 \\s
+h2:comparación-de-desenlaces-según-momento-de-infección-y-sintomatología Comparación de desenlaces según momento de infección y sintomatología
+h3:preeclampsia-1 Preeclampsia
+h3:preeclampsia-con-cg-1 Preeclampsia con CG
+h3:anomalías-congénitas-1 Anomalías congénitas
+h3:retraso-del-crecimiento-intrauterino-1 Retraso del crecimiento intrauterino
+h3:diabetes-gestacional-1 Diabetes gestacional
+h3:hipertensión-gestacional-1 Hipertensión gestacional
+h3:rotura-prematura-de-membranas-1 Rotura prematura de membranas
+h3:ingreso-materno-en-uci-1 Ingreso materno en UCI
+h3:ingreso-materno-en-uci-según-el-momento-del-parto-o-cesárea-1 Ingreso materno en UCI según el momento del parto o cesárea
+h3:feto-muerto-anteparto-1 Feto muerto anteparto
+h3:prematurez-1 Prematurez
+h3:eventos-trombóticos-1 Eventos trombóticos
+h3:eventos-hemorrágicos-1 Eventos hemorrágicos
+h3:hemorragias-potsparto-1 Hemorragias potsparto
+h3:inicio-del-parto-1 Inicio del parto
+h3:tipo-de-parto-1 Tipo de parto
+h3:test-de-apgar-1 Test de Apgar
+h3:ingreso-del-neonato-en-uci-1 Ingreso del neonato en UCI
+h3:peso-de-neonatos-1 Peso de neonatos
 

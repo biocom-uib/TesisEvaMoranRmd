@@ -1,0 +1,6 @@
+"0","Tipo= c(I1,I2,NI1,NI2)"
+"0","dtbp=data.frame(Grupo=c(rep(""Inf."",length(I1)+length(I2)),rep(""No inf."",length(NI1)+length(NI2))),"
+"0","Ola= c(rep(""1a ola"",length(I1)),rep(""2a ola"",length(I2)),rep(""1a ola"",length(NI1)),rep(""2a ola"",length(NI2))),  "
+"0","Tipo"
+"0"," )"
+"0","SRH=scheirerRayHare(Tipo ~ Grupo + Ola,data=dtbp,verbose=FALSE)$p.value[3]"

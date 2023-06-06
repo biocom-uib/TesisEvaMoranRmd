@@ -1,0 +1,69 @@
+h1:presentación Presentación
+h3:paquetes-usados Paquetes usados
+h3:importación-de-datos Importación de datos
+h3:definición-de-grupos-robson Definición de grupos Robson
+h3:algunas-funciones Algunas funciones
+h4:tests Tests
+h4:tablas-y-gráficos Tablas y gráficos
+h1:comparación-de-las-dos-olas Comparación de las dos olas
+h2:gravedad-en-la-infeccion Gravedad en la infeccion
+fig:401 \\s
+h2:comparación-de-antecedentes Comparación de antecedentes
+h3:franja-de-edad Franja de edad
+h3:etnia Etnia
+h3:hábito-tabáquico Hábito tabáquico
+fig:452 \\s
+h3:obesidad Obesidad
+fig:453 \\s
+h3:hipertensión-pregestacional Hipertensión pregestacional
+fig:454 \\s
+h3:diabetes-mellitus Diabetes Mellitus
+fig:455 \\s
+h3:enfermedades-cardiacas-crónicas Enfermedades cardiacas crónicas
+fig:456 \\s
+h3:enfermedades-pulmonares-crónicas-incluyendo-asma Enfermedades pulmonares crónicas (incluyendo asma)
+fig:457 \\s
+h3:paridad Paridad
+fig:458 \\s
+h3:gestación-múltip Gestación múltip
+fig:459 \\s
+h2:comparación-de-riesgos-de-desenlaces Comparación de riesgos de desenlaces
+h3:hipertensión-gestacional Hipertensión gestacional
+fig:462 \\s
+h3:diabetes-gestacional Diabetes gestacional
+fig:463 \\s
+h3:preeclampsia Preeclampsia
+fig:402 \\s
+h3:preeclampsia-con-cg-entre-las-preeclámpsicas Preeclampsia con CG entre las preeclámpsicas
+fig:403 \\s
+h3:prematurez Prematurez
+fig:404 \\s
+h3:eventos-hemorrágicos Eventos hemorrágicos
+fig:405 \\s
+h3:eventos-trombóticos Eventos trombóticos
+fig:406 \\s
+h3:anomalías-congénitas Anomalías congénitas
+fig:407 \\s
+h3:embarazos-con-feto-muerto-anteparto Embarazos con feto muerto anteparto
+fig:408 \\s
+h3:inicios-de-parto Inicios de parto
+fig:409 \\s
+h3:tipos-de-parto Tipos de parto
+h3:retraso-del-crecimiento Retraso del crecimiento
+fig:417 \\s
+h3:hemorragia-postparto Hemorragia postparto
+fig:477 \\s
+fig:473 \\s
+h3:ingreso-materno-en-uci Ingreso materno en UCI
+h3:rotura-prematura-de-membranas Rotura prematura de membranas
+fig:421 \\s
+h3:ingreso-neonatal-en-ucin Ingreso neonatal en UCIN
+fig:419 \\s
+h3:apgar Apgar
+fig:420 \\s
+h3:edad-gestacional-al-parto Edad gestacional al parto
+fig:422 \\s
+h3:peso-de-neonatos-al-nacimiento Peso de neonatos al nacimiento
+fig:423 \\s
+h3:fetos-muertos-anteparto Fetos muertos anteparto
+

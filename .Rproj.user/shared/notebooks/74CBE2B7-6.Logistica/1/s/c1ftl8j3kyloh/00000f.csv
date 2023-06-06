@@ -1,1 +1,0 @@
-"0","VIF=round(vif(mod.COVID)[,1],4)"
