@@ -1,4 +1,0 @@
-"0","I1=c(Casos1w[Casos1w$Feto.muerto.intraútero==""No"",]$Peso._gramos_...125,Casos1wGM[Casos1wGM$Feto.vivo==""Sí"",]$Peso._gramos_...148)"
-"0","NI1=c(Controls1w[Controls1w$Feto.vivo...194==""Sí"",]$Peso._gramos_...198,Controls1wGM[Controls1wGM$Feto.vivo...245==""Sí"",]$Peso._gramos_...247)"
-"0","I2=c(Casos2w[Casos2w$Feto.muerto.intraútero==""No"",]$Peso._gramos_...125,Casos2wGM[Casos2wGM$Feto.vivo==""Sí"",]$Peso._gramos_...148)"
-"0","NI2=c(Controls2w[Controls2w$Feto.vivo...194==""Sí"",]$Peso._gramos_...198,Controls2wGM[Controls2wGM$Feto.vivo...245==""Sí"",]$Peso._gramos_...247)"

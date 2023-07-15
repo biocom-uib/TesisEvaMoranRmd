@@ -59,6 +59,24 @@ ggplot(data, aes(fill=Gravedad, y=valor, x=Grupo)) +
 
 ### Franja de edad
 
+```{r}
+ECa1=Casos1w$Edad._años_
+ECa2=Casos2w$Edad._años_
+ECo1=Controls1w$Edad._años_
+ECo2=Controls2w$Edad._años_
+fligner.test(list(ECa1,ECa2))$p.value
+fligner.test(list(ECo1,ECo2))$p.value
+TCa=t.test(ECa1,ECa2,var.equal=TRUE)
+TCo=t.test(ECo1,ECo2,var.equal=TRUE)
+```
+
+
+* Igualdad de edades medias entre olas
+
+    * Para los casos: test t, p-valor $`r signif(TCa$p.value,1)`$; IC-95% para la diferencia de medias [`r round(TCa$conf.int,3)`]
+
+    * Para los controles: test t, p-valor `r round(TCo$p.value,3)`; IC-95% para la difound(erencia de medias [`r round(TCo$conf.int,3)`]
+
 
 En tablas como la que sigue, para cada fila considerada como antecedente:
 
@@ -867,6 +885,23 @@ NI2=Controls2w$EDAD_GEST
 
 
 ```{r}
+fligner.test(list(I1,I2))$p.value
+fligner.test(list(NI1,NI2))$p.value
+TCa=t.test(I1,I2,var.equal=TRUE)
+TCo=t.test(NI1,NI2,var.equal=TRUE)
+```
+
+
+* Igualdad de edades gestacionales medias entre olas
+
+    * Para los casos: test t, p-valor `r round(TCa$p.value,3)`; IC-95% para la diferencia de medias [`r round(TCa$conf.int,3)`]
+
+    * Para los controles: test t, p-valor `r round(TCo$p.value,3)`; IC-95% para la difound(erencia de medias [`r round(TCo$conf.int,3)`]
+
+
+
+
+```{r}
 Dades=rbind(c(round(min(I1,na.rm=TRUE),1),round(max(I1,na.rm=TRUE),1), round(mean(I1,na.rm=TRUE),1),round(median(I1,na.rm=TRUE),1),round(quantile(I1,c(0.25,0.75),na.rm=TRUE),1), round(sd(I1,na.rm=TRUE),1)),
             c(round(min(NI1,na.rm=TRUE),1),round(max(NI1,na.rm=TRUE),1), round(mean(NI1,na.rm=TRUE),1),round(median(NI1,na.rm=TRUE),1),round(quantile(NI1,c(0.25,0.75),na.rm=TRUE),1),round(sd(NI1,na.rm=TRUE),1)),
             c(round(min(I2,na.rm=TRUE),1),round(max(I2,na.rm=TRUE),1), round(mean(I2,na.rm=TRUE),1),round(median(I2,na.rm=TRUE),1),round(quantile(I2,c(0.25,0.75),na.rm=TRUE),1), round(sd(I2,na.rm=TRUE),1)),
@@ -998,6 +1033,23 @@ SRH=scheirerRayHare(Tipo ~ Grupo + Ola,
                 data=dtbp,verbose=FALSE)$p.value[3]
 
 ```
+
+
+```{r}
+fligner.test(list(I1,I2))$p.value
+fligner.test(list(NI1,NI2))$p.value
+TCa=t.test(I1,I2,var.equal=TRUE)
+TCo=t.test(NI1,NI2,var.equal=TRUE)
+```
+
+
+* Igualdad de edades gestacionales medias entre olas
+
+    * Para los casos: test t, p-valor `r round(TCa$p.value,3)`; IC-95% para la diferencia de medias [`r round(TCa$conf.int,3)`]
+
+    * Para los controles: test t, p-valor `r round(TCo$p.value,3)`; IC-95% para la difound(erencia de medias [`r round(TCo$conf.int,3)`]
+
+
 
 
 

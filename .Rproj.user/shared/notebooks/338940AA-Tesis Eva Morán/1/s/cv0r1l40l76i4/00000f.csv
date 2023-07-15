@@ -1,8 +1,0 @@
-"0","I1=Casos1w$UCI"
-"0","I2=Casos2w$UCI"
-"0",""
-"0","NI1=factor(Controls1w$UCI...9)"
-"0","NI2=factor(Controls2w$UCI...9,levels=0:1)"
-"0",""
-"0","ComparOlasRR(I1,I2,NI1,NI2,""UCI"", ""No UCI"")"
-"2","Warning: number of rows of result is not a multiple of vector length (arg 2)"

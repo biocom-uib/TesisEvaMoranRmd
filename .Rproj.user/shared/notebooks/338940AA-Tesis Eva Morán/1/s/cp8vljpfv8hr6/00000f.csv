@@ -1,6 +1,0 @@
-"0","I1=factor(Casos1w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.,labels=0:1)"
-"0","I2=factor(Casos2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.,labels=0:1)"
-"0","NI1=factor(Controls1w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.)"
-"0","NI2=factor(Controls2w$Defecto.del.crecimiento.fetal..en.tercer.trimestre._.CIR._.)"
-"0",""
-"0","ComparOlasRR(I1,I2,NI1,NI2,""RCIU"", ""No RCIU"")"

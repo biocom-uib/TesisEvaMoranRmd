@@ -1,0 +1,1 @@
+"0","CILet=epitools::binom.exact(table(Casos$MORTALIDAD_MATERNA)[2],n_I)"

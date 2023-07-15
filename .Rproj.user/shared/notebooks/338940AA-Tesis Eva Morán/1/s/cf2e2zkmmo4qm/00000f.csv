@@ -1,7 +1,0 @@
-"0","Casos$Cesárea=Casos$Tipo.de.parto"
-"0","Casos$Cesárea[Casos$Cesárea==""Eutocico"" | Casos$Cesárea==""Instrumental""]=0"
-"0","Casos$Cesárea[Casos$Cesárea==""Cesárea""]=1"
-"0","#"
-"0","Controls$Cesárea=Controls$Tipo.de.parto"
-"0","Controls$Cesárea[Controls$Cesárea==""Eutocico"" | Controls$Cesárea==""Instrumental""]=0"
-"0","Controls$Cesárea[Controls$Cesárea==""Cesárea""]=1"

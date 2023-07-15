@@ -1,5 +1,0 @@
-"0","Columnes=c(""Infectadas (N)"", ""Infectadas (%)"",""No infectadas (N)"", ""No infectadas (%)"")"
-"0","Columnes.Sint=c(""Asintomáticas (N)"", ""Asintomáticas (%)"",""Leves (N)"", ""Leves (%)"", ""Graves (N)"", ""Graves (%)"")"
-"0","ColumnesExt=c(""Infectadas 1a ola (N)"", ""Infectadas 1a ola (%)"",""No infectadas 1a ola (N)"", ""No infectadas 1 ola (%)"",""Infectadas 2 ola (N)"", ""Infectadas 2 ola (%)"",""No infectadas 2 ola (N)"", ""No infectadas 2 ola (%)"")"
-"0","ColumnesOnes=c(""Total 1a ola (N)"", ""Total 1a ola (%)"",""Total 2 ola (N)"", ""Total 2 ola (%)"")"
-"0","Columnes.OR=c(""ORa"",""IC 95%: extremo inf."", ""IC 95%: extremo sup."", ""p-valor"")"

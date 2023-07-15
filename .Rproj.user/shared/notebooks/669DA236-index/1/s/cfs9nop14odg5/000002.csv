@@ -1,0 +1,20 @@
+"0","title: ""SARS-CoV-2 y embarazo. Análisis de variables obstétricas y tipo parto durante la pandemia en España. 
+
+Análisis estadístico.""
+subtitle: ""Eva Morán, Francesc Rosselló""
+date: ""20-06-2023""
+site: bookdown::bookdown_site
+output: 
+   bookdown::html_book:
+    includes:
+      in_header: style.css
+documentclass: book
+#bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: AprendeR-UIB/TesisEva
+---
+
+"
+"2","/bin/sh: ---: command not found
+"
