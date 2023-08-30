@@ -1,0 +1,7 @@
+"0","for (i in 1:length(x)){
+ResLoc[,i]=Passada(i,Ints)
+}
+"
+"2","Error in while (p < II[i, 1] | p > II[i, 2]) { : 
+  missing value where TRUE/FALSE needed
+"

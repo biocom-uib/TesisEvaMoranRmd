@@ -1,0 +1,5 @@
+"0","Dades=as.data.frame(read.csv(""DatosA.csv"")) # Fileres: mostres; Columnes: OTU
+"
+"2","Error in exists(cacheKey, where = .rs.WorkingDataEnv, inherits = FALSE) : 
+  invalid first argument
+"

@@ -1,0 +1,7 @@
+"0","for (i in 1:m){
+Res[,i]=Presa(i,x,Ints)
+}
+"
+"2","Error in while (min(pp - Ints[, 1]) < 0 | max(pp - Ints[, 2]) > 0) { : 
+  missing value where TRUE/FALSE needed
+"
